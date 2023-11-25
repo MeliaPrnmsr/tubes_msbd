@@ -1,0 +1,178 @@
+/* CSS tambahan untuk menyesuaikan tampilan */
+.search-form {
+    display: flex;
+    align-items: center;
+}
+.search-input{
+    width: 500px;
+}
+.search-button {
+    margin-right: 100px;
+    background-color: white; 
+    outline-color: white;
+}
+.text-repository{
+  padding-top: var(--bs-navbar-brand-padding-y);
+  margin-right: 450px;
+} 
+
+.rectangle {
+    position: absolute;
+    width: 250px;
+    height: 43px;
+    left: 0;
+    background-color: #fbef56;
+}
+.text {
+    position: absolute;
+    /* font-family: "Raleway-Medium"; */
+    font-weight: 550;
+    color: #000000;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: normal;
+    white-space: nowrap;
+}
+.rectangle-box {
+    position: absolute;
+    width: 157px;
+    height: 58px;
+    top: 98px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    border: 1px solid;
+    border-color: #2c6c34;
+} 
+  
+  @font-face {
+    font-family: 'Raleway';
+    src: url('../font/NotoSansJP-Regular.ttf');
+  }
+
+    body {
+    font-family: 'Raleway', sans-serif;
+    
+    }
+
+
+    @font-face {
+      font-family: 'RalewayBold';
+      src: url('../font/Raleway/Raleway-Bold.ttf');
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'RalewayBold', sans-serif;
+    }
+
+    .nav-link {
+        color: rgb(0, 0, 0);
+        background-color: #FFc600;
+        font-size: 15px;
+      }
+      
+      .nav-link:hover {
+        color: black;
+        background-color: #FFA400; 
+      }
+
+      .active {
+        color: black;
+        background-color: #FFA400; 
+      }
+
+      
+
+      .nav-link-hijau {
+        color: rgb(0, 0, 0);
+        background-color: #3dae2b;
+        font-size: 15px;
+      }
+      
+      .nav-link-hijau:hover {
+        color: black;
+        background-color: #3dae2b; 
+      }
+
+
+
+      .btn-repository {
+        color: black;
+        background-color: #FFA400;
+      }
+
+      .btn-repository:hover {
+        color: black;
+        background-color: #FFA400;
+      }
+
+      .btn-repository-hijau {
+        color: white;
+        background-color: #006633;
+      }
+
+      .btn-repository-hijau:hover {
+        color:#006633;
+        background-color: white ;
+        border: 2px solid #006633;
+      }
+
+      .btn-hijau {
+        color: white;
+        background-color: #3dae2b;
+      }
+
+      .btn-hijau:hover {
+        color: white;
+        background-color: #3dae2b;
+        border: 2px solid #3dae2b;
+      }
+
+      .alert-repository {
+        background-color: #3dae2b;
+        border: 2px solid #006633;
+        color: white;
+      }
+
+      .alert-repository-no {
+        background-color: #3dae2b;
+        color: white;
+      }
+
+      .bg-repository {
+        color: black;
+        background-color: #FFA400;
+      }
+
+      .bg-orange {
+        color: black;
+        background-color: #FFc600;
+      }
+
+      .bg-repository-hijau {
+        color: white;
+        background-color: #006633;
+      }
+
+      .bg-hijau {
+        color: white;
+        background-color: #3dae2b;
+      }
+
+      .square-btn {
+        width: 90px;
+        height: 90px;
+        border: none;
+        border-radius: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 10px;
+        padding: 0;
+      }
+      .square-btn .icon {
+        font-size: 40px;
+        margin-bottom: 5px;
+      }
+    
