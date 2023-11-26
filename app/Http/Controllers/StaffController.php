@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Mahasiswa; //->pemanggilan model Mahasiswa
 use App\Models\Dosen; //->pemanggilan model Dosen
 use App\Models\TugasAkhir; //->pemanggilan model Dosen
+use App\Models\Prodi; //->pemanggilan model Dosen
 
 class StaffController extends Controller
 {
@@ -51,7 +52,8 @@ class StaffController extends Controller
 
     public function tambahMahasiswa()
     {
-        return view('staff.tambahMahasiswa');
+        $prodis = Prodi::all(); 
+        return view('staff.tambahMahasiswa', ['prodis' => $prodis]);
     }
 
     public function tambahDosen()
