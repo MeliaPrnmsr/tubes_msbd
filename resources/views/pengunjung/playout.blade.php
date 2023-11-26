@@ -27,7 +27,7 @@
         
                 <div class="col p-2 d-flex justify-content-end"> <!-- Update disini -->
                     <div class="">
-                        <button class="btn btn-repository" type="button">&nbsp;Login&nbsp;</button>
+                        <a href="/login" class="btn btn-repository" type="button" style="width: 100px">&nbsp;Login&nbsp;</a>
                     </div>
                 </div>
         </div>
