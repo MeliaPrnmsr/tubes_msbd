@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Mahasiswa; //->pemanggilan model Mahasiswa
+use App\Models\Dosen; //->pemanggilan model Dosen
+use App\Models\TugasAkhir; //->pemanggilan model Dosen
 
 class StaffController extends Controller
 {
@@ -17,19 +20,23 @@ class StaffController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+
     public function dataMahasiswa()
     {
-        return view('staff.datamahasiswa_staff');
+        $mahasiswas = Mahasiswa::all(); 
+        return view('staff.datamahasiswa_staff', compact('mahasiswas')); 
     }
 
     public function dataDosen()
     {
-        return view('staff.datadosen_staff');
+        $dosens = Dosen::all();
+        return view('staff.datadosen_staff', compact('dosens'));
     }
 
     public function dataTugasakhir()
     {
-        return view('staff.datatugasakhir_staff');
+        $tugas_akhirs = TugasAkhir::all();
+        return view('staff.datatugasakhir_staff', compact('tugas_akhirs'));
     }
 
     public function dataKategori()

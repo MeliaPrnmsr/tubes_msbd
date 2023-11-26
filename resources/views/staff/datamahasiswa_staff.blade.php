@@ -8,7 +8,7 @@
   <div class="card-body">
     <div class="row d-flex justify-content-center">
       <div class="col-3">
-        <a href="/tambahmahasiswa" class="btn btn-hijau"><i class="fa-solid fa-user-plus"></i> &nbsp;Tambah Data</a>
+        <a href="{{route('tambahmahasiswa.staff')}}" class="btn btn-hijau"><i class="fa-solid fa-user-plus"></i> &nbsp;Tambah Data</a>
       </div>
 
       <div class="col-8">
@@ -36,35 +36,17 @@
         <div class="col-2">Aksi</div>
       </div>
 
+      @foreach($mahasiswas as $index => $mahasiswa)
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">1</div>
-        <div class="col-4">Kim Seok Jin</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">Teknologi Informasi</div>
+        <div class="col-1">{{ $index + 1 }}</div>
+        <div class="col-4">{{ $mahasiswa->nama_mahasiswa }}</div>
+        <div class="col-2">{{ $mahasiswa->NIM }}</div>
+        <div class="col-3">{{$mahasiswa->prodi->nama_prodi}}</div>
         <div class="col-2">
           <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
         </div>
       </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">2</div>
-        <div class="col-4">Kim Min Seok</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">Teknologi Informasi</div>
-        <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">3</div>
-        <div class="col-4">Kim Seok Jin</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">Teknologi Informasi</div>
-        <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
+      @endforeach
 
     </div>
     {{-- tabel daftar mhs end --}}

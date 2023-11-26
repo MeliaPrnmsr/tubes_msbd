@@ -36,35 +36,17 @@
         <div class="col-2">Aksi</div>
       </div>
 
+      @foreach($dosens as $index => $dosen)
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">1</div>
-        <div class="col-4">Kim Seok Jin</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">19921202</div>
+        <div class="col-1">{{ $index + 1 }}</div>
+        <div class="col-4">{{ $dosen->nama_dosen }}</div>
+        <div class="col-2">{{ $dosen->NIP }}</div>
+        <div class="col-3">{{ $dosen->NIDN }}</div>
         <div class="col-2">
           <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
         </div>
       </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">2</div>
-        <div class="col-4">Kim Min Seok</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">19921202</div>
-        <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">3</div>
-        <div class="col-4">Kim Seok Jin</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">19921202</div>
-        <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
+      @endforeach
 
     </div>
     {{-- tabel daftar mhs end --}}

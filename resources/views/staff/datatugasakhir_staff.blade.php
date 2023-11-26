@@ -36,35 +36,17 @@
         <div class="col-2 text-center">Aksi</div>
       </div>
 
+      @foreach($tugas_akhirs as $index => $tugas_akhir)
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">1</div>
-        <div class="col-4">Machine Learning in IOT</div>
-        <div class="col-3">Kim Seok Jin</div>
-        <div class="col-2 text-center">2019</div>
-        <div class="col-2 text-center">
+        <div class="col-1">{{ $index + 1 }}</div>
+        <div class="col-4">{{ $tugas_akhir->judul }}</div>
+        <div class="col-3">{{$tugas_akhir->mahasiswa->nama_mahasiswa}}</div>
+        <div class="col-2">{{ $tugas_akhir->tahun_terbit }}</div>
+        <div class="col-2">
           <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
         </div>
       </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">2</div>
-        <div class="col-4">Machine Learning in IOT</div>
-        <div class="col-3">Kim Min Seok</div>
-        <div class="col-2 text-center">2019</div>
-        <div class="col-2 text-center">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">3</div>
-        <div class="col-4">Machine Learning in IOT</div>
-        <div class="col-3">Kim Seok Jin</div>
-        <div class="col-2 text-center">2019</div>
-        <div class="col-2 text-center">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
+      @endforeach
 
     </div>
     {{-- tabel daftar mhs end --}}
