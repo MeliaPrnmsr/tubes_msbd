@@ -3,35 +3,115 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Mahasiswa; //->pemanggilan model Mahasiswa
-use App\Models\Dosen; //->pemanggilan model Dosen
-use App\Models\TugasAkhir; //->pemanggilan model Dosen
-use App\Models\Prodi; //->pemanggilan model Dosen
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+
+//Pemanggilan Model
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
+use App\Models\TugasAkhir;
+use App\Models\Prodi;
 
 class StaffController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         return view('staff.dashboard_staff');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-
+    //Mahasiswa Part Start
+    //Mahasiswa Part Start
     public function dataMahasiswa()
     {
         $mahasiswas = Mahasiswa::all(); 
         return view('staff.datamahasiswa_staff', compact('mahasiswas')); 
     }
 
+    public function detailMahasiswa($NIM)
+    {
+        $mahasiswa = Mahasiswa::find($NIM);
+        return view('staff.detailMahasiswa_staff', ['mahasiswa' => $mahasiswa]);
+    }
+
+    public function tambahMahasiswa()
+    {
+        $prodis = Prodi::all(); 
+        return view('staff.tambahMahasiswa', ['prodis' => $prodis]);
+    }
+
+    public function insertMahasiswa(Request $request)
+    {
+        $nim = $request->input('NIM');
+        $nimString = strval($nim);
+        $nama_mahasiswa = $request->input('nama_mahasiswa');
+        $username = $nimString; 
+        $email = $request->input('email');
+        $password = Hash::make($nimString);
+        $role = 'mahasiswa';
+        $prodi_id = $request->input('prodi');
+
+        DB::select('CALL p_tambah_user_mahasiswa(?, ?, ?, ?, ?, ?, ?)', [
+            $nim,
+            $nama_mahasiswa,
+            $username,
+            $email,
+            $password,
+            $role,
+            $prodi_id
+        ]);
+
+        return redirect()->route('datamahasiswa.staff')->with('success', 'Data Mahasiswa berhasil ditambahkan');
+    }
+    //Mahasiswa Part End
+    //Mahasiswa Part End
+
+
     public function dataDosen()
     {
         $dosens = Dosen::all();
         return view('staff.datadosen_staff', compact('dosens'));
+    }
+
+    public function tambahDosen()
+    {
+        $prodis = Prodi::all(); 
+        return view('staff.tambahDosen', ['prodis' => $prodis]);
+    }
+
+    public function insertDosen(Request $request)
+    {
+        $NIDN    = $request->input('NIDN');
+        $NIP = $request->input('NIP');
+        $NIPString = strval($NIP);
+        $username = $NIPString; 
+        $password = Hash::make($NIPString);
+        $email = $request->input('email');
+        $kode_dosen = $request->input('kode_dosen');
+        $nama_dosen = $request->input('nama_dosen');
+        $role = 'dosen';
+        $prodi_id = $request->input('prodi');
+
+        
+        DB::select('CALL p_tambah_user_dosen(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+            $username,
+            $email,
+            $password,
+            $role,
+            $kode_dosen,
+            $NIP,
+            $NIDN,
+            $nama_dosen,
+            $prodi_id
+        ]);
+
+        return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil ditambahkan');
+    }
+
+    public function detailDosen($kode_dosen)
+    {
+        $dosen = Dosen::find($kode_dosen);
+        return view('staff.detailDosen', ['dosen' => $dosen]);
     }
 
     public function dataTugasakhir()
@@ -45,21 +125,7 @@ class StaffController extends Controller
         return view('staff.dataKategori_staff');
     }
 
-    public function detailDosen()
-    {
-        return view('staff.detailDosen');
-    }
 
-    public function tambahMahasiswa()
-    {
-        $prodis = Prodi::all(); 
-        return view('staff.tambahMahasiswa', ['prodis' => $prodis]);
-    }
-
-    public function tambahDosen()
-    {
-        return view('staff.tambahDosen');
-    }
 
 
     public function notifikasi_staff()

@@ -54,14 +54,24 @@ Route::middleware(['role:admin'])->group(function () {
 //ROUTE STAFF
 //ROUTE STAFF
 Route::middleware(['role:staff'])->group(function () {
+    //CONTROLLER DASHBOARD
     Route::get('/dashboard_staff', [StaffController::class,'index'])->name('dashboard.staff');
+    //CONTROLLER MAHASISWA
+    //CONTROLLER MAHASISWA
     Route::get('/datamahasiswa_staff', [StaffController::class,'dataMahasiswa'])->name('datamahasiswa.staff');
+    Route::get('/detailMahasiswa/{NIM}', [StaffController::class,'detailMahasiswa'])->name('detailMahasiswa.staff');
+    Route::get('/tambahmahasiswa_staff', [StaffController::class,'tambahMahasiswa'])->name('tambahmahasiswa.staff');
+    Route::post('/insertmahasiswa', [StaffController::class,'insertMahasiswa']);
+    //CONTROLLER DOSEN
+    //CONTROLLER DOSEN
     Route::get('/datadosen_staff', [StaffController::class,'dataDosen'])->name('datadosen.staff');
+    Route::get('/detailDosen_staff/{kode_dosen}', [StaffController::class,'detailDosen'])->name('detailDosen.staff');
+    Route::get('/tambahdosen_staff', [StaffController::class,'tambahDosen'])->name('tambahdosen.staff');
+    Route::post('/insertdosen', [StaffController::class,'insertDosen']);
+    //CONTROLLER TUGAS AKHIR
+    //CONTROLLER TUGAS AKHIR
     Route::get('/datatugasakhir_staff', [StaffController::class,'dataTugasakhir'])->name('datatugas.staff');
     Route::get('/datakategori_staff', [StaffController::class,'dataKategori'])->name('datakategori.staff');
-    Route::get('/detailDosen_staff', [StaffController::class,'detailDosen'])->name('detaildosen.staff');
-    Route::get('/tambahmahasiswa_staff', [StaffController::class,'tambahMahasiswa'])->name('tambahmahasiswa.staff');
-    Route::get('/tambahdosen_staff', [StaffController::class,'tambahDosen'])->name('tambahdosen.staff');
     Route::get('/notifikasi_staff', [StaffController::class,'notifikasi_staff'])->name('notifikasi.staff');
     Route::get('/tambahskripsi_staff', [StaffController::class,'tambahSkripsi'])->name('tambahskripsi.staff');
 });

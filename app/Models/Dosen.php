@@ -9,11 +9,16 @@ class Dosen extends Model
 {
     use HasFactory;
 
-    protected $table = 'dosens'; // Nama tabel di database
-    protected $primaryKey = 'kode_dosen'; // Nama kolom kunci utama
+    protected $table = 'dosens'; 
+    protected $primaryKey = 'kode_dosen';
 
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id_user');
     }
 }

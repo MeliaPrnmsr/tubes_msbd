@@ -2,6 +2,17 @@
 
 @section('content')
 <br>
+      @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Berhasil!</strong> {{session('success')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @elseif(session('deleted'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Berhasil! </strong> {{session('deleted')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
 <h3 class="text-center p-2" style="color:#006633"><b>Data Mahasiswa</b></h3>
 <div class="card">
   <br>
@@ -43,7 +54,7 @@
         <div class="col-2">{{ $mahasiswa->NIM }}</div>
         <div class="col-3">{{$mahasiswa->prodi->nama_prodi}}</div>
         <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+          <a href="{{ route('detailMahasiswa.staff', ['NIM' => $mahasiswa->NIM]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>
       @endforeach

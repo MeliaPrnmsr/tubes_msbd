@@ -2,13 +2,24 @@
 
 @section('content')
 <br>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Berhasil!</strong> {{session('success')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @elseif(session('deleted'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Berhasil! </strong> {{session('deleted')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    @endif
 <h3 class="text-center pt-2"><b>Data Dosen</b></h3>
 <div class="card">
   <br>
   <div class="card-body">
     <div class="row d-flex justify-content-center">
       <div class="col-3">
-        <a href="/tambahdosen" class="btn btn-hijau"><i class="fa-solid fa-user-plus"></i> &nbsp;Tambah Data</a>
+        <a href="{{route('tambahdosen.staff')}}" class="btn btn-hijau"><i class="fa-solid fa-user-plus"></i> &nbsp;Tambah Data</a>
       </div>
 
       <div class="col-8">
@@ -43,7 +54,7 @@
         <div class="col-2">{{ $dosen->NIP }}</div>
         <div class="col-3">{{ $dosen->NIDN }}</div>
         <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+          <a href="{{ route('detailDosen.staff', ['kode_dosen' => $dosen->kode_dosen]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>
       @endforeach
