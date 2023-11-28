@@ -54,7 +54,7 @@
         <div class="col-2">{{ $dosen->NIP }}</div>
         <div class="col-3">{{ $dosen->NIDN }}</div>
         <div class="col-2">
-          <a href="{{ route('detailDosen.staff', ['kode_dosen' => $dosen->kode_dosen]) }}" class="btn btn-repository">Detail</a>
+          <a href="{{ route('detailDosen.staff', ['NIP' => $dosen->NIP]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>
       @endforeach

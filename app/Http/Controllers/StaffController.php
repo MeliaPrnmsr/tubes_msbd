@@ -108,10 +108,10 @@ class StaffController extends Controller
         return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil ditambahkan');
     }
 
-    public function detailDosen($kode_dosen)
+    public function detailDosen($NIP)
     {
-        $dosen = Dosen::find($kode_dosen);
-        return view('staff.detailDosen', ['dosen' => $dosen]);
+        $dosen = Dosen::find($NIP);
+        return view('staff.detailDosen', compact('dosen'));
     }
 
     public function dataTugasakhir()
