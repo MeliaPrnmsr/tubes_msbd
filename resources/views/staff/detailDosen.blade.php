@@ -3,7 +3,7 @@
 @section('content')
     <!-- Register -->
 <div class="container mt-5">
-    <h3 class="card-title text-center mt-3"><b>Tambah Data Dosen</b></h3>
+    <h3 class="card-title text-center mt-3"><b>Detail Dosen</b></h3>
     <br>
     <div class="card mx-auto">
         <div class="card-body">
@@ -26,11 +26,11 @@
                 </div>
                 <div class="mt-3">
                     <label for="Email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="Email" aria-describedby="email" value="{{ $dosen->email }}" readonly>
+                    <input type="email" class="form-control" id="Email" aria-describedby="email" value="{{ $dosen->user->email }}" readonly>
                 </div>
                 <div class="mt-3">
                     <label for="prodi" class="form-label mt-3">Prodi</label>
-                    <input type="nidn" class="form-control" id="nidn" aria-describedby="nidn" value="{{ $dosen->prodi->nama_prodi }}" readonly>
+                    <input type="nidn" class="form-control" id="nidn" aria-describedby="nidn" value="{{ $dosen->prodi->jenjang }} - {{ $dosen->prodi->nama_prodi }}" readonly>
                 </div>
                 <div class="text-center mt-4">
                     <button type="submit" href="#" class="btn btn-hijau mt-3" style="width: 20%">Edit</button>

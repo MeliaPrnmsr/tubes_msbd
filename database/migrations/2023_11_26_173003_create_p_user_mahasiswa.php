@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         $p_user_mahasiswa = "DROP PROCEDURE IF EXISTS `p_tambah_user_mahasiswa`;
-                CREATE PROCEDURE `p_tambah_user_mahasiswa`(IN `p_NIM` CHAR(9), IN `p_nama_mahasiswa` VARCHAR(255), IN `p_username` VARCHAR(255), IN `p_email` VARCHAR(255), IN `p_password` VARCHAR(255), IN `p_role` VARCHAR(20), IN `p_prodi_id` INT(11))
+                CREATE PROCEDURE `p_tambah_user_mahasiswa`(IN `p_NIM` CHAR(9),
+                IN `p_nama_mahasiswa` VARCHAR(255),
+                IN `p_username` VARCHAR(255),
+                IN `p_email` VARCHAR(255),
+                IN `p_password` VARCHAR(255),
+                IN `p_role` VARCHAR(20),
+                IN `p_prodi_id` INT(11))
                 BEGIN
                     DECLARE id_user_baru INT;
                 

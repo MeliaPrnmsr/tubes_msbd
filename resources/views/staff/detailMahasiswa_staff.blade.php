@@ -25,7 +25,7 @@
                     </div>
                     <div class="mt-3">
                         <label for="prodi" class="form-label">Prodi</label>
-                        <input type="text" class="form-control" id="prodi" name="prodi" aria-describedby="prodi" value="{{ $mahasiswa->prodi->nama_prodi }}" readonly>
+                        <input type="text" class="form-control" id="prodi" name="prodi" aria-describedby="prodi" value="{{ $mahasiswa->prodi->jenjang }} - {{ $mahasiswa->prodi->nama_prodi }}" readonly>
                     </div>
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-hijau mt-3" style="width: 20%">Perbarui</button>

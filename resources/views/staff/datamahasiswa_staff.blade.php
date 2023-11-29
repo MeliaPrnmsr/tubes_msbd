@@ -52,7 +52,7 @@
         <div class="col-1">{{ $index + 1 }}</div>
         <div class="col-4">{{ $mahasiswa->nama_mahasiswa }}</div>
         <div class="col-2">{{ $mahasiswa->NIM }}</div>
-        <div class="col-3">{{$mahasiswa->prodi->nama_prodi}}</div>
+        <div class="col-3">{{$mahasiswa->prodi->jenjang}} - {{$mahasiswa->prodi->nama_prodi}}</div>
         <div class="col-2">
           <a href="{{ route('detailMahasiswa.staff', ['NIM' => $mahasiswa->NIM]) }}" class="btn btn-repository">Detail</a>
         </div>

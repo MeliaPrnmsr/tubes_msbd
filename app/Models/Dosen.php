@@ -9,6 +9,8 @@ class Dosen extends Model
 {
     use HasFactory;
 
+    protected $keyType = 'string';
+    
     protected $table = 'dosens'; 
     protected $primaryKey = 'kode_dosen';
 

@@ -43,20 +43,23 @@
         <div class="col-1">No</div>
         <div class="col-4">Nama</div>
         <div class="col-2">NIP</div>
-        <div class="col-3">NIDN</div>
+        <div class="col-3">Prodi</div>
         <div class="col-2">Aksi</div>
       </div>
-
-      @foreach($dosens as $index => $dosen)
+      @php $i = 1; @endphp
+      @foreach($dosens as $dosen)
+      {{-- @php echo($dosen) @endphp --}}
+      {{-- @dd($dosens) --}}
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">{{ $index + 1 }}</div>
+        <div class="col-1">{{ $i }}</div>
         <div class="col-4">{{ $dosen->nama_dosen }}</div>
         <div class="col-2">{{ $dosen->NIP }}</div>
-        <div class="col-3">{{ $dosen->NIDN }}</div>
+        <div class="col-3">{{$dosen->prodi->jenjang}} - {{$dosen->prodi->nama_prodi}}</div>
         <div class="col-2">
-          <a href="{{ route('detailDosen.staff', ['NIP' => $dosen->NIP]) }}" class="btn btn-repository">Detail</a>
+          <a href="{{ route('detailDosen.staff', ['kode_dosen' => $dosen->kode_dosen]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>
+      @php $i++; @endphp
       @endforeach
 
     </div>

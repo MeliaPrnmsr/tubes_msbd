@@ -1,72 +1,67 @@
 @extends('mahasiswa.mlayout')
 
 @section('content')
-    <div class="container-fluid">
-        <br>
-        <div class="card border-0">
-            <div class="card-body">
-                <div class="row">
-                    {{-- isi skripsi start --}}
+<div class="card border-0">
+    <div class="card-body">
+        <div class="row">
+            {{-- isi skripsi start --}}
+            <div class="col-9">
+                
+                <div class="row p-2">
+                    {{-- kolom judul start --}}
                     <div class="col-9">
-                        
-                        <div class="row p-2">
-                            {{-- kolom judul start --}}
-                            <div class="col-9">
-                                <h3><b>Judul_Skripsi</b></h3>
-                            </div>
-                            {{-- kolom judul end --}}
+                        <h3><b>{{$tugasakhir->judul}}</b></h3>
+                    </div>
+                    {{-- kolom judul end --}}
 
-                            {{-- kolom button start --}}
-                            <div class="col-3 d-flex justify-content-end">
-                                <button class="btn"><i class="fa-regular fa-heart"></i></button>
-                                <button class="btn"><i class="fa-regular fa-bookmark"></i></button>
-                            </div>
-                            {{-- kolom button start --}}
+                    {{-- kolom button start --}}
+                    <div class="col-3 d-flex justify-content-end">
+                        <button class="btn"><i class="fa-regular fa-heart"></i></button>
+                        <button class="btn"><i class="fa-regular fa-bookmark"></i></button>
+                    </div>
+                    {{-- kolom button start --}}
 
-                            {{-- kolom sampul start --}}
-                            <div class="col-3">
-                                <img src="{{asset('asset/img/sampulskripsi.jpeg')}}" alt="" class="w-100">
-                            </div>
-                            {{-- kolom sampul start --}}
+                    {{-- kolom sampul start --}}
+                    <div class="col-3">
+                        <img src="{{asset('asset/img/sampulskripsi.jpeg')}}" alt="" class="w-100">
+                    </div>
+                    {{-- kolom sampul start --}}
 
-                            {{-- kolom tabel start --}}
-                            <div class="col">
-                                <table class="table table-borderless">
-                                    <tr>
-                                        <td style="width: 20%"><b>Penulis</b></td>
-                                        <td style="width: 5%">:</td>
-                                        <td>nama_penulis</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Tipe TA</b></td>
-                                        <td>:</td>
-                                        <td>Skripsi</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pembimbing1</b></td>
-                                        <td>:</td>
-                                        <td>nama_pembimbing1</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Pembimbing2</b></td>
-                                        <td>:</td>
-                                        <td>nama_pembimbing2</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Tahun Terbit</b></td>
-                                        <td>:</td>
-                                        <td>2019</td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Tema</b></td>
-                                        <td>:</td>
-                                        <td>Machine Learning</td>
-                                    </tr>
-                                </table>
-                            </div>
-                            {{-- kolom tabel start --}}
-                        </div>
-                        <br><br>
+                    {{-- kolom tabel start --}}
+                    <div class="col">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td style="width: 20%"><b>Penulis</b></td>
+                                <td style="width: 5%">:</td>
+                                <td>{{$tugasakhir->mahasiswa->nama_mahasiswa}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Tipe TA</b></td>
+                                <td>:</td>
+                                <td>{{$tugasakhir->tipe_ta}}</td>
+                            </tr>
+                            @foreach($dosen_pembimbing as $dosen)
+                            <tr>
+                                <td><b>Pembimbing</b></td>
+                                <td>:</td>
+                                <td>{{ $dosen->dosen->nama_dosen }}</td>
+                            </tr>                       
+                            @endforeach
+                            <tr>
+                                <td><b>Tahun Terbit</b></td>
+                                <td>:</td>
+                                <td>{{$tugasakhir->tahun_terbit}}</td>
+                            </tr>
+                            <tr>
+                                <td><b>Kategori</b></td>
+                                <td>:</td>
+                                <td>{{$tugasakhir->kategori->nama_kategori}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    {{-- kolom tabel start --}}
+                </div>
+                <br><br>
 
                         {{-- tab skripsi start --}}
                             <nav>
@@ -87,7 +82,10 @@
 
                                 {{-- isi tab 2 start --}}
                                 <div class="tab-pane fade bg-white" id="nav-pustaka" role="tabpanel" aria-labelledby="nav-pustaka-tab" tabindex="0">
-                                    pustaka ini
+                                    <div class="container">
+                                        <br>
+                                        <embed src="{{$tugasakhir->dokumenfiles->file_pustaka}}" type="application/pdf" width="100%" height="600px" />
+                                    </div>
                                 </div>
                                 {{-- isi tab 2 end --}}
     

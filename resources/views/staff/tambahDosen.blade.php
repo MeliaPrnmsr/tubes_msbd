@@ -29,7 +29,7 @@
                     <label for="prodi" class="form-label mt-3">Prodi</label>
                     <select class="form-select" id="prodi" name="prodi">
                         @foreach($prodis as $prodi)
-                            <option value="{{ $prodi->id_prodi }}">{{ $prodi->nama_prodi }}</option>
+                            <option value="{{ $prodi->id_prodi }}">{{ $prodi->jenjang }} - {{ $prodi->nama_prodi }}</option>
                         @endforeach
                     </select>
                 </div>
