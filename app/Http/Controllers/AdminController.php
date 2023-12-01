@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Dosen;
+
+
+use App\Models\Mahasiswa;
+use App\Models\TugasAkhir;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -11,20 +18,101 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard_admin');
+        
+        $jumlahSkripsi = TugasAkhir::where('tipe_ta', 'skripsi')->count();
+        $tugasAkhirSkripsiTerbaru =  TugasAkhir::where('tipe_ta', 'skripsi')
+        ->latest('date_added')
+         ->first();
+
+        $jumlahTesis = TugasAkhir::where('tipe_ta', 'tesis')->count();
+        $tugasAkhirTesisTerbaru =  TugasAkhir::where('tipe_ta', 'tesis')
+        ->latest('date_added')
+        ->first();
+
+
+
+        $jumlahDisertasi = TugasAkhir::where('tipe_ta', 'disertasi')->count();
+        $tugasAkhirDisertasiTerbaru =  TugasAkhir::where('tipe_ta', 'disertasi')
+        ->latest('date_added')
+        ->first();
+
+
+
+        $jumlahDosen = User::where('role','dosen')->count();
+        $DosenTerbaru = User::where('role','dosen')
+        ->latest('created_at')
+        ->first();
+            
+        
+        $jumlahMahasiswa = User::where('role','mahasiswa')->count();
+        $MahasiswaTerbaru = User::where('role','mahasiswa')
+        ->latest('created_at')
+        ->first();
+
+
+        $jumlahStaff = User::where('role','staff')->count();
+        $StaffTerbaru = User::where('role','staff')
+        ->latest('created_at')
+        ->first();
+
+
+        //View
+        $topLikeTugasAkhir = DB::table('top_like_tugas_akhir')->get();
+        $baruDitambah = DB::table('judul_baru_ditambahkan')->get();
+
+
+
+        return view('admin.dashboard_admin', 
+        compact('jumlahSkripsi','tugasAkhirSkripsiTerbaru',
+        'jumlahTesis','tugasAkhirTesisTerbaru',
+        'jumlahDisertasi','tugasAkhirDisertasiTerbaru',
+        'jumlahDosen','DosenTerbaru',
+        'jumlahMahasiswa','MahasiswaTerbaru',
+        'jumlahStaff','StaffTerbaru',
+        'topLikeTugasAkhir','baruDitambah'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function dataMahasiswa()
+    public function dataMahasiswa(Request $request)
     {
-        return view('admin.datamahasiswa_admin'); 
+        $search = $request->input('search');
+        $query = DB::table('view_cari_mahasiswa')
+                ->orderBy('nama_mahasiswa', 'asc');
+    
+        if(!empty(request('search')))
+        {
+            $query->where('nama_mahasiswa','like','%'. $search .'%')
+                            ->orWhere('NIM','like','%'. $search .'%')
+                            ->orWhere('nama_prodi', 'like', '%' . $search . '%');
+        }
+
+        $cariMahasiswa = $query->paginate(2);
+
+
+        
+
+        return view('admin.datamahasiswa_admin',compact('cariMahasiswa','search')); 
     }
 
-    public function dataDosen()
+    public function dataDosen(Request $request)
     {
-        return view('admin.datadosen_admin');
+
+        $search = $request->input('search');
+        $query = DB::table('view_cari_dosen')
+                ->orderBy('nama_dosen', 'asc');
+    
+        if(!empty(request('search')))
+        {
+            $query->where('nama_dosen','like','%'. $search .'%')
+                            ->orWhere('NIP','like','%'. $search .'%')
+                            ->orWhere('nama_prodi', 'like', '%' . $search . '%');
+        }
+
+        $cariDosen = $query->paginate(2);
+
+        return view('admin.datadosen_admin',compact('cariDosen','search'));
     }
 
     public function dataStaff()
@@ -32,9 +120,24 @@ class AdminController extends Controller
         return view('admin.datastaff_admin');
     }
 
-    public function dataTugasakhir()
+    public function dataTugasakhir(Request $request)
     {
-        return view('admin.datatugasakhir_admin');
+
+        $search = $request->input('search');
+        $query = DB::table('view_cari_tugas')
+                ->orderBy('judul', 'asc');
+    
+        if(!empty(request('search')))
+        {
+            $query->where('judul','like','%'. $search .'%')
+                            ->orWhere('tipe_ta','like','%'. $search .'%')
+                            ->orWhere('tahun_terbit','like','%'. $search .'%');
+                            
+        }
+
+        $cariTugas = $query->paginate(2);
+
+        return view('admin.datatugasakhir_admin',compact('cariTugas','search'));
     }
 
     public function dataKategori()

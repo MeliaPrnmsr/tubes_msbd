@@ -16,24 +16,24 @@
             {{-- Skripsi start --}}
             <div class="col card p-3 mx-2 text-center">
                 <small>Jumlah Skripsi</small><br>
-                <h3><b>200 Skripsi</b></h3><br>
-                <small class="card-footer">update at: <b>last added_date</b></small>
+                <h3><b>{{ $jumlahSkripsi }}</b></h3><br>
+                <small class="card-footer">update at: <b> {{  $tugasAkhirSkripsiTerbaru -> date_added }}</b></small>
             </div>
             {{-- Skripsi end --}}
 
             {{-- Tesis start --}}
             <div class="col card p-3 mx-2 text-center">
                 <small>Jumlah Tesis</small><br>
-                <h3><b>200 Tesis</b></h3><br>
-                <small class="card-footer">update at: <b>last added_date</b></small>
+                <h3><b>{{ $jumlahTesis }}</b></h3><br>
+                <small class="card-footer">update at: <b>{{ $tugasAkhirTesisTerbaru -> date_added }}</b></small>
             </div>
             {{-- Tesis end --}}
 
             {{-- Disertasi start --}}
             <div class="col card p-3 mx-2 text-center">
                 <small>Jumlah Disertasi</small><br>
-                <h3><b>200 Disertasi</b></h3><br>
-                <small class="card-footer">update at: <b>last added_date</b></small>
+                <h3><b>{{ $jumlahDisertasi }}</b></h3><br>
+                <small class="card-footer">update at: <b>{{ $tugasAkhirDisertasiTerbaru -> date_added }}</b></small>
             </div>
             {{-- Disertasi end --}}
         </div>
@@ -52,11 +52,11 @@
         <div class="col ">
             <div class="card">
                 <div class="card-body">
-                    <h4 class=" text-center"><b>500.000 jiwa</b></h4>
+                    <h4 class=" text-center"><b>{{ $jumlahMahasiswa }} jiwa</b></h4>
                     <p class=" text-center">Mahasiswa</p>
                 </div>
                 <div class="card-footer">
-                    <small>Update at: <b>added_date</b> </small>
+                    <small>Update at: <b>{{ $MahasiswaTerbaru -> created_at }}</b> </small>
                 </div>
             </div>
         </div>
@@ -64,11 +64,11 @@
         <div class="col">
             <div class="card text-white" style="background-color: #3dae2b">
                 <div class="card-body">
-                    <h4 class=" text-center"><b>500.000 jiwa</b></h4>
+                    <h4 class=" text-center"><b>{{ $jumlahDosen }} jiwa</b></h4>
                     <p class=" text-center">Dosen</p>
                 </div>
                 <div class="card-footer">
-                    <small>Update at: <b>added_date</b> </small>
+                    <small>Update at: <b>{{ $DosenTerbaru -> created_at }}</b> </small>
                 </div>
             </div>
         </div>
@@ -76,11 +76,11 @@
         <div class="col ">
             <div class="card">
                 <div class="card-body">
-                    <h4 class=" text-center"><b>500.000 jiwa</b></h4>
+                    <h4 class=" text-center"><b>{{ $jumlahStaff }} jiwa</b></h4>
                     <p class=" text-center">Staff</p>
                 </div>
                 <div class="card-footer">
-                    <small>Update at: <b>added_date</b> </small>
+                    <small>Update at: <b>{{ $StaffTerbaru -> created_at }}</b> </small>
                 </div>
             </div>
         </div>
@@ -104,20 +104,15 @@
                             <th scope="col" class="w-25">Date</th>
                           </tr>
                         </thead>
+                        @foreach($baruDitambah as $tampilJudul)
+
                         <tbody>
                           <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>06/07/2004</td>
+                            <td><a href="#">{{ $tampilJudul -> judul  }}</a></td>
+                            <td>{{ $tampilJudul -> date_added }}</td>
                           </tr>
-                          <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>06/07/2004</td>
-                          </tr>
-                          <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>06/07/2004</td>
-                          </tr>
-                        </tbody>
+
+                          @endforeach
                       </table>
                 </div>
             </div>
@@ -137,18 +132,14 @@
                           </tr>
                         </thead>
                         <tbody>
+                          
+                            @foreach($topLikeTugasAkhir as $like)
                           <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>200</td>
+                            <td><a href="#">{{ $like -> judul }}</a></td>
+                            <td>{{ $like -> total_likes }}</td>
                           </tr>
-                          <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>200</td>
-                          </tr>
-                          <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>200</td>
-                          </tr>
+                          @endforeach
+                          
                         </tbody>
                       </table>
                 </div>
