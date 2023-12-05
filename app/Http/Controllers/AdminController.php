@@ -19,7 +19,7 @@ class AdminController extends Controller
      */
     public function dataMahasiswa()
     {
-        return view('admin.datamahasiswa_admin');
+        return view('admin.datamahasiswa_admin'); 
     }
 
     public function dataDosen()

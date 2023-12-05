@@ -19,7 +19,7 @@
             <div class="row px-2 w-100 "> <!-- Menggunakan justify-content-center dan px-2 -->
                 
                 <div class="col p-2 d-flex justify-content-start"> <!-- Update disini -->
-                    <a class="navbar-brand text-white" href="#">
+                    <a class="navbar-brand text-white" href="/dlandingpage">
                         <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
                         RepositorySkripsi
                       </a>
@@ -29,7 +29,7 @@
                     
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          halo, <b>nama_pengguna</b>
+                          halo, <b>{{ auth()->user()->dosen->nama_dosen }}</b>
                         </button>
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="{{ route('landingpage.dosen') }}"><i class="fa-solid fa-chart-line"></i>&nbsp; Dashboard</a></li>

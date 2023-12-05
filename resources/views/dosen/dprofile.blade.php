@@ -22,52 +22,32 @@
                             {{-- nama --}}
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Lengkap</label>
-                                <input disabled readonly type="text" class="form-control" id="nama" value="Nama Saya Budi">
+                                <input disabled readonly type="text" class="form-control" id="nama" value="{{ $nama_lengkap }}">
                             </div>
                             {{-- email --}}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input disabled readonly type="email" class="form-control" id="email" value="namasayabudi@gmail.com">
-                            </div>
-                            {{-- jenis kelamin --}}
-                            <div class="mb-3">
-                                <label for="jeniskelamin" class="form-label">NIP</label>
-                                <input disabled readonly type="text" class="form-control" id="jeniskelamin" value="Laki-Laki">
+                                <input disabled readonly type="email" class="form-control" id="email" value="{{ $email }}">
                             </div>
                             {{-- tgl lahir --}}
                             <div class="mb-3">
+                                <label for="tgllahir" class="form-label">NIP</label>
+                                <input disabled readonly type="text" class="form-control" id="tgllahir" value="{{ $nip }}">
+                            </div>
+                            <div class="mb-3">
                                 <label for="tgllahir" class="form-label">NIDN</label>
-                                <input disabled readonly type="text" class="form-control" id="tgllahir" value="06/07/2004">
+                                <input disabled readonly type="text" class="form-control" id="tgllahir" value="{{ $nidn }}">
                             </div>
-                        </div>
-                        {{-- col-3 --}}
-                        <div class="col">
-                            {{-- nim --}}
                             <div class="mb-3">
-                                <label for="nim" class="form-label">Fakultas</label>
-                                <input disabled readonly type="text" class="form-control" id="nim" value="221402112">
-                            </div>
-                            {{-- fakultas --}}
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Program Studi</label>
-                                <input disabled readonly type="text" class="form-control" id="email" value="Fakultas Ilmu Komputer & Teknologi Informasi">
-                            </div>
-                            {{-- program studi --}}
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Tanggal Lahir</label>
-                                <input disabled readonly type="text" class="form-control" id="email" value="06 Juli 1994">
-                            </div>
-                            {{-- alamat --}}
-                            <div class="mb-3">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <input disabled readonly type="text" class="form-control" id="alamat" value="jalan raya rumah saya di dekat jalan">
+                                <label for="tgllahir" class="form-label">Program Studi</label>
+                                <input disabled readonly type="text" class="form-control" id="tgllahir" value="{{ $nidn }}">
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="d-flex justify-content-end">
-                        <a href="/editprofilmhs" class="btn btn-hijau" style="width: 15%">Edit</a> &nbsp;
-                        <button class="btn btn-secondary" style="width: 15%">Back</button>
+                        <a href="/deditprofile" class="btn btn-hijau" style="width: 15%">Edit</a> &nbsp;
+                        <button href="/dlandingpage" class="btn btn-secondary" style="width: 15%">Back</button>
                     </div>
                 </form>                
         {{-- end --}}

@@ -8,49 +8,32 @@
         <br>
         <div class="card mx-auto">
             <div class="card-body">
-                <form>
+                <form action="/insertmahasiswa" method="POST">
+                    @csrf
+
                     <div class="mt-3">
-                        <label for="Name" class="form-label">NIM</label>
-                        <input type="name" class="form-control" id="name" aria-describedby="name">
+                        <label for="NIM" class="form-label">NIM</label>
+                        <input type="text" class="form-control" id="NIM" name="NIM" aria-describedby="NIM">
                     </div>
                     <div class="mt-3">
-                        <label for="Name" class="form-label">Nama</label>
-                        <input type="name" class="form-control" id="name" aria-describedby="name">
-                    </div>
-                    <div class="mt-3"> 
-                        <label for="dospem" class="form-label">Dosen Pembimbing</label>
-                        <input type="dospem" class="form-control" id="dospem" aria-describedby="dospem">
+                        <label for="nama_mahasiswa" class="form-label">Nama</label>
+                        <input type="text" class="form-control" id="nama_mahasiswa" name="nama_mahasiswa" aria-describedby="nama_mahasiswa">
                     </div>
                     <div class="mt-3">
-                        <label for="fakultas" class="form-label mt-3">Fakultas</label> 
-                        <select class="form-select" aria-label="fakultas">
-                            <option>Fasilkom TI</option>
-                        </select>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="email">
                     </div>
                     <div class="mt-3">
-                        <label for="prodi" class="form-label mt-3">Prodi</label>
-                      <select class="form-select" aria-label="prodi">
-                        <option>S1 Teknologi Informasi</option>
-                        <option>S1 Ilmu Komputer</option>
-                        <option>S2 Teknik Informatika</option>
-                        <option>S3 Ilmu Komputer</option>
+                        <label for="prodi" class="form-label">Prodi</label>
+                      <select class="form-select" id="prodi" name="prodi">
+                        @foreach($prodis as $prodi)
+                            <option value="{{ $prodi->id_prodi }}">{{$prodi->jenjang}} - {{ $prodi->nama_prodi}}</option>
+                        @endforeach
                       </select>
                     </div>
-                    <div class="mt-3">
-                        <label for="Email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="Email" aria-describedby="email">
-                    </div>
-                    <div class="mt-3">
-                        <label for="Password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="Password">
-                    </div>
-                    <div class="mt-3">
-                        <label for="Alamat" class="form-label">Alamat</label>
-                        <textarea type="alamat" class="form-control" id="Alamat" aria-describedby="alamat"></textarea>
-                    </div>
                     <div class="text-center mt-4">
-                        <button type="submit" href="#" class="btn btn-hijau mt-3" style="width: 20%">Tambahkan</button>
-                        <button type="cancel" href="/datamahasiswastaff" class="btn btn-secondary mt-3" style="width: 20%">Batal</button>
+                        <button type="submit" class="btn btn-hijau mt-3" style="width: 20%">Tambahkan</button>
+                        <a href="{{route('datamahasiswa.staff')}}" class="btn btn-secondary mt-3" style="width: 20%">Batal</a>
                     </div>
                 </form>
             </div>

@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <div class="col-9">
                                         <p>Skripsi adalah makanan yang digandrungi oleh sejuta umat. Dan repository skripsi adalah pameran skripsi agar pengunjung bisa melihat-lihat mana tau tertarik</p>
-                                        <form class="d-flex" role="search">
+                                        <form class="d-flex" role="search" action="{{ route('search.dosen') }}">
                                             <input class="form-control me-2 rounded-pill" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
                                             <button class="btn btn-repository rounded-pill" type="submit">Cari</button>
                                         </form>
@@ -82,39 +82,52 @@
         <br>
         <div class="container justify-content-center align-items-center">
             <div class="row row-cols-3">
-                {{-- skripsi --}}
-                <div class="col text-center ">
-                    <div class="card">
-                        <div class="card-body">
-                            <img src="{{asset('asset/img/paper 1.png')}}" alt="">
-                            <h4><b>200</b></h4>
-                            <p>Skripsi</p>
+                {{-- Jumlah Tugas Akhir berdasarkan Tipe --}}
+                @foreach($results as $result)
+                    @if($result->tipe_ta === 'skripsi')
+                        <div class="col text-center">
+                            <div class="card">
+                                <br>
+                                <div class="card-body">
+                                    <img src="{{ asset('asset/img/paper 1.png') }}" alt="">
+                                    <h4><b>{{ $result->jumlah }}</b></h4>
+                                    <p>Skripsi</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    @endif
+                
+            
+            
     
                 {{-- tesis --}}
+                @if($result->tipe_ta === 'tesis')
                 <div class="col text-center ">
                     <div class="card">
+                        <br>
                         <div class="card-body">
                             <img src="{{asset('asset/img/paper2.png')}}" alt="">
-                            <h4><b>200</b></h4>
+                            <h4><b>{{ $result->jumlah }}</b></h4>
                             <p>Tesis</p>
                         </div>
                     </div>
                 </div>
+                @endif
     
                 {{-- disertasi --}}
+                @if($result->tipe_ta === 'disertasi')
                 <div class="col text-center ">
                     <div class="card">
+                        <br>
                         <div class="card-body">
                             <img src="{{asset('asset/img/paper3.png')}}" alt="">
-                            <h4><b>200</b></h4>
+                            <h4><b>{{ $result->jumlah }}</b></h4>
                             <p>Disertasi</p>
                         </div>
                     </div>
                 </div>
-
+                @endif
+                @endforeach
             </div>
         </div>
         <br><br>
@@ -126,50 +139,17 @@
     <div class="container justify-content-center m-3 mx-auto">
         <h3><i class="fa-solid fa-chart-line"></i>&nbsp;Terpopuler</h3>
         <br>
-            <div class="row row-cols-3">
-                <div class="col">
-                    <ul class="list-unstyled text-muted">
-                        <li><small>penulis</small></li>
-                        <li><a href="#" class="text-black"><b>judul_skripsi</b></a></li>
-                        <li><small>tanggal</small></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-unstyled text-muted">
-                        <li><small>penulis</small></li>
-                        <li><a href="#" class="text-black"><b>judul_skripsi</b></a></li>
-                        <li><small>tanggal</small></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-unstyled text-muted">
-                        <li><small>penulis</small></li>
-                        <li><a href="#" class="text-black"><b>judul_skripsi</b></a></li>
-                        <li><small>tanggal</small></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-unstyled text-muted">
-                        <li><small>penulis</small></li>
-                        <li><a href="#" class="text-black"><b>judul_skripsi</b></a></li>
-                        <li><small>tanggal</small></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-unstyled text-muted">
-                        <li><small>penulis</small></li>
-                        <li><a href="#" class="text-black"><b>judul_skripsi</b></a></li>
-                        <li><small>tanggal</small></li>
-                    </ul>
-                </div>
-                <div class="col">
-                    <ul class="list-unstyled text-muted">
-                        <li><small>penulis</small></li>
-                        <li><a href="#" class="text-black"><b>judul_skripsi</b></a></li>
-                        <li><small>tanggal</small></li>
-                    </ul>
-                </div>
+        <div class="row row-cols-3">
+            @foreach ($popular_skripsi as $skripsi)
+            <div class="col">
+                <ul class="list-unstyled text-muted">
+                    <li><small>{{ $skripsi->nama_mahasiswa }}</small></li>
+                    <li><a href="#" class="text-black"><b>{{ $skripsi->judul }}</b></a></li>
+                    <li><small>{{ $skripsi->tahun_terbit }}</small></li>
+                </ul>   
             </div>
+            @endforeach
+        </div>
         <br>
     </div>
     

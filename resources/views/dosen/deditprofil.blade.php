@@ -9,10 +9,13 @@
             <h4><b>Edit Profil</b></h4>
             {{-- start --}}
             <div class="card-body">
-                <form action="">
+                <form action="/inserteditdosen" method="POST">
                     <div class="row">
                         <div class="col-3 align-items-center justify-content-center">
                             <div class="text-center">
+                                @if ($profil->foto)
+                                <img src="{{asset('asset/img/' . $profil->foto)}}" class="rounded-circle" width="70%">
+                                @else
                                 <img src="{{asset('asset/img/profile.jpeg')}}" class="rounded-circle" width="70%">
                                 <br><br>
                                 <button type="button" class="btn btn-secondary">Ganti Profil</button>
@@ -23,47 +26,28 @@
                             {{-- nama --}}
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="nama" value="Nama Saya Budi">
+                                <input type="text" class="form-control" id="nama" name="nama" value="{{ $nama_lengkap }}">
                             </div>
                             {{-- email --}}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" value="namasayabudi@gmail.com">
-                            </div>
-                            {{-- jenis kelamin --}}
-                            <div class="mb-3">
-                                <label for="jeniskelamin" class="form-label">Jenis Kelamin</label>
-                                <input type="text" class="form-control" id="jeniskelamin" value="Laki-Laki">
+                                <input type="email" class="form-control" id="email" name="email" value="{{ $email }}">
                             </div>
                             {{-- tgl lahir --}}
                             <div class="mb-3">
-                                <label for="tgllahir" class="form-label">Tanggal Lahir</label>
-                                <input type="date" class="form-control" id="tgllahir" value="06/07/2004">
+                                <label for="nip" class="form-label">NIP</label>
+                                <input disabled readonly type="text" class="form-control" id="nip" value="{{ $nip }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="nidn" class="form-label">NIDN</label>
+                                <input disabled readonly type="text" class="form-control" id="nidn" value="{{ $nidn }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="prodi" class="form-label">Program Studi</label>
+                                <input disabled readonly type="text" class="form-control" id="prodi" value="{{ $program_studi }}">
                             </div>
                         </div>
                         {{-- col-3 --}}
-                        <div class="col">
-                            {{-- nim --}}
-                            <div class="mb-3">
-                                <label for="nim" class="form-label">NIM</label>
-                                <input disabled type="text" class="form-control" id="nim" value="221402112">
-                            </div>
-                            {{-- fakultas --}}
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Fakultas</label>
-                                <input disabled type="text" class="form-control" id="email" value="Fakultas Ilmu Komputer & Teknologi Informasi">
-                            </div>
-                            {{-- program studi --}}
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Program Studi</label>
-                                <input disabled type="text" class="form-control" id="email" value="S1-Teknologi Informasi">
-                            </div>
-                            {{-- alamat --}}
-                            <div class="mb-3">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control" id="alamat" value="jalan raya rumah saya di dekat jalan">
-                            </div>
-                        </div>
                     </div>
                     <br>
                     <div class="d-flex justify-content-center">
@@ -92,7 +76,7 @@
                             </div>
                         </div>
                         
-                        <a href="/profilmhs" class="btn btn-secondary" style="width: 25%" >Cancel</a>
+                        <a href="/dprofile" class="btn btn-secondary" style="width: 25%" >Cancel</a>
                     </div>                    
                 </form>                
         {{-- end --}}

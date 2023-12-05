@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_tugasakhir');
             $table->string('judul');
             $table->text('abstrak');
+            $table->string('sampul')->nullable();
             $table->timestamp('date_added')->useCurrent();
             $table->year('tahun_terbit');
             $table->enum('tipe_ta', ['skripsi', 'tesis', 'disertasi']);
