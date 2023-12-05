@@ -33,7 +33,7 @@
 
                     {{-- teks --}}
                     <div class="alert alert-repository-no" role="alert">
-                        <small><i class="fa-solid fa-circle-info"></i> menampilkan <b>xx</b> tugas akhir </small>
+                        <small><i class="fa-solid fa-circle-info"></i> menampilkan <b></b> tugas akhir </small>
                     </div>
                     {{-- teks --}}
                     <br>
@@ -109,16 +109,16 @@
                         <div class="card-body">
                          <form action="">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan1">
-                                <label class="form-check-label" for="pilihan1">Pilihan 1</label>
+                                <input class="form-check-input" type="radio" value="" name="pilihan" id="pilihan1">
+                                <label class="form-check-label" for="pilihan1">S1 - Teknologi Informasi</label>
                               </div>
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan2">
-                                <label class="form-check-label" for="pilihan2">Pilihan 2</label>
+                                <input class="form-check-input" type="radio" value="" name="pilihan" id="pilihan2">
+                                <label class="form-check-label" for="pilihan2">S1 - Ilmu Komputer</label>
                               </div>
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan3">
-                                <label class="form-check-label" for="pilihan3">Pilihan 3</label>
+                                <input class="form-check-input" type="radio" value="" name="pilihan" id="pilihan3">
+                                <label class="form-check-label" for="pilihan3">S2 - Teknik Informatika</label>
                               </div>
                          </form>
                         </div>
@@ -134,15 +134,15 @@
                         <div class="card-body">
                          <form action="">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan1">
+                                <input class="form-check-input" type="radio" value="" id="pilihan1">
                                 <label class="form-check-label" for="pilihan1">Pilihan 1</label>
                               </div>
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan2">
+                                <input class="form-check-input" type="radio" value="" id="pilihan2">
                                 <label class="form-check-label" for="pilihan2">Pilihan 2</label>
                               </div>
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan3">
+                                <input class="form-check-input" type="radio" value="" id="pilihan3">
                                 <label class="form-check-label" for="pilihan3">Pilihan 3</label>
                               </div>
                          </form>

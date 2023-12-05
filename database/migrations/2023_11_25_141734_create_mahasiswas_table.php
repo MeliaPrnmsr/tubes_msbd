@@ -15,6 +15,9 @@ return new class extends Migration
             $table->char('NIM', 9)->primary();
             $table->string('nama_mahasiswa');
             $table->string('foto')->nullable();
+            $table->string('jenis_kelamin');
+            $table->date('tanggal_lahir');
+            $table->string('alamat');
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id_user')->on('users')->onUpdate('cascade');

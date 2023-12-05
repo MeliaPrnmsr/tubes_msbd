@@ -66,7 +66,7 @@
          <div class="card-body">
              <p>
                 <b>| Melalui mahasiswa-mahasiswa yang sudah menyelesaikan tugas akhir,
-                saat in sudah terdapat sebanyak xxx tugas akhir di dalam repository skripsi
+                saat in sudah terdapat sebanyak {{ $totalTugasAkhir }} tugas akhir di dalam repository skripsi
                 </b>
             </p>
          </div>

@@ -29,7 +29,7 @@
                     
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          halo, <b>nama_pengguna</b>
+                          halo, <b>{{ Auth::user()->username }}</b>
                         </button>
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="{{ route ('landingpage.mahasiswa') }}"><i class="fa-solid fa-chart-line"></i>&nbsp; Dashboard</a></li>

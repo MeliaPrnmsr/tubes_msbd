@@ -11,6 +11,16 @@ class Mahasiswa extends Model
     
     protected $table = 'mahasiswas'; // Nama tabel di database
     protected $primaryKey = 'NIM'; // Nama kolom kunci utama
+    protected $fillable = [
+        'NIM',
+        'nama_mahasiswa',
+        'jenis_kelamin',
+        'alamat',
+        'tanggal_lahir',
+        'image',
+    ];
+
+    public $timestamps = false;
 
     public function prodi()
     {

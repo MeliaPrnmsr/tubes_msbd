@@ -1,6 +1,23 @@
 @extends('mahasiswa.mlayout')
 
 @section('content')
+@if (session()->has('failed'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('failed') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session()->has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @elseif(session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
     <!--Profile-->
     <div class="container-fluid">
         <br>
@@ -11,9 +28,9 @@
             <div class="card-body">
                 <form action="">
                     <div class="row">
-                        <div class="col-3 align-items-center justify-content-center">
+                        <div class="col-4 align-items-center justify-content-center">
                             <div class="text-center">
-                                <img src="{{asset('asset/img/profile.jpeg')}}" class="rounded-circle" width="70%">
+                            <img src="{{ asset('asset/img/' . $mahasiswas->foto) }}" class="rounded-circle" width="30%">
                                 <br><br>
                             </div>
                         </div>
@@ -22,56 +39,37 @@
                             {{-- nama --}}
                             <div class="mb-3">
                                 <label for="nama" class="form-label">Nama Lengkap</label>
-                                <input disabled readonly type="text" class="form-control" id="nama" value="Nama Saya Budi">
+                                <input disabled readonly type="text" class="form-control" id="nama" value="{{ $mahasiswas->nama_mahasiswa }}">
                             </div>
                             {{-- email --}}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input disabled readonly type="email" class="form-control" id="email" value="namasayabudi@gmail.com">
+                                <input disabled readonly type="email" class="form-control" id="email" value="{{ Auth::user()->email }}">
                             </div>
-                            {{-- jenis kelamin --}}
-                            <div class="mb-3">
-                                <label for="jeniskelamin" class="form-label">Jenis Kelamin</label>
-                                <input disabled readonly type="text" class="form-control" id="jeniskelamin" value="Laki-Laki">
-                            </div>
-                            {{-- tgl lahir --}}
-                            <div class="mb-3">
-                                <label for="tgllahir" class="form-label">Tanggal Lahir</label>
-                                <input disabled readonly type="date" class="form-control" id="tgllahir" value="06/07/2004">
-                            </div>
-                        </div>
                         {{-- col-3 --}}
                         <div class="col">
                             {{-- nim --}}
                             <div class="mb-3">
                                 <label for="nim" class="form-label">NIM</label>
-                                <input disabled readonly type="text" class="form-control" id="nim" value="221402112">
-                            </div>
-                            {{-- fakultas --}}
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Fakultas</label>
-                                <input disabled readonly type="text" class="form-control" id="email" value="Fakultas Ilmu Komputer & Teknologi Informasi">
+                                <input disabled readonly type="text" class="form-control" id="nim" value="{{ $mahasiswas->NIM }}">
                             </div>
                             {{-- program studi --}}
-                            <div class="mb-3">
+                            <div class="mb-5">
                                 <label for="email" class="form-label">Program Studi</label>
-                                <input disabled readonly type="text" class="form-control" id="email" value="S1-Teknologi Informasi">
-                            </div>
-                            {{-- alamat --}}
-                            <div class="mb-3">
-                                <label for="alamat" class="form-label">Alamat</label>
-                                <input disabled readonly type="text" class="form-control" id="alamat" value="jalan raya rumah saya di dekat jalan">
+                                <input disabled readonly type="text" class="form-control" id="email" value="{{ $mahasiswas->prodi->nama_prodi }}">
                             </div>
                         </div>
                     </div>
                     <br>
                     <div class="d-flex justify-content-end">
-                        <a href="/editprofilmhs" class="btn btn-hijau" style="width: 15%">Edit</a> &nbsp;
-                        <button class="btn btn-secondary" style="width: 15%">Back</button>
+                        <a href="{{ route ('editprofil.mahasiswa') }}" class="btn btn-hijau" style="width: 15%">Edit</a> &nbsp;
+                        <a href="{{ route ('landingpage.mahasiswa') }}" class="btn btn-secondary" style="width: 15%">Back</a>
                     </div>
                 </form>                
         {{-- end --}}
-        </div>
             </div>
         </div>
+    </div>
+    </div>
+    <br>
 @endsection
