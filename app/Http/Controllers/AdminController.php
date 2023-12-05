@@ -88,7 +88,7 @@ class AdminController extends Controller
                             ->orWhere('nama_prodi', 'like', '%' . $search . '%');
         }
 
-        $cariMahasiswa = $query->paginate(2);
+        $cariMahasiswa = $query->paginate(3);
 
 
         
@@ -110,14 +110,28 @@ class AdminController extends Controller
                             ->orWhere('nama_prodi', 'like', '%' . $search . '%');
         }
 
-        $cariDosen = $query->paginate(2);
+        $cariDosen = $query->paginate(3);
 
         return view('admin.datadosen_admin',compact('cariDosen','search'));
     }
 
-    public function dataStaff()
+    public function dataStaff(Request $request)
     {
-        return view('admin.datastaff_admin');
+        $search = $request->input('search');
+        $query = DB::table('view_staff_admin')
+                ->orderBy('nama_staff', 'asc');
+    
+        if(!empty(request('search')))
+        {
+            $query->where('nama_staff','like','%'. $search .'%')
+                            ->orWhere('kode_staff','like','%'. $search .'%')
+                            ->orWhere('nama_prodi','like','%'. $search .'%');
+                            
+        }
+
+        $cariStaff = $query->paginate(2);
+
+        return view('admin.datastaff_admin',compact('cariStaff','search'));
     }
 
     public function dataTugasakhir(Request $request)
@@ -135,24 +149,51 @@ class AdminController extends Controller
                             
         }
 
-        $cariTugas = $query->paginate(2);
+        $cariTugas = $query->paginate(3);
 
         return view('admin.datatugasakhir_admin',compact('cariTugas','search'));
     }
 
     public function dataKategori()
     {
-        return view('admin.datakategori_admin');
+
+        $query = DB::table('view_kategori_jenjang')
+                    ->orderBy('jenjang','asc')
+                    ->groupBy('nama_prodi')
+                    ->get();
+        
+        $collection = DB::table('view_kategori_jenjang')->get();
+
+        return view('admin.datakategori_admin',compact('query', 'collection'));
     }
 
     public function notifikasi()
     {
-        return view('admin.notifikasi_admin');
+        $query = DB::table('log_likes')
+                    ->orderBy('waktu_dibuat', 'desc')
+                    ->paginate(3);
+
+
+        return view('admin.notifikasi_admin',compact('query'));
     }
 
-    public function log()
+    public function log(Request $request)
     {
-        return view('admin.log');
+
+        $search = $request->input('search');
+        $query = DB::table('view_log_admin')
+                ->orderBy('waktu', 'desc');
+    
+        if(!empty(request('search')))
+        {
+            $query->where('action','like','%'. $search .'%')
+                            ->orWhere('waktu','like','%'. $search .'%')
+                            ->orWhere('deskripsi', 'like', '%' . $search . '%');
+        }
+
+        $cariLog = $query->paginate(3);
+
+        return view('admin.log',compact('cariLog','search'));
     }
 
     public function tambahSkripsi()
