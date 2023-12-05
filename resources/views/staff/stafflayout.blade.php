@@ -88,37 +88,37 @@
         <br>
         <ul class="nav flex-column pt-3">
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('dashboard.staff') }}">
+                <a class="nav-link {{ ($active == 'dashboard') ? 'active' : '' }}" href="{{ route('dashboard.staff') }}">
                     <i class="fa-solid fa-chart-simple"></i>
                     Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('datamahasiswa.staff') }}">
+                <a class="nav-link {{ ($active == 'datamahasiswa') ? 'active' : '' }}" href="{{ route('datamahasiswa.staff') }}">
                     <i class="fa-solid fa-users-rectangle"></i>
                     Data Mahasiswa
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('datadosen.staff') }}">
+                <a class="nav-link {{ ($active == 'datadosen') ? 'active' : '' }}" href="{{ route('datadosen.staff') }}">
                     <i class="fa-solid fa-chalkboard-user"></i>
                     Data Dosen
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('datatugas.staff') }}">
+                <a class="nav-link {{ ($active == 'datatugas') ? 'active' : '' }}" href="{{ route('datatugas.staff') }}">
                     <i class="fa-solid fa-folder-open"></i>
                     Data Tugas Akhir
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('datakategori.staff') }}">
+                <a class="nav-link {{ ($active == 'datakategori') ? 'active' : '' }}" href="{{ route('datakategori.staff') }}">
                     <i class="fa-solid fa-list"></i>
                     Data Kategori
                 </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ route('notifikasi.staff') }}">
+              <a class="nav-link {{ ($active == 'notifikasi') ? 'active' : '' }}" href="{{ route('notifikasi.staff') }}">
                   <i class="fa-solid fa-clipboard-user"></i>
                   Notifikasi
               </a>

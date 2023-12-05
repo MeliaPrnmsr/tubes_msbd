@@ -1,5 +1,7 @@
 @extends('staff.stafflayout')
-
+@php
+    $active = 'datadosen';
+@endphp
 @section('content')
 <br>
     @if(session('success'))
@@ -54,7 +56,7 @@
         <div class="col-1">{{ $i }}</div>
         <div class="col-4">{{ $dosen->nama_dosen }}</div>
         <div class="col-2">{{ $dosen->NIP }}</div>
-        <div class="col-3">{{$dosen->prodi->jenjang}} - {{$dosen->prodi->nama_prodi}}</div>
+        <div class="col-3">{{$dosen->jenjang}} - {{$dosen->nama_prodi}}</div>
         <div class="col-2">
           <a href="{{ route('detailDosen.staff', ['kode_dosen' => $dosen->kode_dosen]) }}" class="btn btn-repository">Detail</a>
         </div>

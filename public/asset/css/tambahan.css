@@ -127,6 +127,17 @@
         border: 2px solid #3dae2b;
       }
 
+      .btn-orange {
+        color: white;
+        background-color: #FFc600;
+      }
+
+      .btn-orange:hover {
+        color: white;
+        background-color: #FFc600;
+        border: 2px solid #FFc600;
+      }
+
       .alert-repository {
         background-color: #3dae2b;
         border: 2px solid #006633;

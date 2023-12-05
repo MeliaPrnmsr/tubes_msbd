@@ -37,7 +37,7 @@ require __DIR__.'/auth.php';
 // ROUTE ADMIN
 // ROUTE ADMIN
 // ROUTE ADMIN
-Route::middleware(['role:admin'])->group(function () {
+Route::middleware(['role:admin', 'auth', 'verified'])->group(function () {
     Route::get('/dashboard_admin', [AdminController::class,'index'])->name('dashboard.admin');
     Route::get('/datamahasiswa_admin', [AdminController::class,'dataMahasiswa'])->name('datamahasiswa.admin');
     Route::get('/datadosen_admin', [AdminController::class,'dataDosen'])->name('datadosen.admin');
@@ -53,7 +53,7 @@ Route::middleware(['role:admin'])->group(function () {
 //ROUTE STAFF
 //ROUTE STAFF
 //ROUTE STAFF
-Route::middleware(['role:staff'])->group(function () {
+Route::middleware(['role:staff', 'auth', 'verified'])->group(function () {
     //CONTROLLER DASHBOARD
     Route::get('/dashboard_staff', [StaffController::class,'index'])->name('dashboard.staff');
     //CONTROLLER MAHASISWA
@@ -74,9 +74,7 @@ Route::middleware(['role:staff'])->group(function () {
     Route::get('/detailTugasakhir/{id_tugasakhir}', [StaffController::class,'detailTugasakhir'])->name('detailTugasakhir.staff');
     Route::get('/tambahTugasakhir_staff', [StaffController::class,'tambahTugasakhir'])->name('tambahtugasakhir.staff');
     Route::post('/inserttugasakhir', [StaffController::class,'insertTugasakhir']);
-
     Route::get('/datakategori_staff', [StaffController::class,'dataKategori'])->name('datakategori.staff');
-
     Route::get('/notifikasi_staff', [StaffController::class,'notifikasi_staff'])->name('notifikasi.staff');
 });
 
@@ -84,7 +82,7 @@ Route::middleware(['role:staff'])->group(function () {
 //ROUTE PENGUNJUNG
 //ROUTE PENGUNJUNG
 //ROUTE PENGUNJUNG
-Route::get('/landingpage', [PengunjungController::class,'index']);
+Route::get('/landingpage', [PengunjungController::class,'index'])->name('landingpage');
 Route::get('/search', [PengunjungController::class,'search']);
 Route::get('/detailtugasakhir/{id_tugasakhir}', [PengunjungController::class,'detailTugasakhir'])->name('detailTugasakhir');
 Route::get('/browseall', [PengunjungController::class,'browseAll'])->name('browseall.pengunjung');
@@ -94,12 +92,13 @@ Route::get('/abstrak', [PengunjungController::class,'abstrak']);
 //ROUTE MAHASISWA
 //ROUTE MAHASISWA
 //ROUTE MAHASISWA
-Route::middleware(['role:mahasiswa'])->group(function () {
+Route::middleware(['role:mahasiswa', 'auth', 'verified'])->group(function () {
     Route::get('/mlandingpage', [MahasiswaController::class,'landingMhs'])->name('landingpage.mahasiswa');
     Route::get('/mprofil', [MahasiswaController::class,'profilMhs'])->name('profile.mahasiswa');
     Route::get('/meditprofil', [MahasiswaController::class,'editprofilMhs'])->name('editprofil.mahasiswa');
     Route::get('/mbookmark', [MahasiswaController::class,'bookmarkMhs'])->name('bookmark.mahasiswa');
     Route::get('/msearch', [MahasiswaController::class,'searchMhs'])->name('search.mahasiswa');
+    Route::get('/hasil_search', [MahasiswaController::class,'hasil_search']);
     Route::get('/mdetailTugasakhir/{id_tugasakhir}', [MahasiswaController::class,'detailMhs'])->name('detail.mahasiswa');
     Route::get('/mbrowseall', [MahasiswaController::class,'browseallMhs'])->name('browseall.mahasiswa');
     Route::get('/mabstrak', [MahasiswaController::class,'abstrakMhs'])->name('abstrak.mahasiswa');    
@@ -110,7 +109,7 @@ Route::middleware(['role:mahasiswa'])->group(function () {
 //ROUTE DOSEN
 //ROUTE DOSEN
 //ROUTE DOSEN
-Route::middleware(['role:dosen'])->group(function () {
+Route::middleware(['role:dosen', 'auth', 'verified'])->group(function () {
     Route::get('/dlandingpage', [DosenController::class,'landingDosen'])->name('landingpage.dosen');
     Route::get('/dprofile', [DosenController::class,'profileDosen'])->name('profile.dosen');
     Route::get('/deditprofile', [DosenController::class,'editprofilDosen'])->name('editprofile.dosen');

@@ -1,5 +1,7 @@
 @extends('staff.stafflayout')
-
+@php
+    $active = 'datatugas';
+@endphp
 @section('content')
 <br>
 @if(session('success'))
@@ -46,17 +48,22 @@
         <div class="col-2 text-center">Tahun Terbit</div>
         <div class="col-2 text-center">Aksi</div>
       </div>
-
-      @foreach($tugas_akhirs as $index => $tugas_akhir)
+      @php
+          $i = 1;
+      @endphp
+      @foreach($tugas_akhirs as $tugas_akhir)
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">{{ $index + 1 }}</div>
+        <div class="col-1">{{ $i }}</div>
         <div class="col-4">{{ $tugas_akhir->judul }}</div>
-        <div class="col-3">{{$tugas_akhir->mahasiswa->nama_mahasiswa}}</div>
+        <div class="col-3">{{ $tugas_akhir->mahasiswa->nama_mahasiswa }}</div>
         <div class="col-2">{{ $tugas_akhir->tahun_terbit }}</div>
         <div class="col-2">
           <a href="{{ route('detailTugasakhir.staff', ['id_tugasakhir' => $tugas_akhir->id_tugasakhir]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>
+      @php
+          $i++;
+      @endphp
       @endforeach
 
     </div>

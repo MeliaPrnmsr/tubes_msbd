@@ -1,5 +1,7 @@
 @extends('staff.stafflayout')
-
+{{-- @php
+    $active = 'datastaff';
+@endphp --}}
 @section('content')
     <!-- Register -->
 <div class="container mt-5">

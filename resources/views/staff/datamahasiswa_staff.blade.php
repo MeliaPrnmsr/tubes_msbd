@@ -1,5 +1,7 @@
 @extends('staff.stafflayout')
-
+@php
+    $active = 'datamahasiswa';
+@endphp
 @section('content')
 <br>
       @if(session('success'))
@@ -47,16 +49,18 @@
         <div class="col-2">Aksi</div>
       </div>
 
-      @foreach($mahasiswas as $index => $mahasiswa)
+      @php $i = 1; @endphp
+      @foreach($mahasiswas as $mahasiswa)
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">{{ $index + 1 }}</div>
+        <div class="col-1">{{ $i }}</div>
         <div class="col-4">{{ $mahasiswa->nama_mahasiswa }}</div>
         <div class="col-2">{{ $mahasiswa->NIM }}</div>
-        <div class="col-3">{{$mahasiswa->prodi->jenjang}} - {{$mahasiswa->prodi->nama_prodi}}</div>
+        <div class="col-3">{{$mahasiswa->jenjang}} - {{$mahasiswa->nama_prodi}}</div>
         <div class="col-2">
           <a href="{{ route('detailMahasiswa.staff', ['NIM' => $mahasiswa->NIM]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>
+      @php $i++; @endphp
       @endforeach
 
     </div>

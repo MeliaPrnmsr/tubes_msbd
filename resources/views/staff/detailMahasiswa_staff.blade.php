@@ -1,5 +1,7 @@
 @extends('staff.stafflayout')
-
+@php
+    $active = 'datamahasiswa';
+@endphp
 @section('content')
     
     <!-- Register -->
@@ -21,11 +23,11 @@
                     </div>
                     <div class="mt-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" aria-describedby="email" value="{{ $mahasiswa->user->email }}" readonly>
+                        <input type="email" class="form-control" id="email" name="email" aria-describedby="email" value="{{ $mahasiswa->email }}" readonly>
                     </div>
                     <div class="mt-3">
                         <label for="prodi" class="form-label">Prodi</label>
-                        <input type="text" class="form-control" id="prodi" name="prodi" aria-describedby="prodi" value="{{ $mahasiswa->prodi->jenjang }} - {{ $mahasiswa->prodi->nama_prodi }}" readonly>
+                        <input type="text" class="form-control" id="prodi" name="prodi" aria-describedby="prodi" value="{{ $mahasiswa->jenjang }} - {{ $mahasiswa->nama_prodi }}" readonly>
                     </div>
                     <div class="text-center mt-4">
                         <button type="submit" class="btn btn-hijau mt-3" style="width: 20%">Perbarui</button>

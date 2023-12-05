@@ -1,5 +1,7 @@
 @extends('staff.stafflayout')
-
+@php
+    $active = 'datadosen';
+@endphp
 @section('content')
     <!-- Register -->
 <div class="container mt-5">
@@ -26,11 +28,11 @@
                 </div>
                 <div class="mt-3">
                     <label for="Email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="Email" aria-describedby="email" value="{{ $dosen->user->email }}" readonly>
+                    <input type="email" class="form-control" id="Email" aria-describedby="email" value="{{ $dosen->email }}" readonly>
                 </div>
                 <div class="mt-3">
                     <label for="prodi" class="form-label mt-3">Prodi</label>
-                    <input type="nidn" class="form-control" id="nidn" aria-describedby="nidn" value="{{ $dosen->prodi->jenjang }} - {{ $dosen->prodi->nama_prodi }}" readonly>
+                    <input type="nidn" class="form-control" id="nidn" aria-describedby="nidn" value="{{ $dosen->jenjang }} - {{ $dosen->nama_prodi }}" readonly>
                 </div>
                 <div class="text-center mt-4">
                     <button type="submit" href="#" class="btn btn-hijau mt-3" style="width: 20%">Edit</button>

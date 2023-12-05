@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="{{asset('asset/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('asset/css/tambahan.css')}}">
         <link rel="stylesheet" href="{{asset('asset/icon/css/all.min.css')}}">
+
     </head>
 <body>
     <!-- Navbar -->
@@ -64,6 +65,11 @@
           <p class="text-white">helpdesk?<br>011-22-33</p>
         </div>
     </div>
-        <script src="{{asset('asset/js/bootstrap.bundle.min.js')}}"></script>
+
+
+<script src="{{asset('asset/js/bootstrap.bundle.min.js')}}"></script>
+
+{{-- <script src="{{asset('node_modules/jquery/dist/jquery.min.js')}}"></script>
+<script src="{{asset('node_modules/@popperjs/core/dist/umd/popper.min.js')}}"></script> --}}
 </body>
 </html>

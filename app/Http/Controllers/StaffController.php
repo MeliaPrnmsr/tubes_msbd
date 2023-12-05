@@ -27,13 +27,15 @@ class StaffController extends Controller
     //Mahasiswa Part Start
     public function dataMahasiswa()
     {
-        $mahasiswas = Mahasiswa::orderBy('prodi_id')->get(); 
-        return view('staff.datamahasiswa_staff', compact('mahasiswas')); 
+        // $mahasiswas = Mahasiswa::orderBy('prodi_id')->get(); 
+        $mahasiswas = DB::table('v_data_mahasiswa')->get();
+        return view('staff.datamahasiswa_staff', ['mahasiswas' => $mahasiswas]); 
     }
 
     public function detailMahasiswa($NIM)
     {
-        $mahasiswa = Mahasiswa::find($NIM);
+        //$mahasiswa = Mahasiswa::find($NIM);
+        $mahasiswa = DB::table('v_data_mahasiswa')->where('NIM', $NIM)->first();
         return view('staff.detailMahasiswa_staff', ['mahasiswa' => $mahasiswa]);
     }
 
@@ -45,6 +47,13 @@ class StaffController extends Controller
 
     public function insertMahasiswa(Request $request)
     {
+        $request->validate([
+            'NIM' => 'required|unique:mahasiswas,NIM|numeric|digits:9',
+            'nama_mahasiswa' => ['required', 'regex:/^[A-Za-z\s\-]+$/u'],
+            'email' => 'required|email|unique:users,email',
+            'prodi' => 'required|not_in:0'
+        ]);
+
         $nim = $request->input('NIM');
         $nimString = strval($nim);
         $nama_mahasiswa = $request->input('nama_mahasiswa');
@@ -71,9 +80,8 @@ class StaffController extends Controller
 
     public function dataDosen()
     {
-        $dosens = Dosen::orderBy('prodi_id')->get();
-        //dd($dosens->first()->kode_dosen);
-        //dd($dosens->first()->kode_dosen);
+        //$dosens = Dosen::orderBy('prodi_id')->get();
+        $dosens = DB::table('v_data_dosen')->orderBy('nama_prodi')->get();
         return view('staff.datadosen_staff', compact('dosens'));
     }
 
@@ -85,6 +93,15 @@ class StaffController extends Controller
 
     public function insertDosen(Request $request)
     {
+       $validasidata =  $request->validate([
+            'kode_dosen' => ['required', 'unique:dosens,kode_dosen', 'size:3', 'alpha', 'uppercase'],            
+            'NIP' => 'required|unique:dosens,NIP|numeric|digits:14',
+            'NIDN' => 'required|unique:dosens,NIDN|numeric|digits:7',
+            'nama_dosen' => ['required', 'regex:/^[A-Za-z\s\-,\.]+$/u'],
+            'email' => 'required|email|unique:users,email',
+            'prodi' => 'required|not_in:0'
+        ]);
+
         $NIDN    = $request->input('NIDN');
         $NIP = $request->input('NIP');
         $NIPString = strval($NIP);
@@ -114,7 +131,8 @@ class StaffController extends Controller
 
     public function detailDosen($kode_dosen)
     {
-        $dosen = Dosen::find($kode_dosen);
+        //$dosen = Dosen::find($kode_dosen);
+        $dosen = DB::table('v_data_dosen')->where('kode_dosen', $kode_dosen)->first();
         return view('staff.detailDosen', ['dosen' => $dosen]);
     }
 
@@ -123,23 +141,16 @@ class StaffController extends Controller
     public function dataTugasakhir()
     {
         $tugas_akhirs = TugasAkhir::all();
-        return view('staff.datatugasakhir_staff', compact('tugas_akhirs'));
+        //$tugas_akhirs = DB::table('v_data_tugasakhirl')->get();
+        return view('staff.datatugasakhir_staff', ['tugas_akhirs' => $tugas_akhirs]);
     }
 
     public function detailTugasakhir($id_tugasakhir)
     {
-        $tugas_akhir = TugasAkhir::find($id_tugasakhir);
-        $author_nim = $tugas_akhir->author;
-        $dosen_pembimbing = Dosenpembimbing::where('NIM', $author_nim)->with('dosen')->get();
+        $tugas_akhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
 
-        return view('staff.detailTugasakhir_staff', [
-            'tugas_akhir' => $tugas_akhir,
-            'dosen_pembimbing' => $dosen_pembimbing
-        ]);
+        return view('staff.detailTugasakhir_staff', ['tugas_akhir' => $tugas_akhir]);
     }
-
-
-
 
     public function tambahTugasakhir()
     {
@@ -151,6 +162,21 @@ class StaffController extends Controller
 
     public function insertTugasakhir(Request $request)
     {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'author' => 'required|string',
+            'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
+            'dospem1' => 'required|string',
+            'dospem2' => 'nullable|string',
+            'tahun_terbit' => 'required|numeric|min:1900|max:2099',
+            'kategori' => 'required',
+            'abstrak' => 'required',
+            'sampul' => 'required|mimes:jpeg,png,jpg',
+            'file_metodologi' => 'required|mimes:pdf',
+            'file_pustaka' => 'required|mimes:pdf',
+            'file_tugasakhir' => 'required|mimes:pdf',
+        ]);
+
         $judul  = $request->input('judul');
         $abstrak = $request->input('abstrak');
         $author = $request->input('author');
@@ -158,32 +184,39 @@ class StaffController extends Controller
         $dospem2 = $request->input('dospem2');
         $tipe_ta = $request->input('tipe_ta');
         $tahun_terbit = $request->input('tahun_terbit');
-        $sampul = $request->file('sampul');
         $kategori = $request->input('kategori');
+        //foto_sampul
+        $sampul = $request->file('sampul');
+        $nama_sampul = 'Sampul'.$author.'.'.$request->file('sampul')->getClientOriginalExtension();
+        $sampul->move('asset/img/',$nama_sampul);
+
+        //file_tugas_akhir
         $file_metodologi = $request->file('file_metodologi');
+        $nama_file_metodologi = 'Metodologi'.$author.'.'.$request->file('file_metodologi')->getClientOriginalExtension();
+        $file_metodologi->move('asset/file/',$nama_file_metodologi);
+
         $file_pustaka = $request->file('file_pustaka');
+        $nama_file_pustaka = 'Daftar Pustaka'.$author.'.'.$request->file('file_pustaka')->getClientOriginalExtension();
+        $file_pustaka->move('asset/file/',$nama_file_pustaka);
+
         $file_tugasakhir = $request->file('file_tugasakhir');
-
-        $sampulPath = $sampul->store('uploads', 'public');
-        $fileMetodologiPath = $file_metodologi->store('uploads', 'public');
-        $filePustakaPath = $file_pustaka->store('uploads', 'public');
-        $fileTugasakhirPath = $file_tugasakhir->store('uploads', 'public');
-
+        $nama_file_tugasakhir = 'Isi TA'.$author.'.'.$request->file('file_tugasakhir')->getClientOriginalExtension();
+        $file_tugasakhir->move('asset/file/',$nama_file_tugasakhir);
 
         
         DB::select('CALL p_tambah_tugas_akhir(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $judul,
             $abstrak,
-            $sampulPath,
+            $nama_sampul,
             $tipe_ta,
             $author,
             $kategori,
             $dospem1,
             $dospem2,
             $tahun_terbit,
-            $fileMetodologiPath,
-            $filePustakaPath,
-            $fileTugasakhirPath
+            $nama_file_metodologi,
+            $nama_file_pustaka,
+            $nama_file_tugasakhir
         ]);
 
         return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');

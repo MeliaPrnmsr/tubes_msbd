@@ -1,5 +1,7 @@
 @extends('staff.stafflayout')
-
+@php
+    $active = 'datakategori';
+@endphp
 @section('content')
 <br>
 <h3 class="text-center"><b>Daftar Kategori</b></h3>  
