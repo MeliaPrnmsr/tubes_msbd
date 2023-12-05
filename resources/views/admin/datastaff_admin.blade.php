@@ -8,14 +8,16 @@
   <div class="card-body">
     <div class="row d-flex justify-content-center">
       <div class="col-8">
-        <div class="input-group">
-          <input class="form-control border-end-0 border rounded-pill" type="text" value="search" id="example-search-input">
-          <span class="input-group-append">
-              <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button">
-                  <i class="fa fa-search"></i>
-              </button>
-          </span>
-        </div>     
+        <form action="/datastaff_admin" method="GET">
+          <div class="input-group">
+            <input class="form-control border-end-0 border rounded-pill" type="text" value="{{ request('search') }}" id="example-search-input" name="search">
+            <span class="input-group-append">
+                <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+          </div>   
+          </form>
       </div>
 
     </div>
