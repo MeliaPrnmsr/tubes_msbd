@@ -9,6 +9,8 @@ class Prodi extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'prodis'; // Nama tabel di database
     protected $primaryKey = 'id_prodi'; // Nama kolom kunci utama
 }

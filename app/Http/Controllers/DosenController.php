@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\TugasAkhir;
 use App\Models\Like;
 use App\Models\Dosenpembimbing;
+use App\Models\Dosen;
 
 class DosenController extends Controller
 {
@@ -40,17 +41,55 @@ class DosenController extends Controller
      */
     public function profileDosen()
     {
-        return view('dosen.dprofile');
+        $profil = DB::table('profil_dosen')->where('user_id', auth()->user()->id_user)->first();
+        return view('dosen.dprofile', [
+            'nama_lengkap' => $profil->nama_dosen,
+            'email' => $profil->email,
+            'nip' => $profil->NIP,
+            'nidn' => $profil->NIDN,
+            'program_studi' => $profil->nama_prodi
+        ]);
     }
 
     public function editprofilDosen()
     {
-        return view('dosen.deditprofil');
+        $profil = DB::table('profil_dosen')->where('user_id', auth()->user()->id_user)->first();
+        return view('dosen.deditprofil', [
+            'nama_lengkap' => $profil->nama_dosen,
+            'email' => $profil->email,
+            'nip' => $profil->NIP,
+            'nidn' => $profil->NIDN,
+            'program_studi' => $profil->nama_prodi
+        ]);
+    }
+
+    public function inserteditprofildosen(Request $request)
+    {
+        $id = Dosen::where('user_id', auth()->user()->id_user)->value('user_id');
+        $nama = $request->input('nama');
+        // $request->validate([
+        //     'photo' => 'image|mimes:jpeg,png,jpg|max:2048'
+        // ]);
+        // $foto = $request->file('photo')->store('dosenfoto');
+        $email = $request->input('email');
+
+        DB::select('CALL p_editprofil_dosen(?, ?, ?)', [
+        $id,
+        $nama,
+        $email
+        // $foto
+        ]); 
+        
+        return redirect()->route('profile.dosen')->with('succes', 'Data Dosen Berhasil Diubah!');
     }
     
     public function bimbinganDosen()
     {
-        return view('dosen.dbimbingan');
+       
+        return view('dosen.dbimbingan', [
+            'tugasbimbings' => DB::table('profil_dosen')->where('user_id', auth()->user()->id_user)->get()
+
+        ]);
     }
 
     public function bookmarkDosen()
@@ -58,9 +97,37 @@ class DosenController extends Controller
         return view('dosen.dbookmark');
     }
 
-    public function searchDosen()
+    public function searchDosen(Request $request)
     {
-        return view('dosen.dseacrh');
+        $jenis = $request->input('jenis_koleksi');
+        $search = $request->input('search');
+
+        session(['pilihan_jeniskoleksi' => $jenis]);
+
+        $results = DB::table('v_seluruh_tugas_akhirs')
+        ->select('judul', 'sampul', 'abstrak', 'author')
+        ->orWhere(function ($query) use ($jenis, $search){
+
+            if($jenis == 'skripsi'){
+                $query->where('judul', 'LIKE', '%' . $search . '%')
+                ->where('tipe_ta', '=', 'skripsi');
+            }
+            elseif($jenis == 'tesis'){
+                $query->where('judul', 'LIKE', '%' . $search . '%')
+                ->where('tipe_ta', '=', 'tesis');
+            }
+            elseif($jenis == 'disertasi'){
+                $query->where('judul', 'LIKE', '%' . $search . '%')
+                ->where('tipe_ta', '=', 'disertasi');
+            }else{
+                $query->where('judul', 'LIKE', '%' . $search . '%');
+            }
+        })->get();
+
+        return view('dosen.dsearch', [
+            'results' => $results,
+            'search' => $search
+        ]);
     }
 
     public function browseallDosen()
@@ -108,6 +175,13 @@ class DosenController extends Controller
         //dd($tugasakhir);
         return view('dosen.dopenskrip', ['tugasakhir' => $tugasakhir, 'dosen_pembimbing' => $dosen_pembimbing]);
     }
+
+    // public function search(Request $request){
+    //     $jenis = $request->input('jenis_koleksi');
+    //     $search = $request->input('search');
+
+
+    // }
 
     /**
      * Show the form for creating a new resource.

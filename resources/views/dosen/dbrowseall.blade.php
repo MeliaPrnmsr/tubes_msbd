@@ -9,8 +9,9 @@
             <h5 class="text-center">Advanced Search</h5>
             <div class="d-flex justify-content-center">
                 <div class="d-flex mb-2 w-50 bg-hijau p-3">
+                    <form class="d-flex justify-content-center w-100" role="search" method="GET" action="{{ route('search.dosen') }}">
                     <div class="me-2 w-25">
-                        <select class="form-select" aria-label="tipe">
+                        <select name="jenis_koleksi" class="form-select" aria-label="tipe">
                             <option selected>All</option>
                             <option value="skripsi">Skripsi</option>
                             <option value="tesis">Tesis</option>
@@ -18,11 +19,12 @@
                           </select>
                     </div>
                     <div class="w-75">
-                        <form class="d-flex justify-content-center w-100" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
-                            <button class="btn btn-repository-hijau" type="submit">Cari</button>
-                        </form>
+                        <input class="form-control me-2" name="search" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
                     </div>
+                    <div>
+                        <button class="btn btn-repository-hijau" type="submit">Cari</button>
+                    </div>
+                </form>
                 </div>
             </div>
             {{-- advanced search start --}}

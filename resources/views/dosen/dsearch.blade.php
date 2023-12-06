@@ -13,22 +13,22 @@
                 
                 <div class="col-9">
                     {{-- search button start --}}
+                    <form role="search" method="GET" action="{{ route('search.dosen') }}">
                     <div class="d-flex mb-2">
                             <div class="me-2 w-25">
-                                <select class="form-select" aria-label="tipe">
-                                    <option selected>All</option>
-                                    <option value="skripsi">Skripsi</option>
-                                    <option value="tesis">Tesis</option>
-                                    <option value="disertasi">Disertasi</option>
+                                <select class="form-select" name="jenis_koleksi" aria-label="tipe">
+                                    <option >All</option>
+                                    <option value="skripsi" {{ session('pilihan_jeniskoleksi') == 'skripsi' ? 'selected' : '' }}>Skripsi</option>
+                                    <option value="tesis" {{ session('pilihan_jeniskoleksi') == 'tesis' ? 'selected' : '' }}>Tesis</option>
+                                    <option value="disertasi" {{ session('pilihan_jeniskoleksi') == 'disertasi' ? 'selected' : '' }}>Disertasi</option>
                                   </select>
                             </div>
-                            <div class="w-75">
-                                <form class="d-flex justify-content-center w-100" role="search">
-                                    <input class="form-control me-2" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
-                                    <button class="btn btn-primary" type="submit">Cari</button>
-                                </form>
+                            <div class="w-75 d-flex justify-content-center w-100">
+                                <input class="form-control me-2" name="search" type="search" value="{{ $search }}" placeholder="Cari Tugas Akhir" aria-label="Search">
+                                <button class="btn btn-primary" type="submit">Cari</button>
+                                </div>
                             </div>
-                    </div>
+                        </form>
                     {{-- search button end --}}
 
                     {{-- teks --}}
@@ -38,44 +38,24 @@
                     {{-- teks --}}
                     <br>
                     {{-- hasil skripsi pencarian start--}}
+                    @foreach($results as $result)
                     <div class="card mb-3  ">
                         <div class="row p-2">
                             <div class="col-2">
                                 <img src="{{asset('asset/img/sampulskripsi.jpeg')}}" alt="" class="w-100">
                             </div>
                             <div class="col-10 justify-content-start">
-                                <h6><b>Ini Judul Skripsi</b></h6>
-                                <small style="font-size: 75%">Penulis : <b>nama_penulis</b></small>
+                                <h6><b>{{$result->judul}}</b></h6>
+                                <small style="font-size: 75%">Penulis : <b>{{$result->author}}</b></small>
                                 <hr>
                                 <small style="font-size: 70%"><i>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                    Labore, aliquam quae! Asperiores, assumenda aut sed ullam labore corrupti tempora quae,
-                                    laborum sunt quos voluptas nemo quas saepe quasi at iste.
+                                {{$result->abstrak}}
                                 </i></small>
                             </div>
                         </div>
                     </div>
+                    @endforeach
                     {{-- hasil skripsi pencarian end--}}
-
-                    {{-- hasil skripsi pencarian 2 start--}}
-                    <div class="card mt-2 mb-2">
-                        <div class="row p-2">
-                            <div class="col-2">
-                                <img src="{{asset('asset/img/sampulskripsi.jpeg')}}" alt="" class="w-100">
-                            </div>
-                            <div class="col-10 justify-content-start">
-                                <h6><b>Ini Judul Skripsi</b></h6>
-                                <small style="font-size: 75%">Penulis : <b>nama_penulis</b></small>
-                                <hr>
-                                <small style="font-size: 70%"><i>
-                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                    Labore, aliquam quae! Asperiores, assumenda aut sed ullam labore corrupti tempora quae,
-                                    laborum sunt quos voluptas nemo quas saepe quasi at iste.
-                                </i></small>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- hasil skripsi pencarian 2 end--}}
                     <br>
                     {{-- pagination start --}}
                         <nav aria-label="Page navigation example">

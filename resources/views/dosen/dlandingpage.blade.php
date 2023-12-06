@@ -38,8 +38,8 @@
                                 <div class="row">
                                     <div class="col-9">
                                         <p>Skripsi adalah makanan yang digandrungi oleh sejuta umat. Dan repository skripsi adalah pameran skripsi agar pengunjung bisa melihat-lihat mana tau tertarik</p>
-                                        <form class="d-flex" role="search">
-                                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
+                                        <form class="d-flex" role="search" method="GET" action="{{ route('search.dosen') }}">
+                                            <input class="form-control me-2 rounded-pill" type="search" name="search" placeholder="Cari Tugas Akhir" aria-label="Search">
                                             <button class="btn btn-repository rounded-pill" type="submit">Cari</button>
                                         </form>
                                     </div>

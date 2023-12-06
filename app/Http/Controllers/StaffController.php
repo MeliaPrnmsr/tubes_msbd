@@ -20,7 +20,7 @@ class StaffController extends Controller
 
     public function index()
     {
-        return view('staff.dashboard_staff');
+        return view('staff.dashboard_staff'); 
     }
 
     //Mahasiswa Part Start

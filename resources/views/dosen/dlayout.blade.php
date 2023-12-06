@@ -29,7 +29,7 @@
                     
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          halo, <b>nama_pengguna</b>
+                          halo, <b>{{ auth()->user()->dosen->nama_dosen }}</b>
                         </button>
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="{{ route('landingpage.dosen') }}"><i class="fa-solid fa-chart-line"></i>&nbsp; Dashboard</a></li>

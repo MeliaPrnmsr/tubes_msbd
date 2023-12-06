@@ -114,6 +114,7 @@ Route::middleware(['role:dosen'])->group(function () {
     Route::get('/dlandingpage', [DosenController::class,'landingDosen'])->name('landingpage.dosen');
     Route::get('/dprofile', [DosenController::class,'profileDosen'])->name('profile.dosen');
     Route::get('/deditprofile', [DosenController::class,'editprofilDosen'])->name('editprofile.dosen');
+    Route::post('/inserteditdosen', [DosenController::class,'inserteditprofilDosen']);
     Route::get('/dbimbingan', [DosenController::class,'bimbinganDosen'])->name('bimbingan.dosen');
     Route::get('/dbookmark', [DosenController::class,'bookmarkDosen'])->name('bookmark.dosen');
     Route::get('/dsearch', [DosenController::class,'searchDosen'])->name('search.dosen');

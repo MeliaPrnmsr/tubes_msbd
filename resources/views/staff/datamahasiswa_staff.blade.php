@@ -47,9 +47,9 @@
         <div class="col-2">Aksi</div>
       </div>
 
-      @foreach($mahasiswas as $index => $mahasiswa)
+      @foreach($mahasiswas as  x => $mahasiswa)
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">{{ $index + 1 }}</div>
+        <div class="col-1">{{ $index + 1 }}</div> 
         <div class="col-4">{{ $mahasiswa->nama_mahasiswa }}</div>
         <div class="col-2">{{ $mahasiswa->NIM }}</div>
         <div class="col-3">{{$mahasiswa->prodi->jenjang}} - {{$mahasiswa->prodi->nama_prodi}}</div>
