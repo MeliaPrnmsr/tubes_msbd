@@ -40,7 +40,7 @@
               <div class="col-2">{{$data->NIM}}</div>
               <div class="col-2 text-center">{{$data ->tahun_terbit}}</div>
               <div class="col-2 text-center">
-                <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
               </div>
             </div>
             @endforeach
@@ -50,7 +50,7 @@
               <div class="col-2">12021992</div>
               <div class="col-2 text-center">Teknologi Informasi</div>
               <div class="col-2 text-center">
-                <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
               </div>
             </div>
       
@@ -60,7 +60,7 @@
               <div class="col-2">12021992</div>
               <div class="col-2 text-center">Teknologi Informasi</div>
               <div class="col-2 text-center">
-                <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
               </div>
             </div> -->
       

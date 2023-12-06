@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement("DROP PROCEDURE IF EXISTS p_editprofil_dosen");
+        DB::statement("DROP PROCEDURE IF EXISTS editprofil_dosen");
 
         DB::statement("
             CREATE PROCEDURE p_editprofil_dosen(

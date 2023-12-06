@@ -14,6 +14,9 @@
                     <div class="row">
                         <div class="col-3 align-items-center justify-content-center">
                             <div class="text-center">
+                                @if ($profil->foto)
+                                <img src="{{asset('asset/img/' . $profil->foto)}}" class="rounded-circle" width="70%">
+                                @else
                                 <img src="{{asset('asset/img/profile.jpeg')}}" class="rounded-circle" width="70%">
                                 <br><br>
                                 <label for="photo">Ganti Profil</label>

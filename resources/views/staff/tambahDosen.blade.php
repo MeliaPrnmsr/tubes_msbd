@@ -38,7 +38,11 @@
                     <input type="email" class="form-control" id="email" name="email" aria-describedby="email">
                 </div>
                 <div class="text-center mt-4">
+<<<<<<< HEAD
                     <button type="submit"class="btn btn-hijau mt-3" style="width: 20%">Tambahkan</button>
+=======
+                    <button type="submit" class="btn btn-hijau mt-3" style="width: 20%">Tambahkan</button>
+>>>>>>> 9c6d6af5417b7eb70622a3950c9b6ac96761ab8c
                     <button type="cancel" href="/datamahasiswastaff" class="btn btn-secondary mt-3" style="width: 20%">Batal</button>
                 </div>
             </form>

@@ -15,7 +15,7 @@ class DosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function landingDosen()
+    public function landingDosen(Request $request)
     {
         $popular_skripsi = DB::table('v_tugasakhir_terpopuler')
         ->join('tugas_akhirs', 'v_tugasakhir_terpopuler.tugasakhir_id', '=', 'tugas_akhirs.id_tugasakhir')
@@ -54,13 +54,14 @@ class DosenController extends Controller
     public function editprofilDosen()
     {
         $profil = DB::table('profil_dosen')->where('user_id', auth()->user()->id_user)->first();
-        return view('dosen.deditprofil', [
+        return view('dosen.dprofile', [
             'nama_lengkap' => $profil->nama_dosen,
             'email' => $profil->email,
             'nip' => $profil->NIP,
             'nidn' => $profil->NIDN,
             'program_studi' => $profil->nama_prodi
         ]);
+
     }
 
     public function inserteditprofildosen(Request $request)
@@ -82,6 +83,7 @@ class DosenController extends Controller
         
         return redirect()->route('profile.dosen')->with('succes', 'Data Dosen Berhasil Diubah!');
     }
+
     
     public function bimbinganDosen()
     {
