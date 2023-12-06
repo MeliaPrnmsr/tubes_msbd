@@ -9,6 +9,9 @@
     <br>
 
     <div class="container-fluid">
+        <form action="/dsearch" method="GET">
+            @csrf
+
             <div class="row m-2">
                 
                 <div class="col-9">
@@ -23,10 +26,10 @@
                                   </select>
                             </div>
                             <div class="w-75">
-                                <form class="d-flex justify-content-center w-100" role="search">
+                                <div class="d-flex justify-content-center w-100">
                                     <input class="form-control me-2" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
                                     <button class="btn btn-primary" type="submit">Cari</button>
-                                </form>
+                                </div>
                             </div>
                     </div>
                     {{-- search button end --}}
@@ -102,56 +105,43 @@
                 <div class="col-3">
                     <h6><b>Filter Pencarian</b></h6>
                     {{-- Filter 1 --}}
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-hijau">
-                          Filter 1
-                        </div>
-                        <div class="card-body">
-                         <form action="">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan1">
-                                <label class="form-check-label" for="pilihan1">Pilihan 1</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan2">
-                                <label class="form-check-label" for="pilihan2">Pilihan 2</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan3">
-                                <label class="form-check-label" for="pilihan3">Pilihan 3</label>
-                              </div>
-                         </form>
-                        </div>
-                    </div>
-                    <br>
                     {{-- Filter 1 --}}
-
-                    {{-- Filter 2 --}}
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-hijau">
-                          Filter 2
-                        </div>
-                        <div class="card-body">
-                         <form action="">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan1">
-                                <label class="form-check-label" for="pilihan1">Pilihan 1</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan2">
-                                <label class="form-check-label" for="pilihan2">Pilihan 2</label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="pilihan3">
-                                <label class="form-check-label" for="pilihan3">Pilihan 3</label>
-                              </div>
-                         </form>
-                        </div>
+                <div class="card rounded-0">
+                    <div class="card-header rounded-0 bg-hijau">
+                        Kategori
                     </div>
+                    <div class="card-body">
+                            @foreach ($kategoris as $kategori)
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" wire:model="kategori" value="{{$kategori->id_kategori}}" id="{{$kategori->id_kategori}}">
+                                <label class="form-check-label" for="kategori">{{$kategori->nama_kategori}}</label>
+                            </div>
+                            @endforeach
+                    </div>
+                </div>
+                <br>
+                {{-- Filter 1 --}}
+    
+                {{-- Filter 2 --}}
+                <div class="card rounded-0">
+                    <div class="card-header rounded-0 bg-hijau">
+                        Prodi
+                    </div>
+                    <div class="card-body">
+                            @foreach ($prodis as $prodi)
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" wire:model="prodi" value="{{$prodi->id_prodi}}" id="{{$prodi->id_prodi}}">
+                                <label class="form-check-label" for="prodi">{{$prodi->jenjang}} - {{$prodi->nama_prodi}}</label>
+                            </div>
+                            @endforeach
+                    </div>
+                </div>
+                {{-- Filter 2 --}}
                     {{-- Filter 2 --}}
 
                 </div>
             </div>
         <br>
+    </form>
     </div>
 @endsection

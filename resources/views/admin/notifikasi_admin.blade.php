@@ -1,5 +1,7 @@
 @extends('admin.adminlayout')
-
+@php
+    $active = 'notifikasi';
+@endphp
 @section('content')
 <br>
 <h3 class="text-center"><b>Pemberitahuan</b></h3> 

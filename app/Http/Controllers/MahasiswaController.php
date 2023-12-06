@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
+use App\Models\Prodi;
 use App\Models\TugasAkhir;
 use App\Models\Kategori;
-use App\Models\Prodi;
-use App\Models\DokumenFile;
 use App\Models\Like;
+use App\Models\Mahasiswa;
 use App\Models\Dosenpembimbing;
+use App\Models\User as User;
 
 class MahasiswaController extends Controller
 {
@@ -19,6 +21,7 @@ class MahasiswaController extends Controller
      */
     public function landingMhs()
     {
+        $totalTugasAkhir = TugasAkhir::count();
         $popular_skripsi = DB::table('v_tugasakhir_terpopuler')
             ->join('tugas_akhirs', 'v_tugasakhir_terpopuler.tugasakhir_id', '=', 'tugas_akhirs.id_tugasakhir')
             ->join('mahasiswas', 'tugas_akhirs.author', '=', 'mahasiswas.NIM')
@@ -34,7 +37,8 @@ class MahasiswaController extends Controller
 
         return view('mahasiswa.mlandingpage', [
             'popular_skripsi' => $popular_skripsi,
-            'results' => $results
+            'results' => $results,
+            'totalTugasAkhir' => $totalTugasAkhir
         ]);
     }
 
@@ -47,13 +51,43 @@ class MahasiswaController extends Controller
 
     public function profilMhs()
     {
-        return view('mahasiswa.mprofile');
+        $mahasiswas = Mahasiswa::with('prodi')->where('user_id', auth()->id())->first();
+        return view('mahasiswa.mprofile', compact('mahasiswas'));
     }
 
     public function editprofilMhs()
     {
-        return view('mahasiswa.meditprofil');
+        $mahasiswas = Mahasiswa::with('prodi')->where('user_id', auth()->id())->first();
+        return view('mahasiswa.meditprofil', compact('mahasiswas'));
     }
+
+    public function UpdateProfil(Request $request)
+    {
+        $user_login = auth()->user()->id_user;
+        $emailBaru = $request->input('email');
+        $namaBaru = $request->input('nama_mahasiswa');
+
+        $user = auth()->user();
+        $pathFoto = $user->mahasiswa->foto ?? $user->foto;
+
+        if ($request->hasFile('foto')) {
+            $fotoBaru = $request->file('foto');
+            $namaFoto = $user->username . '.' . $fotoBaru->getClientOriginalExtension();
+            $path = public_path('asset/img/');
+            $fotoBaru->move($path, $namaFoto);
+            $pathFoto = $namaFoto;
+        }
+
+        DB::select('CALL p_update_profilMhs(?, ?, ?, ?)', [
+            $user_login,
+            $emailBaru,
+            $namaBaru,
+            $pathFoto,
+        ]);
+
+        return redirect()->route('profile.mahasiswa')->with('success', 'Profil berhasil diperbarui');
+    }
+
 
     public function bookmarkMhs()
     {
@@ -73,64 +107,6 @@ class MahasiswaController extends Controller
         return view('mahasiswa.msearch', compact('tugas_akhirs', 'prodis', 'kategoris', 'tipe_ta_lists', 'searchTerm'));
     }
 
-
-    // public function hasil_search(Request $request)
-    // {
-        
-    //     if ($request->ajax()) {
-    //         $results = TugasAkhir::query(); // Inisialisasi query builder
-            
-    //         $searchTerm = $request->input('search');
-    //         $kategoriFilter = $request->input('kategori');
-    //         $prodiFilter = $request->input('prodi');
-    
-    //         if (!empty($searchTerm)) {
-    //             $results->where('judul', 'like', '%' . $searchTerm . '%');
-    //         }
-    
-    //         if ($kategoriFilter) {
-    //             $results->whereHas('kategori', function ($q) use ($kategoriFilter) {
-    //                 $q->where('id_kategori', $kategoriFilter);
-    //             });
-    //         }
-    
-    //         if ($prodiFilter) {
-    //             $results->whereHas('kategori.prodi', function ($q) use ($prodiFilter) {
-    //                 $q->where('id_prodi', $prodiFilter);
-    //             });
-    //         }
-    
-    //         $results = $results->get(); 
-            
-    //         $output = '';
-
-    //         if(count($results) > 0) {
-    //             $output = '';
-    //                 if (count($results) > 0)
-    //                     foreach($results as $result)
-    //                     $output = '
-    //                     <div class="card mb-3  ">
-    //                         <div class="row p-2">
-    //                             <div class="col-2">
-    //                                 <img src="asset/img/.$result->sampul" alt="" class="w-100">
-    //                             </div>
-    //                             <div class="col-10 justify-content-start">
-    //                                 <h6><b>{{$result->judul}}</b></h6>
-    //                                 <small style="font-size: 75%">Penulis : <b>nama_mahasiswa</b></small>
-    //                                 <hr>
-    //                                 <small style="font-size: 70%"><i>{{$result->judul}}</i></small>
-    //                             </div>
-    //                         </div>
-    //                     </div>
-    //                     endforeach ';
-    //         }
-
-    //     } else {
-    //         $output = "<p> hasil tidak tersedia </p>";
-    //     }
-
-    //     return $output;
-    // }
 
     public function browseallMhs()
     {
@@ -153,7 +129,6 @@ class MahasiswaController extends Controller
         $disertasi = DB::table('v_tugasakhir_disertasi')
             ->orderBy('judul', 'ASC')
             ->get();
-        //dd($tahun_terbit);
         return view('mahasiswa.mbrowseall', [
             'tahun_terbit' => $tahun_terbit,
             'kategori' => $kategori,
@@ -216,3 +191,61 @@ class MahasiswaController extends Controller
         //
     }
 }
+
+// public function hasil_search(Request $request)
+// {
+
+//     if ($request->ajax()) {
+//         $results = TugasAkhir::query(); // Inisialisasi query builder
+
+//         $searchTerm = $request->input('search');
+//         $kategoriFilter = $request->input('kategori');
+//         $prodiFilter = $request->input('prodi');
+
+//         if (!empty($searchTerm)) {
+//             $results->where('judul', 'like', '%' . $searchTerm . '%');
+//         }
+
+//         if ($kategoriFilter) {
+//             $results->whereHas('kategori', function ($q) use ($kategoriFilter) {
+//                 $q->where('id_kategori', $kategoriFilter);
+//             });
+//         }
+
+//         if ($prodiFilter) {
+//             $results->whereHas('kategori.prodi', function ($q) use ($prodiFilter) {
+//                 $q->where('id_prodi', $prodiFilter);
+//             });
+//         }
+
+//         $results = $results->get(); 
+
+//         $output = '';
+
+//         if(count($results) > 0) {
+//             $output = '';
+//                 if (count($results) > 0)
+//                     foreach($results as $result)
+//                     $output = '
+//                     <div class="card mb-3  ">
+//                         <div class="row p-2">
+//                             <div class="col-2">
+//                                 <img src="asset/img/.$result->sampul" alt="" class="w-100">
+//                             </div>
+//                             <div class="col-10 justify-content-start">
+//                                 <h6><b>{{$result->judul}}</b></h6>
+//                                 <small style="font-size: 75%">Penulis : <b>nama_mahasiswa</b></small>
+//                                 <hr>
+//                                 <small style="font-size: 70%"><i>{{$result->judul}}</i></small>
+//                             </div>
+//                         </div>
+//                     </div>
+//                     endforeach ';
+//         }
+
+//     } else {
+//         $output = "<p> hasil tidak tersedia </p>";
+//     }
+
+//     return $output;
+// }

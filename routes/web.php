@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\DosenController;
@@ -95,7 +95,8 @@ Route::get('/abstrak', [PengunjungController::class,'abstrak']);
 Route::middleware(['role:mahasiswa', 'auth', 'verified'])->group(function () {
     Route::get('/mlandingpage', [MahasiswaController::class,'landingMhs'])->name('landingpage.mahasiswa');
     Route::get('/mprofil', [MahasiswaController::class,'profilMhs'])->name('profile.mahasiswa');
-    Route::get('/meditprofil', [MahasiswaController::class,'editprofilMhs'])->name('editprofil.mahasiswa');
+    Route::get('/meditprofil', [MahasiswaController::class, 'editprofilMhs'])->name('editprofil.mahasiswa');
+    Route::match(['get', 'post'], '/updateprofil', [MahasiswaController::class, 'UpdateProfil'])->name('update.mahasiswa');
     Route::get('/mbookmark', [MahasiswaController::class,'bookmarkMhs'])->name('bookmark.mahasiswa');
     Route::get('/msearch', [MahasiswaController::class,'searchMhs'])->name('search.mahasiswa');
     Route::get('/hasil_search', [MahasiswaController::class,'hasil_search']);
@@ -113,6 +114,7 @@ Route::middleware(['role:dosen', 'auth', 'verified'])->group(function () {
     Route::get('/dlandingpage', [DosenController::class,'landingDosen'])->name('landingpage.dosen');
     Route::get('/dprofile', [DosenController::class,'profileDosen'])->name('profile.dosen');
     Route::get('/deditprofile', [DosenController::class,'editprofilDosen'])->name('editprofile.dosen');
+    Route::match(['get', 'post'], '/dupdateprofil', [DosenController::class, 'inserteditprofildosen'])->name('update.dosen');
     Route::get('/dbimbingan', [DosenController::class,'bimbinganDosen'])->name('bimbingan.dosen');
     Route::get('/dbookmark', [DosenController::class,'bookmarkDosen'])->name('bookmark.dosen');
     Route::get('/dsearch', [DosenController::class,'searchDosen'])->name('search.dosen');

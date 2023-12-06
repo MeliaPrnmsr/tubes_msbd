@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement("DROP VIEW IF EXISTS v_data_tugasakhirl");
+        DB::statement("DROP VIEW IF EXISTS v_data_tugasakhir");
 
         DB::statement("
         CREATE VIEW v_data_tugasakhir AS 
-        SELECT 
+        SELECT DISTINCT
             ta.*, m.nama_mahasiswa, df.*, k.nama_kategori,
             d1.nama_dosen AS nama_dosen_dospem1,
             d2.nama_dosen AS nama_dosen_dospem2

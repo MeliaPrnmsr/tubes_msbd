@@ -3,45 +3,60 @@
 namespace App\Livewire;
 
 use App\Models\TugasAkhir;
+use App\Models\Prodi;
+use App\Models\Kategori;
+
 use Livewire\Component;
 use Illuminate\Http\Request;
 
 class TugasAkhirs extends Component
 {
     public $search;
+    // public $kategori;
+    // public $prodi;
 
-    public $queryString = [
-        'tugas_akhirs' => ['except' => ''],
-    ];
-    public function render( Request $request)
+
+
+    public function render()
     {
-            $results = TugasAkhir::query();
-            
-            $searchTerm = $request->input('search');
-            $kategoriFilter = $request->input('kategori');
-            $prodiFilter = $request->input('prodi');
     
-            if (!empty($searchTerm)) {
-                $results->where('judul', 'like', '%' . $searchTerm . '%');
-            }
+        $tipe_ta_lists = TugasAkhir::distinct()->get('tipe_ta');
+        $prodis = Prodi::all();
+        $kategoris = Kategori::all();
+
+
+        // $results = TugasAkhir::query()
+        //     ->when($this->search, function ($query) {
+        //         $query->where('judul', 'like', '%' . $this->search . '%');
+        //     })
+        //     ->when($this->kategori, function ($query) {
+        //         $query->whereHas('kategori', function ($q) {
+        //             $q->where('id_kategori', $this->kategori);
+        //         });
+        //     })
+        //     ->when($this->prodi, function ($query) {
+        //         $query->whereHas('kategori.prodi', function ($q) {
+        //             $q->where('id_prodi', $this->prodi);
+        //         });
+        //     })
+        //     ->get();
+
+        $search = '%' . $this->search . '%';
+        $results = TugasAkhir::where('judul', 'like', $search)->get();
     
-            if ($kategoriFilter) {
-                $results->whereHas('kategori', function ($q) use ($kategoriFilter) {
-                    $q->where('id_kategori', $kategoriFilter);
-                });
-            }
-    
-            if ($prodiFilter) {
-                $results->whereHas('kategori.prodi', function ($q) use ($prodiFilter) {
-                    $q->where('id_prodi', $prodiFilter);
-                });
-            }
-    
-            $results = $results->get(); 
-        
-            return view('livewire.tugas-akhirs', [
-                'tugasAkhirs' => $results,
-            ]);
+        return view('livewire.tugas-akhirs', [
+            'results' => $results,
+            'tipe_ta_lists' => $tipe_ta_lists,
+            'prodis' => $prodis,
+            'kategoris' => $kategoris
+        ]);
+
+        // return view('livewire.tugas-akhirs', [
+        //     'results' => $results,
+        //     'tipe_ta_lists' => $tipe_ta_lists,
+        //     'prodis' => $prodis,
+        //     'kategoris' => $kategoris
+        // ]);
             
     }
 }

@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="{{asset('asset/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('asset/css/tambahan.css')}}">
         <link rel="stylesheet" href="{{asset('asset/icon/css/all.min.css')}}">
-
+        @livewireStyles
     </head>
 <body>
     <!-- Navbar -->
@@ -20,9 +20,9 @@
             <div class="row px-2 w-100 "> <!-- Menggunakan justify-content-center dan px-2 -->
                 
                 <div class="col p-2 d-flex justify-content-start"> <!-- Update disini -->
-                    <a class="navbar-brand text-white" href="#">
+                    <a class="navbar-brand text-white" href="/mlandingpage">
                         <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
-                        RepositorySkripsi
+                        Repository TugasAkhir
                       </a>
                 </div>
         
@@ -30,7 +30,7 @@
                     
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          halo, <b>nama_pengguna</b>
+                          halo, <b>{{ Auth::user()->username }}</b>
                         </button>
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="{{ route ('landingpage.mahasiswa') }}"><i class="fa-solid fa-chart-line"></i>&nbsp; Dashboard</a></li>
@@ -68,6 +68,7 @@
 
 
 <script src="{{asset('asset/js/bootstrap.bundle.min.js')}}"></script>
+@livewireScripts
 
 {{-- <script src="{{asset('node_modules/jquery/dist/jquery.min.js')}}"></script>
 <script src="{{asset('node_modules/@popperjs/core/dist/umd/popper.min.js')}}"></script> --}}

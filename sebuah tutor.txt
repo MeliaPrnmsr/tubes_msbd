@@ -1,0 +1,53 @@
+Untuk membuat pencarian berdasarkan judul tugas akhir, prodi, dan kategori, Anda bisa menggunakan query builder pada saat melakukan pencarian. Berikut adalah contoh implementasinya:
+
+Pada bagian Controller:
+php
+Copy code
+public function search(Request $request)
+{
+    $keyword = $request->input('search');
+    $prodi = $request->input('prodi');
+    $kategori = $request->input('kategori');
+
+    $query = DB::table('tugas_akhir');
+
+    if (!empty($keyword)) {
+        $query->where('judul', 'LIKE', "%$keyword%");
+    }
+
+    if (!empty($prodi)) {
+        $query->where('prodi_id', $prodi);
+    }
+
+    if (!empty($kategori)) {
+        $query->where('kategori_id', $kategori);
+    }
+
+    $tugasAkhir = $query->get();
+
+    // Lakukan query untuk mendapatkan list prodi dan kategori
+    $prodis = Prodi::all();
+    $kategoris = Kategori::all();
+
+    return view('dosen.search_result', compact('tugasAkhir', 'prodis', 'kategoris'));
+}
+Pada bagian View:
+html
+Copy code
+<form action="{{ route('search.tugasakhir') }}" method="GET" class="d-flex justify-content-center w-100" role="search">
+    <input class="form-control me-2" type="search" placeholder="Cari Tugas Akhir" aria-label="Search" name="search">
+    <select class="form-select me-2" aria-label="Prodi" name="prodi">
+        <option value="">Semua Prodi</option>
+        @foreach($prodis as $prodi)
+            <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
+        @endforeach
+    </select>
+    <select class="form-select me-2" aria-label="Kategori" name="kategori">
+        <option value="">Semua Kategori</option>
+        @foreach($kategoris as $kategori)
+            <option value="{{ $kategori->id }}">{{ $kategori->nama_kategori }}</option>
+        @endforeach
+    </select>
+    <button class="btn btn-primary" type="submit">Cari</button>
+</form>
+Pastikan untuk menyesuaikan route, model, dan struktur database sesuai dengan yang Anda gunakan. Dengan cara ini, Anda dapat melakukan pencarian berdasarkan judul, prodi, dan kategori yang dipilih dari form.

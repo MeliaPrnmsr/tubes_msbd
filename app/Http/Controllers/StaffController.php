@@ -27,9 +27,9 @@ class StaffController extends Controller
     //Mahasiswa Part Start
     public function dataMahasiswa()
     {
-        // $mahasiswas = Mahasiswa::orderBy('prodi_id')->get(); 
-        $mahasiswas = DB::table('v_data_mahasiswa')->get();
-        return view('staff.datamahasiswa_staff', ['mahasiswas' => $mahasiswas]); 
+        $prodiStaff = auth()->user()->staff->prodi_id;
+        $mahasiswas = DB::table('v_data_mahasiswa')->where('prodi_id', $prodiStaff)->get();
+        return view('staff.datamahasiswa_staff', ['mahasiswas' => $mahasiswas]);
     }
 
     public function detailMahasiswa($NIM)
@@ -41,7 +41,8 @@ class StaffController extends Controller
 
     public function tambahMahasiswa()
     {
-        $prodis = Prodi::all(); 
+        $prodiStaff = auth()->user()->staff->prodi_id;
+        $prodis = Prodi::where('id_prodi', $prodiStaff)->get();
         return view('staff.tambahMahasiswa', ['prodis' => $prodis]);
     }
 
@@ -57,7 +58,7 @@ class StaffController extends Controller
         $nim = $request->input('NIM');
         $nimString = strval($nim);
         $nama_mahasiswa = $request->input('nama_mahasiswa');
-        $username = $nimString; 
+        $username = $nimString;
         $email = $request->input('email');
         $password = Hash::make($nimString);
         $role = 'mahasiswa';
@@ -80,21 +81,22 @@ class StaffController extends Controller
 
     public function dataDosen()
     {
-        //$dosens = Dosen::orderBy('prodi_id')->get();
-        $dosens = DB::table('v_data_dosen')->orderBy('nama_prodi')->get();
+        $prodiStaff = auth()->user()->staff->prodi_id;
+        $dosens = DB::table('v_data_dosen')->where('prodi_id', $prodiStaff)->get();
         return view('staff.datadosen_staff', compact('dosens'));
     }
 
     public function tambahDosen()
     {
-        $prodis = Prodi::all(); 
+        $prodiStaff = auth()->user()->staff->prodi_id;
+        $prodis = Prodi::where('id_prodi', $prodiStaff)->get();
         return view('staff.tambahDosen', ['prodis' => $prodis]);
     }
 
     public function insertDosen(Request $request)
     {
-       $validasidata =  $request->validate([
-            'kode_dosen' => ['required', 'unique:dosens,kode_dosen', 'size:3', 'alpha', 'uppercase'],            
+        $validasidata = $request->validate([
+            'kode_dosen' => ['required', 'unique:dosens,kode_dosen', 'size:3', 'alpha', 'uppercase'],
             'NIP' => 'required|unique:dosens,NIP|numeric|digits:14',
             'NIDN' => 'required|unique:dosens,NIDN|numeric|digits:7',
             'nama_dosen' => ['required', 'regex:/^[A-Za-z\s\-,\.]+$/u'],
@@ -102,10 +104,10 @@ class StaffController extends Controller
             'prodi' => 'required|not_in:0'
         ]);
 
-        $NIDN    = $request->input('NIDN');
+        $NIDN = $request->input('NIDN');
         $NIP = $request->input('NIP');
         $NIPString = strval($NIP);
-        $username = $NIPString; 
+        $username = $NIPString;
         $password = Hash::make($NIPString);
         $email = $request->input('email');
         $kode_dosen = $request->input('kode_dosen');
@@ -113,7 +115,7 @@ class StaffController extends Controller
         $role = 'dosen';
         $prodi_id = $request->input('prodi');
 
-        
+
         DB::select('CALL p_tambah_user_dosen(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $username,
             $email,
@@ -131,7 +133,7 @@ class StaffController extends Controller
 
     public function detailDosen($kode_dosen)
     {
-        //$dosen = Dosen::find($kode_dosen);
+
         $dosen = DB::table('v_data_dosen')->where('kode_dosen', $kode_dosen)->first();
         return view('staff.detailDosen', ['dosen' => $dosen]);
     }
@@ -140,8 +142,11 @@ class StaffController extends Controller
     //TUGAS AKHIR
     public function dataTugasakhir()
     {
-        $tugas_akhirs = TugasAkhir::all();
-        //$tugas_akhirs = DB::table('v_data_tugasakhirl')->get();
+        $prodiStaff = auth()->user()->staff->prodi_id;
+        $tugas_akhirs = DB::table('v_data_tugasakhir')
+            ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
+            ->where('kategoris.prodi_id', $prodiStaff)
+            ->get();
         return view('staff.datatugasakhir_staff', ['tugas_akhirs' => $tugas_akhirs]);
     }
 
@@ -154,9 +159,12 @@ class StaffController extends Controller
 
     public function tambahTugasakhir()
     {
-        $dosens = Dosen::all(); 
-        $mahasiswas = Mahasiswa::all(); 
-        $kategoris = Kategori::all(); 
+        $prodiStaff = auth()->user()->staff->prodi_id;
+
+        $dosens = Dosen::where('prodi_id', $prodiStaff)->get();
+        $mahasiswas = Mahasiswa::where('prodi_id', $prodiStaff)->get();
+        $kategoris = Kategori::where('prodi_id', $prodiStaff)->get();
+
         return view('staff.tambahTugasakhir_staff', compact('dosens', 'mahasiswas', 'kategoris'));
     }
 
@@ -177,7 +185,7 @@ class StaffController extends Controller
             'file_tugasakhir' => 'required|mimes:pdf',
         ]);
 
-        $judul  = $request->input('judul');
+        $judul = $request->input('judul');
         $abstrak = $request->input('abstrak');
         $author = $request->input('author');
         $dospem1 = $request->input('dospem1');
@@ -187,23 +195,23 @@ class StaffController extends Controller
         $kategori = $request->input('kategori');
         //foto_sampul
         $sampul = $request->file('sampul');
-        $nama_sampul = 'Sampul'.$author.'.'.$request->file('sampul')->getClientOriginalExtension();
-        $sampul->move('asset/img/',$nama_sampul);
+        $nama_sampul = 'Sampul' . $author . '.' . $request->file('sampul')->getClientOriginalExtension();
+        $sampul->move('asset/img/', $nama_sampul);
 
         //file_tugas_akhir
         $file_metodologi = $request->file('file_metodologi');
-        $nama_file_metodologi = 'Metodologi'.$author.'.'.$request->file('file_metodologi')->getClientOriginalExtension();
-        $file_metodologi->move('asset/file/',$nama_file_metodologi);
+        $nama_file_metodologi = 'Metodologi' . $author . '.' . $request->file('file_metodologi')->getClientOriginalExtension();
+        $file_metodologi->move('asset/file/', $nama_file_metodologi);
 
         $file_pustaka = $request->file('file_pustaka');
-        $nama_file_pustaka = 'Daftar Pustaka'.$author.'.'.$request->file('file_pustaka')->getClientOriginalExtension();
-        $file_pustaka->move('asset/file/',$nama_file_pustaka);
+        $nama_file_pustaka = 'Daftar Pustaka' . $author . '.' . $request->file('file_pustaka')->getClientOriginalExtension();
+        $file_pustaka->move('asset/file/', $nama_file_pustaka);
 
         $file_tugasakhir = $request->file('file_tugasakhir');
-        $nama_file_tugasakhir = 'Isi TA'.$author.'.'.$request->file('file_tugasakhir')->getClientOriginalExtension();
-        $file_tugasakhir->move('asset/file/',$nama_file_tugasakhir);
+        $nama_file_tugasakhir = 'Isi TA' . $author . '.' . $request->file('file_tugasakhir')->getClientOriginalExtension();
+        $file_tugasakhir->move('asset/file/', $nama_file_tugasakhir);
 
-        
+
         DB::select('CALL p_tambah_tugas_akhir(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $judul,
             $abstrak,
@@ -224,7 +232,10 @@ class StaffController extends Controller
 
     public function dataKategori()
     {
-        return view('staff.dataKategori_staff');
+        $prodiStaff = auth()->user()->staff->prodi_id;
+        $kategoris = Kategori::where('prodi_id', $prodiStaff)->get();
+
+        return view('staff.dataKategori_staff', compact('kategoris'));
     }
 
 

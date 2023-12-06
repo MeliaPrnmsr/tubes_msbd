@@ -40,7 +40,6 @@
                     <div class="mt-3">
                         <label for="prodi" class="form-label">Prodi</label>
                         <select class="form-select @error('prodi') is-invalid @enderror" id="prodi" name="prodi">
-                            <option value="0" selected disabled>Pilih prodi</option>
                             @foreach($prodis as $prodi)
                                 <option value="{{ $prodi->id_prodi }}">{{$prodi->jenjang}} - {{ $prodi->nama_prodi}}</option>
                             @endforeach

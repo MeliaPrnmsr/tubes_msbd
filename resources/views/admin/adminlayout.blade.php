@@ -91,49 +91,49 @@
         <br>
         <ul class="nav flex-column pt-3">
             <li class="nav-item">
-                <a class="nav-link active" href="{{ route('dashboard.admin') }}">
+                <a class="nav-link {{ ($active == 'dashboard') ? 'active' : '' }}" href="{{ route('dashboard.admin') }}">
                     <i class="fa-solid fa-chart-simple"></i>
                     Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('datamahasiswa.admin') }}">
+                <a class="nav-link {{ ($active == 'mahasiswa') ? 'active' : '' }}" href="{{ route('datamahasiswa.admin') }}">
                     <i class="fa-solid fa-users-rectangle"></i>
                     Data Mahasiswa
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('datadosen.admin') }}">
+                <a class="nav-link {{ ($active == 'dosen') ? 'active' : '' }}" href="{{ route('datadosen.admin') }}">
                     <i class="fa-solid fa-chalkboard-user"></i>
                     Data Dosen
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-orange" href="{{ route('datastaff.admin') }}">
+                <a class="nav-link {{ ($active == 'staff') ? 'active' : '' }} nav-link-orange" href="{{ route('datastaff.admin') }}">
                     <i class="fa-solid fa-clipboard-user"></i>
                     Data Staff
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-orange" href="{{ route('datatugas.admin') }}">
+                <a class="nav-link {{ ($active == 'tugas_akhir') ? 'active' : '' }} nav-link-orange" href="{{ route('datatugas.admin') }}">
                     <i class="fa-solid fa-folder-open"></i>
                     Data Tugas Akhir
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-orange" href="{{ route('datakategori.admin') }}">
+                <a class="nav-link {{ ($active == 'kategori') ? 'active' : '' }} nav-link-orange" href="{{ route('datakategori.admin') }}">
                     <i class="fa-solid fa-list"></i>
                     Data Kategori
                 </a>  
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-orange" href="{{ route('notifikasi.admin') }}">
+                <a class="nav-link {{ ($active == 'notifikasi') ? 'active' : '' }} nav-link-orange" href="{{ route('notifikasi.admin') }}">
                     <i class="fa-solid fa-bell"></i>
                     Notifikasi
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link nav-link-orange" href="{{ route('log.admin') }}">
+                <a class="nav-link {{ ($active == 'log') ? 'active' : '' }} nav-link-orange" href="{{ route('log.admin') }}">
                     <i class="fa-solid fa-clipboard-list"></i>
                     Log
                 </a>
@@ -151,5 +151,6 @@
     {{-- content end --}}
     
   <script src="{{ asset('asset/js/bootstrap.bundle.min.js') }}"></script>
+
 </body>
 </html>
