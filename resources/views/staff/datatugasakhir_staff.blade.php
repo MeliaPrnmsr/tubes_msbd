@@ -71,22 +71,7 @@
     <br>
     {{-- pagination start --}}
     <div class="d-flex justify-content-center card-body">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous" style="color: #3dae2b">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">1</a></li>
-          <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">2</a></li>
-          <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next"  style="color: #3dae2b">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
+      {{$tugas_akhirs->links()}}
       </nav>
     </div>
     {{-- pagination end --}}

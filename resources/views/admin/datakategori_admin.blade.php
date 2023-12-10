@@ -11,9 +11,9 @@
               <h5 class="card-header"><b>{{ $data->jenjang }} {{ $data->nama_prodi }}</b></h5>
               <ul class="list-group list-group-flush">
                   @foreach ($collection as $item)
-                  @if ($item-> nama_prodi == $data->nama_prodi)
-                  <li class="list-group-item">{{ $item -> nama_kategori }}</li>
-                  @endif
+                    @if ($item->prodi_id == $data->prodi_id)
+                        <li class="list-group-item">{{ $item->nama_kategori }}</li>
+                    @endif
                   @endforeach
 
               </ul>

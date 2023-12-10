@@ -4,11 +4,26 @@
 @endphp
 @section('content')
 <br>
+@if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Berhasil!</strong> {{session('success')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @elseif(session('deleted'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Berhasil! </strong> {{session('deleted')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    @endif
 <h3 class="text-center pt-2"><b>Data Staff</b></h3>
 <div class="card">
   <br>
   <div class="card-body">
     <div class="row d-flex justify-content-center">
+      <div class="col-3">
+        <a href="{{route('tambahStaff.admin')}}" class="btn btn-hijau"><i class="fa-solid fa-user-plus"></i> &nbsp;Tambah Data</a>
+      </div>
+
       <div class="col-8">
         <form action="/datastaff_admin" method="GET">
           <div class="input-group">
@@ -49,7 +64,7 @@
       <div class="col-2">{{ $data->kode_staff }}</div>
       <div class="col-3">{{ $data->nama_prodi }}</div>
       <div class="col-2">
-        <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+        <a href="{{ route('detailStaff.admin', ['kode_staff' => $data->kode_staff]) }}" class="btn btn-repository">Detail</a>
       </div>
     </div>
     @php

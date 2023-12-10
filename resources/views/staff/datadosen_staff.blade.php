@@ -25,14 +25,15 @@
       </div>
 
       <div class="col-8">
-        <div class="input-group">
-          <input class="form-control border-end-0 border rounded-pill" type="text" value="search" id="example-search-input">
-          <span class="input-group-append">
-              <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button">
-                  <i class="fa fa-search"></i>
-              </button>
-          </span>
-        </div>     
+        <form action="/datadosen_staff" method="get">
+          <div class="input-group">
+            <input class="form-control border-end-0 border rounded-pill" type="text" value="{{$search}}" id="example-search-input" name="search">
+            <span class="input-group-append">
+                <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+          </div> </form>    
       </div>
 
     </div>
@@ -48,6 +49,10 @@
         <div class="col-3">Prodi</div>
         <div class="col-2">Aksi</div>
       </div>
+
+      @if(isset($noDataMessage))
+        <p>{{ $noDataMessage }}</p>
+      @else
       @php $i = 1; @endphp
       @foreach($dosens as $dosen)
       {{-- @php echo($dosen) @endphp --}}
@@ -69,25 +74,10 @@
     <br>
     {{-- pagination start --}}
     <div class="d-flex justify-content-center card-body">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous" style="color: #3dae2b">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">1</a></li>
-          <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">2</a></li>
-          <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next"  style="color: #3dae2b">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      {{$dosens->links()}}
     </div>
     {{-- pagination end --}}
+    @endif
 </div>
 <br>
 @endsection

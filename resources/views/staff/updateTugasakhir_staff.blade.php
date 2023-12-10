@@ -8,7 +8,7 @@
     <br>
     <div class="card border-0">
         <div class="card-body">
-            <form action="#" method="GET" enctype="multipart/form-data">
+            <form action="/updatetugasakhir" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="mb-4">
@@ -90,8 +90,8 @@
             
             <br>
             <div class="d-flex justify-content-center">
-                <a href="{{route('edittugasakhir.staff', ['id_tugasakhir' => $tugas_akhir->id_tugasakhir])}}" class="btn btn-hijau mt-3" style="width: 20%">Perbarui</a> &nbsp;
-                <a href="{{route('datatugas.staff')}}" class="btn btn-secondary mt-3" style="width: 20%">Kembali</a>
+                <button class="btn btn-hijau" type="submit" style="width: 20%">Simpan</button> &nbsp;
+                <a href="{{route('datatugas.staff')}}" class="btn btn-secondary" style="width: 20%">Kembali</a>
             </div>
         </form>
         

@@ -53,7 +53,7 @@
             <div class="col p-2 d-flex justify-content-end">
                 <div class="dropdown">
                     <button class="btn btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      halo, <b>prodi</b>
+                      halo, <b>{{ Auth::user()->username }}</b>
                     </button>
                     <ul class="dropdown-menu">
                       <form method="POST" action="{{ route('logout') }}">

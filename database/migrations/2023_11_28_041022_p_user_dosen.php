@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         $p_user_dosen = "DROP PROCEDURE IF EXISTS `p_tambah_user_dosen`;
-        CREATE PROCEDURE `p_tambah_user_dosen`(IN `p_username` VARCHAR(255),
+        CREATE PROCEDURE `p_tambah_user_dosen`(
+        IN `p_username` VARCHAR(255),
         IN `p_email` VARCHAR(255),
         IN `p_password` VARCHAR(255),
         IN `p_role` VARCHAR(20),

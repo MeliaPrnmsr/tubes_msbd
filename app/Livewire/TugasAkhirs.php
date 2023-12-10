@@ -8,14 +8,39 @@ use App\Models\Kategori;
 
 use Livewire\Component;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class TugasAkhirs extends Component
 {
-    public $search;
-    // public $kategori;
-    // public $prodi;
+    public $search; 
+    public $kategori;
+    public $prodi;
 
+    public function hasil_search()
+    {
 
+    }
+
+    public function hasil_kategori($kategori_search)
+    {
+        $filters = DB::table('v_data_tugasakhir')->query()
+            ->when($this->search, function ($query) {
+                $query->where('judul', 'like', '%' . $this->search . '%');
+            })
+            ->when($this->kategori, function ($query) {
+                $query->whereHas('kategori', function ($q) {
+                    $q->where('id_kategori', $this->kategori);
+                });
+            })
+            ->when($this->prodi, function ($query) {
+                $query->whereHas('kategori.prodi', function ($q) {
+                    $q->where('id_prodi', $this->prodi);
+                });
+            })
+            ->get();
+
+    }
 
     public function render()
     {
@@ -25,38 +50,20 @@ class TugasAkhirs extends Component
         $kategoris = Kategori::all();
 
 
-        // $results = TugasAkhir::query()
-        //     ->when($this->search, function ($query) {
-        //         $query->where('judul', 'like', '%' . $this->search . '%');
-        //     })
-        //     ->when($this->kategori, function ($query) {
-        //         $query->whereHas('kategori', function ($q) {
-        //             $q->where('id_kategori', $this->kategori);
-        //         });
-        //     })
-        //     ->when($this->prodi, function ($query) {
-        //         $query->whereHas('kategori.prodi', function ($q) {
-        //             $q->where('id_prodi', $this->prodi);
-        //         });
-        //     })
-        //     ->get();
-
         $search = '%' . $this->search . '%';
-        $results = TugasAkhir::where('judul', 'like', $search)->get();
+        $results = DB::table('v_data_tugasakhir')->where('judul', 'like', $search)->get();
+
+        $kategori = '%' . $this->kategori . '%';
+        $filters = DB::table('v_data_tugasakhir')->where('judul', 'like', $kategori)->get();
     
         return view('livewire.tugas-akhirs', [
             'results' => $results,
             'tipe_ta_lists' => $tipe_ta_lists,
             'prodis' => $prodis,
-            'kategoris' => $kategoris
+            'kategoris' => $kategoris,
+            'filters'   => $filters
         ]);
 
-        // return view('livewire.tugas-akhirs', [
-        //     'results' => $results,
-        //     'tipe_ta_lists' => $tipe_ta_lists,
-        //     'prodis' => $prodis,
-        //     'kategoris' => $kategoris
-        // ]);
             
     }
 }

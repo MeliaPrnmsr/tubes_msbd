@@ -16,11 +16,20 @@
                     {{-- kolom judul end --}}
 
                     {{-- kolom button start --}}
-                    <div class="col-3 d-flex justify-content-end">
-                        <button class="btn"><i class="fa-regular fa-heart"></i></button>
-                        <button class="btn"><i class="fa-regular fa-bookmark"></i></button>
-                    </div>
-                    {{-- kolom button start --}}
+                    
+                        <div class="col-3 d-flex justify-content-end">
+                            <form action="" method="post">
+                            <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
+                            <input type="hidden" name="id_user" value="{{ Auth::user()->username }}">
+                            <button class="btn" type="submit"><i class="fa-regular fa-heart"></i></button>
+                        </form>
+
+                        <form action="" method="post">
+                            <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
+                            <input type="hidden" name="id_user" value="{{ Auth::user()->username }}">
+                            <button class="btn" type="submit"><i class="fa-regular fa-bookmark"></i></button>
+                        </form>
+                        </div>
 
                     {{-- kolom sampul start --}}
                     <div class="col-4 d-flex align-items-center justify-content-center">

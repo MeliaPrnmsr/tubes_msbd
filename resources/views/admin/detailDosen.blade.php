@@ -1,12 +1,14 @@
-@extends('staff.stafflayout')
+@extends('admin.adminlayout')
 @php
-    $active = 'datadosen';
+    $active = 'dosen';
 @endphp
 @section('content')
     <!-- Register -->
 <div class="container mt-5">
     <h3 class="card-title text-center mt-3"><b>Detail Dosen</b></h3>
     <br>
+    <a href="{{route('datadosen.admin')}}" class="btn btn-hijau text-start" style="width: 10%">Kembali</a>
+        <br><br>
     <div class="card mx-auto">
         <div class="card-body">
             <form>
@@ -35,8 +37,8 @@
                     <input type="nidn" class="form-control" id="nidn" aria-describedby="nidn" value="{{ $dosen->jenjang }} - {{ $dosen->nama_prodi }}" readonly>
                 </div>
                 <div class="text-center mt-4">
-                    <a href="{{route('editdosen.staff', ['kode_dosen' => $dosen->kode_dosen])}}" class="btn btn-hijau mt-3" style="width: 20%">Perbarui</a>
-                    <a href="{{route('datadosen.staff')}}" class="btn btn-secondary mt-3" style="width: 20%">Kembali</a>
+                    <button type="submit" href="#" class="btn btn-hijau mt-3" style="width: 20%">Edit</button>
+                    <button type="cancel" href="/datadosenstaff" class="btn btn-secondary mt-3" style="width: 20%">Kembali</button>
                 </div>
             </form>
         </div>

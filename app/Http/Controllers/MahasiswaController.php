@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 
 use App\Models\Prodi;
 use App\Models\TugasAkhir;
 use App\Models\Kategori;
 use App\Models\Like;
 use App\Models\Mahasiswa;
-use App\Models\Dosenpembimbing;
-use App\Models\User as User;
+// use App\Models\Dosenpembimbing;
+// use App\Models\User;
 
 class MahasiswaController extends Controller
 {
@@ -42,10 +42,19 @@ class MahasiswaController extends Controller
         ]);
     }
 
+    public function cariLanding(Request $request)
+    {
+        $search = $request->input('search');
+        $results = TugasAkhir::where(function ($results) use ($search) {
+            $results->where('judul', 'LIKE', '%' . $search . '%');
+        });
+
+        return view('mahasiswa.msearch', ['results' => $results]);
+    }
+
     public function detailMhs($id_tugasakhir)
     {
         $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
-
         return view('mahasiswa.mopenskrip', ['tugasakhir' => $tugasakhir]);
     }
 
@@ -94,6 +103,28 @@ class MahasiswaController extends Controller
         return view('mahasiswa.mbookmark');
     }
 
+    public function likeTugasAkhir(Request $request)
+    {
+        $tugasAkhirId = $request->input('id_tugasakhir');
+        $userId = $request->input('id_user');
+
+        $existingLike = Like::where('tugasakhir_id', $tugasAkhirId)
+                            ->where('user_id', $userId)
+                            ->first();
+
+        if (!$existingLike) {
+            Like::create([
+                'tugasakhir_id' => $tugasAkhirId,
+                'user_id' => $userId,
+                'status' => 1
+            ]);
+        } else {
+            $existingLike->status = $existingLike->status === null ? 1 : ($existingLike->status == 1 ? 0 : 1);
+            $existingLike->save();
+        }
+
+        return redirect()->back()->with('success', 'Tugas Akhir liked successfully!');
+    }
 
     public function searchMhs(Request $request)
     {
@@ -191,61 +222,3 @@ class MahasiswaController extends Controller
         //
     }
 }
-
-// public function hasil_search(Request $request)
-// {
-
-//     if ($request->ajax()) {
-//         $results = TugasAkhir::query(); // Inisialisasi query builder
-
-//         $searchTerm = $request->input('search');
-//         $kategoriFilter = $request->input('kategori');
-//         $prodiFilter = $request->input('prodi');
-
-//         if (!empty($searchTerm)) {
-//             $results->where('judul', 'like', '%' . $searchTerm . '%');
-//         }
-
-//         if ($kategoriFilter) {
-//             $results->whereHas('kategori', function ($q) use ($kategoriFilter) {
-//                 $q->where('id_kategori', $kategoriFilter);
-//             });
-//         }
-
-//         if ($prodiFilter) {
-//             $results->whereHas('kategori.prodi', function ($q) use ($prodiFilter) {
-//                 $q->where('id_prodi', $prodiFilter);
-//             });
-//         }
-
-//         $results = $results->get(); 
-
-//         $output = '';
-
-//         if(count($results) > 0) {
-//             $output = '';
-//                 if (count($results) > 0)
-//                     foreach($results as $result)
-//                     $output = '
-//                     <div class="card mb-3  ">
-//                         <div class="row p-2">
-//                             <div class="col-2">
-//                                 <img src="asset/img/.$result->sampul" alt="" class="w-100">
-//                             </div>
-//                             <div class="col-10 justify-content-start">
-//                                 <h6><b>{{$result->judul}}</b></h6>
-//                                 <small style="font-size: 75%">Penulis : <b>nama_mahasiswa</b></small>
-//                                 <hr>
-//                                 <small style="font-size: 70%"><i>{{$result->judul}}</i></small>
-//                             </div>
-//                         </div>
-//                     </div>
-//                     endforeach ';
-//         }
-
-//     } else {
-//         $output = "<p> hasil tidak tersedia </p>";
-//     }
-
-//     return $output;
-// }

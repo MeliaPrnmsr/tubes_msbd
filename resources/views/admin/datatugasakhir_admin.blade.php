@@ -47,7 +47,7 @@
       <div class="col-3">{{ $cari ->tipe_ta }}</div>
       <div class="col-2 text-center">{{ $cari ->tahun_terbit }}</div>
       <div class="col-2 text-center">
-        <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+        <a href="{{ route('detailtugas.admin', ['id_tugasakhir' => $cari->id_tugasakhir]) }}" class="btn btn-repository">Detail</a>
       </div>
     </div>
     @php

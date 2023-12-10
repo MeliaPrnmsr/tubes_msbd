@@ -10,7 +10,7 @@ $active = 'dashboard';
 {{-- Jumlah tugas akhir start --}}
 <div class="card p-2">
     <div class="card-header" style="background-color: #ffc600">
-        <h4 class="mt-2"><b>Jumlah Tugas Akhir</b></h4>
+        <h4 class="mt-2">Data &nbsp; <b>{{$prodi_data->jenjang}} - {{$prodi_data->nama_prodi}}</b></h4>
     </div>
     <br>
     <div class="card-body">
@@ -19,36 +19,36 @@ $active = 'dashboard';
         <div class="row">
             <div class="col ">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class=" text-center"><b>500.000 jiwa</b></h4>
+                    <div class="card-body  bg-orange">
+                        <h2 class=" text-center"><b>{{$jumlahMahasiswa}}</b></h2>
                         <p class=" text-center">Mahasiswa</p>
                     </div>
-                    <div class="card-footer">
-                        <small>Update at: <b>added_date</b> </small>
+                    <div class="card-footer text-center bg-repository">
+                        <a href="{{route('datamahasiswa.staff')}}" class="btn btn-light" style="width: 50%">Detail</a>
                     </div>
                 </div>
             </div>
 
             <div class="col">
-                <div class="card text-white" style="background-color: #3dae2b">
+                <div class="card text-white bg-hijau">
                     <div class="card-body">
-                        <h4 class=" text-center"><b>120</b></h4>
+                        <h2 class=" text-center"><b>{{$jumlahTugasakhir}}</b></h2>
                         <p class=" text-center">Tugas Akhir</p>
                     </div>
-                    <div class="card-footer">
-                        <small>Update at: <b>added_date</b> </small>
+                    <div class="card-footer text-center">
+                        <a href="{{route('datatugas.staff')}}" class="btn btn-light" style="width: 50%">Detail</a>
                     </div>
                 </div>
             </div>
 
             <div class="col ">
                 <div class="card">
-                    <div class="card-body">
-                        <h4 class=" text-center"><b>500.000 jiwa</b></h4>
+                    <div class="card-body bg-orange">
+                        <h2 class=" text-center"><b>{{$jumlahDosen}}</b></h2>
                         <p class=" text-center">Dosen</p>
                     </div>
-                    <div class="card-footer">
-                        <small>Update at: <b>added_date</b> </small>
+                    <div class="card-footer text-center bg-repository">
+                        <a href="{{route('datadosen.staff')}}" class="btn btn-light" style="width: 50%">Detail</a>
                     </div>
                 </div>
             </div>
@@ -57,10 +57,6 @@ $active = 'dashboard';
         <!--row end-->
         {{-- jumlah user end --}}
         <br>
-        <div class="d-flex justify-content-center p-2">
-            <a href="{{route('datatugas.staff')}}" class="btn"
-                style="background-color: #ffa400; width: 30%;">Selengkapnya</a>
-        </div>
     </div>
 </div>
 {{-- Jumlah tugas akhir end --}}

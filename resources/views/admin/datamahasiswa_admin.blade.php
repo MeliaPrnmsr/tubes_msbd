@@ -47,7 +47,7 @@
       <div class="col-2">{{ $cari->NIM }}</div>
       <div class="col-3">{{ $cari->nama_prodi }}</div>
       <div class="col-2">
-        <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+        <a href="{{ route('detailmahasiswa.admin', ['NIM' => $cari->NIM]) }}" class="btn btn-repository">Detail</a>
       </div>
     </div>
 

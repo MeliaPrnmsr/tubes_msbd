@@ -12,12 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('likes', function (Blueprint $table) {
-            $table->increments('id_like'); // Auto-incrementing primary key
+            $table->increments('id_like');
             $table->unsignedInteger('tugasakhir_id');
             $table->foreign('tugasakhir_id')->references('id_tugasakhir')->on('tugas_akhirs')->onUpdate('cascade');
 
             $table->unsignedInteger('user_id');            
             $table->foreign('user_id')->references('id_user')->on('users')->onUpdate('cascade');
+            $table->enum('status', ['0','1']);
         });
     }
 
