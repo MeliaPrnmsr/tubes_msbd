@@ -54,16 +54,30 @@ Route::middleware(['role:admin'])->group(function () {
 //ROUTE STAFF
 //ROUTE STAFF
 Route::middleware(['role:staff'])->group(function () {
+    //CONTROLLER DASHBOARD
     Route::get('/dashboard_staff', [StaffController::class,'index'])->name('dashboard.staff');
+    //CONTROLLER MAHASISWA
+    //CONTROLLER MAHASISWA
     Route::get('/datamahasiswa_staff', [StaffController::class,'dataMahasiswa'])->name('datamahasiswa.staff');
-    Route::get('/datadosen_staff', [StaffController::class,'dataDosen'])->name('datadosen.staff');
-    Route::get('/datatugasakhir_staff', [StaffController::class,'dataTugasakhir'])->name('datatugas.staff');
-    Route::get('/datakategori_staff', [StaffController::class,'dataKategori'])->name('datakategori.staff');
-    Route::get('/detailDosen_staff', [StaffController::class,'detailDosen'])->name('detaildosen.staff');
+    Route::get('/detailMahasiswa/{NIM}', [StaffController::class,'detailMahasiswa'])->name('detailMahasiswa.staff');
     Route::get('/tambahmahasiswa_staff', [StaffController::class,'tambahMahasiswa'])->name('tambahmahasiswa.staff');
+    Route::post('/insertmahasiswa', [StaffController::class,'insertMahasiswa']);
+    //CONTROLLER DOSEN
+    //CONTROLLER DOSEN
+    Route::get('/datadosen_staff', [StaffController::class,'dataDosen'])->name('datadosen.staff');
+    Route::get('/detailDosen_staff/{kode_dosen}', [StaffController::class,'detailDosen'])->name('detailDosen.staff');
     Route::get('/tambahdosen_staff', [StaffController::class,'tambahDosen'])->name('tambahdosen.staff');
+    Route::post('/insertdosen', [StaffController::class,'insertDosen']);
+    //CONTROLLER TUGAS AKHIR
+    //CONTROLLER TUGAS AKHIR
+    Route::get('/datatugasakhir_staff', [StaffController::class,'dataTugasakhir'])->name('datatugas.staff');
+    Route::get('/detailTugasakhir/{id_tugasakhir}', [StaffController::class,'detailTugasakhir'])->name('detailTugasakhir.staff');
+    Route::get('/tambahTugasakhir_staff', [StaffController::class,'tambahTugasakhir'])->name('tambahtugasakhir.staff');
+    Route::post('/inserttugasakhir', [StaffController::class,'insertTugasakhir']);
+
+    Route::get('/datakategori_staff', [StaffController::class,'dataKategori'])->name('datakategori.staff');
+
     Route::get('/notifikasi_staff', [StaffController::class,'notifikasi_staff'])->name('notifikasi.staff');
-    Route::get('/tambahskripsi_staff', [StaffController::class,'tambahSkripsi'])->name('tambahskripsi.staff');
 });
 
 
@@ -72,8 +86,8 @@ Route::middleware(['role:staff'])->group(function () {
 //ROUTE PENGUNJUNG
 Route::get('/landingpage', [PengunjungController::class,'index']);
 Route::get('/search', [PengunjungController::class,'search']);
-Route::get('/detailskripsi', [PengunjungController::class,'detailskripsi']);
-Route::get('/browseall', [PengunjungController::class,'browseall']);
+Route::get('/detailtugasakhir/{id_tugasakhir}', [PengunjungController::class,'detailTugasakhir'])->name('detailTugasakhir');
+Route::get('/browseall', [PengunjungController::class,'browseAll'])->name('browseall.pengunjung');
 Route::get('/abstrak', [PengunjungController::class,'abstrak']);
 
 
@@ -86,7 +100,7 @@ Route::middleware(['role:mahasiswa'])->group(function () {
     Route::get('/meditprofil', [MahasiswaController::class,'editprofilMhs'])->name('editprofil.mahasiswa');
     Route::get('/mbookmark', [MahasiswaController::class,'bookmarkMhs'])->name('bookmark.mahasiswa');
     Route::get('/msearch', [MahasiswaController::class,'searchMhs'])->name('search.mahasiswa');
-    Route::get('/mdetailSkripsi', [MahasiswaController::class,'detailMhs'])->name('detail.mahasiswa');
+    Route::get('/mdetailTugasakhir/{id_tugasakhir}', [MahasiswaController::class,'detailMhs'])->name('detail.mahasiswa');
     Route::get('/mbrowseall', [MahasiswaController::class,'browseallMhs'])->name('browseall.mahasiswa');
     Route::get('/mabstrak', [MahasiswaController::class,'abstrakMhs'])->name('abstrak.mahasiswa');    
 });
@@ -100,12 +114,13 @@ Route::middleware(['role:dosen'])->group(function () {
     Route::get('/dlandingpage', [DosenController::class,'landingDosen'])->name('landingpage.dosen');
     Route::get('/dprofile', [DosenController::class,'profileDosen'])->name('profile.dosen');
     Route::get('/deditprofile', [DosenController::class,'editprofilDosen'])->name('editprofile.dosen');
+    Route::post('/inserteditdosen', [DosenController::class,'inserteditprofilDosen']);
     Route::get('/dbimbingan', [DosenController::class,'bimbinganDosen'])->name('bimbingan.dosen');
     Route::get('/dbookmark', [DosenController::class,'bookmarkDosen'])->name('bookmark.dosen');
     Route::get('/dsearch', [DosenController::class,'searchDosen'])->name('search.dosen');
     Route::get('/dbrowseall', [DosenController::class,'browseallDosen'])->name('browseall.dosen');
     Route::get('/dabstrak', [DosenController::class,'abstrakDosen'])->name('abstrak.dosen');
-    Route::get('/detailskripsi_dosen', [DosenController::class,'detailskripsiDosen']);    
+    Route::get('/detailskripsi_dosen/{id_tugasakhir}', [DosenController::class,'detailskripsiDosen'])->name('detail.dosen');    
 });
 
 

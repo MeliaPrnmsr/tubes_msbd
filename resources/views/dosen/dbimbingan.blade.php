@@ -32,24 +32,25 @@
               <div class="col-2 text-center">Tahun Terbit</div>
               <div class="col-2 text-center">Aksi</div>
             </div>
-      
+
+            @foreach($tugasbimbings as $data)
             <div class="row shadow p-3 mb-2 align-items-center">
-              <div class="col-1">1</div>
-              <div class="col-5">Kim Seok Jin</div>
-              <div class="col-2">12021992</div>
-              <div class="col-2 text-center">Teknologi Informasi</div>
+              <div class="col-1">{{$loop->iteration + 1}}</div>
+              <div class="col-5">{{$data->nama_mahasiswa}}</div>
+              <div class="col-2">{{$data->NIM}}</div>
+              <div class="col-2 text-center">{{$data ->tahun_terbit}}</div>
               <div class="col-2 text-center">
-                <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
               </div>
             </div>
-      
-            <div class="row shadow p-3 mb-2 align-items-center">
+            @endforeach
+            <!-- <div class="row shadow p-3 mb-2 align-items-center">
               <div class="col-1">2</div>
               <div class="col-5">Kim Min Seok</div>
               <div class="col-2">12021992</div>
               <div class="col-2 text-center">Teknologi Informasi</div>
               <div class="col-2 text-center">
-                <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
               </div>
             </div>
       
@@ -59,9 +60,9 @@
               <div class="col-2">12021992</div>
               <div class="col-2 text-center">Teknologi Informasi</div>
               <div class="col-2 text-center">
-                <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
               </div>
-            </div>
+            </div> -->
       
           </div>
           {{-- tabel daftar mhs end --}}

@@ -18,13 +18,13 @@ return new class extends Migration
             CREATE PROCEDURE p_editprofil_dosen(
                 IN id INT,
                 IN new_namadosen VARCHAR(255),
-                IN new_email VARCHAR(255))
+                IN new_email VARCHAR(255)
+                )
 
                 BEGIN 
 
-                UPDATE users SET email = new_email WHERE id = id_user;
-                UPDATE dosens SET nama_dosen = new_namadosen WHERE id = user_id;
-
+                UPDATE users SET email = new_email WHERE id_user = id;
+                UPDATE dosens SET nama_dosen = new_namadosen WHERE user_id = id;
                 END
         ");
     }

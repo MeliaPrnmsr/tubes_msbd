@@ -2,13 +2,24 @@
 
 @section('content')
 <br>
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Berhasil!</strong> {{session('success')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          @elseif(session('deleted'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Berhasil! </strong> {{session('deleted')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    @endif
 <h3 class="text-center pt-2"><b>Data Dosen</b></h3>
 <div class="card">
   <br>
   <div class="card-body">
     <div class="row d-flex justify-content-center">
       <div class="col-3">
-        <a href="/tambahdosen" class="btn btn-hijau"><i class="fa-solid fa-user-plus"></i> &nbsp;Tambah Data</a>
+        <a href="{{route('tambahdosen.staff')}}" class="btn btn-hijau"><i class="fa-solid fa-user-plus"></i> &nbsp;Tambah Data</a>
       </div>
 
       <div class="col-8">
@@ -32,39 +43,24 @@
         <div class="col-1">No</div>
         <div class="col-4">Nama</div>
         <div class="col-2">NIP</div>
-        <div class="col-3">NIDN</div>
+        <div class="col-3">Prodi</div>
         <div class="col-2">Aksi</div>
       </div>
-
+      @php $i = 1; @endphp
+      @foreach($dosens as $dosen)
+      {{-- @php echo($dosen) @endphp --}}
+      {{-- @dd($dosens) --}}
       <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">1</div>
-        <div class="col-4">Kim Seok Jin</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">19921202</div>
+        <div class="col-1">{{ $i }}</div>
+        <div class="col-4">{{ $dosen->nama_dosen }}</div>
+        <div class="col-2">{{ $dosen->NIP }}</div>
+        <div class="col-3">{{$dosen->prodi->jenjang}} - {{$dosen->prodi->nama_prodi}}</div>
         <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
+          <a href="{{ route('detailDosen.staff', ['kode_dosen' => $dosen->kode_dosen]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">2</div>
-        <div class="col-4">Kim Min Seok</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">19921202</div>
-        <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
-
-      <div class="row shadow p-3 mb-2 align-items-center">
-        <div class="col-1">3</div>
-        <div class="col-4">Kim Seok Jin</div>
-        <div class="col-2">12021992</div>
-        <div class="col-3">19921202</div>
-        <div class="col-2">
-          <a href="/detailmahasiswastaff" class="btn btn-repository">Detail</a>
-        </div>
-      </div>
+      @php $i++; @endphp
+      @endforeach
 
     </div>
     {{-- tabel daftar mhs end --}}

@@ -1,4 +1,4 @@
-@extends('dosen.dlayout')
+@extends('mahasiswa.mlayout')
 
 @section('content')
     <div class="container-fluid">
@@ -35,28 +35,42 @@
             <nav class="d-flex justify-content-center">
                 <div class="nav nav-pills" id="nav-tab" role="tablist">
                     <button class="nav-link mx-1 active" id="nav-tanggal-tab" data-bs-toggle="tab" data-bs-target="#nav-tanggal" type="button" role="tab" aria-controls="nav-tanggal" aria-selected="true">Tanggal</button>
-                    <button class="nav-link mx-1" id="nav-prodi-tab" data-bs-toggle="tab" data-bs-target="#nav-prodi" type="button" role="tab" aria-controls="nav-prodi" aria-selected="false">Jurusan</button>
-                    <button class="nav-link mx-1" id="nav-tipe-tab" data-bs-toggle="tab" data-bs-target="#nav-tipe" type="button" role="tab" aria-controls="nav-tipe" aria-selected="false">Tipe Tugas Akhir</button>
+                    <button class="nav-link mx-1" id="nav-kategori-tab" data-bs-toggle="tab" data-bs-target="#nav-kategori" type="button" role="tab" aria-controls="nav-kategori" aria-selected="false">Jurusan</button>
+                    <button class="nav-link mx-1" id="nav-skripsi-tab" data-bs-toggle="tab" data-bs-target="#nav-skripsi" type="button" role="tab" aria-controls="nav-skripsi" aria-selected="false">Skripsi</button>
+                    <button class="nav-link mx-1" id="nav-tesis-tab" data-bs-toggle="tab" data-bs-target="#nav-tesis" type="button" role="tab" aria-controls="nav-tesis" aria-selected="false">Tesis</button>
+                    <button class="nav-link mx-1" id="nav-disertasi-tab" data-bs-toggle="tab" data-bs-target="#nav-disertasi" type="button" role="tab" aria-controls="nav-disertasi" aria-selected="false">Disertasi</button>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 {{-- isi tab 1 start --}}
                 <div class="tab-pane fade show active bg-white" id="nav-tanggal" role="tabpanel" aria-labelledby="nav-tanggal-tab" tabindex="0">
-                    @include('mahasiswa.mlisttgl')
+                    @include('mahasiswa.mlisttgl', ['tahun_terbit' => $tahun_terbit])
                 </div>
                 {{-- isi tab 1 start --}}
 
+                {{-- isi tab 3 start --}}
+                <div class="tab-pane fade bg-white" id="nav-kategori" role="tabpanel" aria-labelledby="nav-kategori-tab" tabindex="0">
+                    @include('mahasiswa.mlistkategori', ['kategori' => $kategori])
+                </div>
+                {{-- isi tab 3 end --}} 
+
                 {{-- isi tab 2 start --}}
-                <div class="tab-pane fade bg-white" id="nav-tipe" role="tabpanel" aria-labelledby="nav-tipe-tab" tabindex="0">
-                    @include('mahasiswa.mlisttgl')
+                <div class="tab-pane fade bg-white" id="nav-skripsi" role="tabpanel" aria-labelledby="nav-skripsi-tab" tabindex="0">
+                    @include('mahasiswa.mlistskripsi', ['skripsi' => $skripsi])
                 </div>
                 {{-- isi tab 2 end --}}
 
-                {{-- isi tab 3 start --}}
-                <div class="tab-pane fade bg-white" id="nav-prodi" role="tabpanel" aria-labelledby="nav-prodi-tab" tabindex="0">
-                    @include('mahasiswa.mlisttgl')
+                {{-- isi tab 2 start --}}
+                <div class="tab-pane fade bg-white" id="nav-tesis" role="tabpanel" aria-labelledby="nav-tesis-tab" tabindex="0">
+                    @include('mahasiswa.mlisttesis', ['tesis' => $tesis])
                 </div>
-                {{-- isi tab 3 end --}} 
+                {{-- isi tab 2 end --}}
+
+                {{-- isi tab 2 start --}}
+                <div class="tab-pane fade bg-white" id="nav-disertasi" role="tabpanel" aria-labelledby="nav-disertasi-tab" tabindex="0">
+                    @include('mahasiswa.mlistdisertasi', ['disertasi' => $disertasi])
+                </div>
+                {{-- isi tab 2 end --}}
             </div>
         </div>
     </div>

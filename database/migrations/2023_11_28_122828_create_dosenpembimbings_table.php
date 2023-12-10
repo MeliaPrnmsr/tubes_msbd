@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('kode_dosen')->references('kode_dosen')->on('dosens')->onUpdate('cascade')->onDelete('restrict');
             
             $table->enum('status_pembimbing', ['dospem1', 'dospem2']);
+
         });
     }
 
