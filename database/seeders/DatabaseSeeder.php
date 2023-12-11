@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
 use App\Models\User;
 use App\Models\Prodi;
 use App\Models\Mahasiswa;
@@ -12,6 +11,8 @@ use App\Models\Dosen;
 use App\Models\Kategori;
 use App\Models\TugasAkhir;
 use App\Models\Dosenpembimbing;
+use App\Models\DokumenFile;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,10 +50,10 @@ class DatabaseSeeder extends Seeder
         ]);
 
         User::create([
-            'username' => "SabrinaSiahaan", 
-            'email' => "sabrina@gmail.com",
-            'password' => bcrypt('sabrina'),
-            'role' => "staff"
+            'username' => "Seniman", 
+            'email' => "pakmanusu@gmail.com",
+            'password' => bcrypt('seniman'),
+            'role' => "dosen"
         ]);
 
         User::create([
@@ -69,38 +70,26 @@ class DatabaseSeeder extends Seeder
             'role' => "mahasiswa"
         ]);
 
-
+        
         Prodi::create([
             'jenjang' => "S1",
             'nama_prodi' => "Teknologi Informasi",
             'alamat_prodi' => "Gedung C Fasilkom-TI, Universitas Sumatera Utara, Jl. Alumni No.3, Padang Bulan, Kec. Medan Baru, Kota Medan, Sumatera Utara 20155"
         ]); 
-
+        
         Prodi::create([
             'jenjang' => "S1",
             'nama_prodi' => "Ilmu Komputer",
             'alamat_prodi' => "Gedung D Fasilkom-TI, Universitas Sumatera Utara, Jl. Alumni No.3, Padang Bulan, Kec. Medan Baru, Kota Medan, Sumatera Utara 20155"
         ]);
-
-        Prodi::create([
-            'jenjang' => "S2",
-            'nama_prodi' => "Teknik Informatika",
-            'alamat_prodi' => "Universitas Sumatera Utara, Jl. Alumni No.3, Padang Bulan, Kec. Medan Baru, Kota Medan, Sumatera Utara 20155"
-        ]);
-
-        Prodi::create([
-            'jenjang' => "S3",
-            'nama_prodi' => "Ilmu Komputer",
-            'alamat_prodi' => "Universitas Sumatera Utara, Jl. Alumni No.3, Padang Bulan, Kec. Medan Baru, Kota Medan, Sumatera Utara 20155"
-        ]);
-
+        
         Mahasiswa::create([
-            'nim' => "221402078",
-            'nama_mahasiswa' => "Sabrina Marisi Siahaan",
-            'user_id' => "2",
+            'nim' => "221402020",
+            'nama_mahasiswa' => "Gylbert Chrismiguel Sitorus",
+            'user_id' => 5,
             'prodi_id' => "1"
         ]);
-
+        
         Mahasiswa::create([
             'nim' => "221402133",
             'nama_mahasiswa' => "Serafim Edgar Pandamei Sitorus",
@@ -114,6 +103,15 @@ class DatabaseSeeder extends Seeder
             'NIDN' => "0031087905",
             'nama_dosen' => "Deddy Arisandi",
             'user_id' => 3,
+            'prodi_id' => 1
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "CEES",
+            'NIP' => "198705252014041001",
+            'NIDN' => "0025058704",
+            'nama_dosen' => "Seniman Cees",
+            'user_id' => 4,
             'prodi_id' => 1
         ]);
 
@@ -131,12 +129,7 @@ class DatabaseSeeder extends Seeder
             'nama_kategori' => "Computer Vision",
             'prodi_id' => 1
         ]);
-
-        Kategori::create([
-            'nama_kategori' => "Internet Of Things",
-            'prodi_id' => 2
-        ]);
-
+            
         TugasAkhir::create([
             'judul' => "Kesadaran banyak orang akan teknologi iron dome",
             'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
@@ -160,7 +153,7 @@ class DatabaseSeeder extends Seeder
             'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
             'tahun_terbit' => 1980,
             'tipe_ta' => "tesis",
-            'author' => "221402078",
+            'author' => "221402133",
             'kategori_id' => 2
         ]);
 
@@ -170,5 +163,25 @@ class DatabaseSeeder extends Seeder
             'status_pembimbing' => "dospem1"
         ]);
 
+        Dosenpembimbing::create([
+            'NIM' => "221402133",
+            'kode_dosen' => "CEES",
+            'status_pembimbing' => "dospem2"
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "D:\Semester 3\MSBD\TubesMSBD\tubes_msbd\public\asset\file\Metodologi220402001.pdf",
+            'file_tugasakhir' => "D:\Semester 3\MSBD\TubesMSBD\tubes_msbd\public\asset\file\Isi TA220402001.pdf",
+            'file_daftarpustaka' => "D:\Semester 3\MSBD\TubesMSBD\tubes_msbd\public\asset\file\Daftar Pustaka220402001.pdf",
+            'tugasakhir_id' => 2
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "D:\Semester 3\MSBD\TubesMSBD\tubes_msbd\public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "D:\Semester 3\MSBD\TubesMSBD\tubes_msbd\public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "D:\Semester 3\MSBD\TubesMSBD\tubes_msbd\public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 1
+        ]);
+        
     }
 }

@@ -20,7 +20,7 @@ class DosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function landingDosen()
+    public function landingDosen(Request $request)
     {
         $totalTugasAkhir = TugasAkhir::count();
         $popular_skripsi = DB::table('v_tugasakhir_terpopuler')
@@ -170,8 +170,9 @@ class DosenController extends Controller
 
         $prodis = Prodi::all();
         $kategoris = Kategori::orderBy('prodi_id')->get();
+        
 
-        return view('dosen.dsearch', compact('tugasAkhir', 'prodis', 'kategoris'));
+        return view('dosen.dsearch', compact('tugasAkhir', 'prodis', 'kategoris', 'search'));
     }
 
     public function browseallDosen()

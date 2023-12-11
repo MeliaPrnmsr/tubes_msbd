@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::statement("DROP VIEW IF EXISTS top_like_tugas_akhir");
         DB::statement("
             CREATE VIEW top_like_tugas_akhir AS
             SELECT

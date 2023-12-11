@@ -33,11 +33,9 @@
                             <h2 style="color: #006633"><b>Repository Skripsi</b></h2>
                             <div class="row">
                                 <div class="col-9">
-                                    <p>Skripsi adalah makanan yang digandrungi oleh sejuta umat. Dan repository skripsi
-                                        adalah pameran skripsi agar pengunjung bisa melihat-lihat mana tau tertarik</p>
-                                    <form class="d-flex" role="search">
-                                        <input class="form-control me-2 rounded-pill" type="search"
-                                            placeholder="Cari Tugas Akhir" aria-label="Search">
+                                    <p>Skripsi adalah makanan yang digandrungi oleh sejuta umat. Dan repository skripsiadalah pameran skripsi agar pengunjung bisa melihat-lihat mana tau tertarik</p>
+                                    <form class="d-flex" role="search" method="GET" action="{{ route('search.dosen') }}"> 
+                                        <input class="form-control me-2 rounded-pill" type="search" placeholder="Cari Tugas Akhir" aria-label="Search" name="search">
                                         <button class="btn btn-repository rounded-pill" type="submit">Cari</button>
                                     </form>
                                 </div>
@@ -53,8 +51,7 @@
     </div>
     <br>
     <div class="container-fluid" id="baris2" style="flex: 1;" style="background-color: white">
-        <img src="{{asset('asset/img/imgdashboard.png')}}" alt="Potrait"
-            style="position: absolute; top: 40%; transform: translateY(-48%); right: 0;">
+        <img src="{{asset('asset/img/imgdashboard.png')}}" alt="Potrait" style="position: absolute; top: 40%; transform: translateY(-48%); right: 0;">
     </div>
 </div>
 <br>
