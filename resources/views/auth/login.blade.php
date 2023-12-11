@@ -1,46 +1,95 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="assets/img/logo.png" sizes="16x16 32x32" rel="shortcut icon">
+    <title>Repository Tugas Akhir</title>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="username" :value="__('username')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required autofocus autocomplete="username" />
+    <link rel="shortcut icon" href="{{ asset('asset/img/logo.png')}}" sizes="16x16 32x32">
+    <link rel="stylesheet" href="{{asset('asset/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/css/tambahan.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/icon/css/all.min.css')}}">
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand sticky-top shadow bg-repository-hijau">
+        <div class="container-fluid justify-content-center">
+            <div class="row px-2 w-100 ">
+                <!-- Menggunakan justify-content-center dan px-2 -->
+
+                <div class="col p-2 d-flex justify-content-start">
+                    <!-- Update disini -->
+                    <a class="navbar-brand text-white" href="#">
+                        <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35"
+                            class="d-inline-block align-text-top">
+                        Repository TugasAkhir
+                    </a>
+                </div>
+
+                <div class="col p-2 d-flex justify-content-end">
+                    <!-- Update disini -->
+                    {{-- <div class="">
+                        <a href="/login" class="btn btn-repository" type="button"
+                            style="width: 100px">&nbsp;Login&nbsp;</a>
+                    </div> --}}
+                </div>
+            </div>
         </div>
+    </nav>
+    <!-- End Navbar -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col ms-5 mt-5 pe-3">
+                <div class="container-fluid">
+                    <h3 style="color: #006633">Repository Tugas Akhir</h3>
+                    <p>
+                        Menyimpan kreativitas dan inovasi mahasiswa
+                        untuk tugas akhir yang membawa perubahan
+                    </p>
+                    <img src="{{asset('asset/img/imgdashboard.png')}}" alt="" class="w-50">
+                </div>
+            </div>
+            <div class="col mt-5 p-3">
+                <div class="card border-0 rounded-0 shadow w-100" style="background-color">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mt-3 p-2">LOGIN</h2>
+                        <form method="POST" action="{{ route('login') }}">
+                            @csrf
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                            <div class="d-flex flex-column align-items-center">
+                                <div class="mt-4 w-75">
+                                    <label for="username" :value="__('username')" class="form-label">Username</label>
+                                    <input type="text" class="form-control" id="username" aria-describedby="username"
+                                        name="username" :value="old('username')" required autofocus autocomplete="username">
+                                </div>
+                                <div class="mt-3  w-75">
+                                    <label for="password" :value="__('password')" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="password" aria-describedby="password"
+                                        name="password" :value="old('password')" required autofocus autocomplete="password">
+                                </div>
+                            </div>
+                            <div class="text-center mt-3">
+                                <button type="submit" class="btn btn-repository mt-4 w-50">Login</button>
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
+    </div>
+    <!-- Footer -->
+    <div class="footer mt-5" style="background-color:black; height: 70px;">
+        <div class="container-fluid">
+            <p class="text-center" style="color: white;">Ada Masalah? <br> Hubungi Administrator
+                <a href="">[helpdesk@usu.ac.id]</a>
+            </p>
         </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</html>

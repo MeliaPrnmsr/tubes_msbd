@@ -38,10 +38,14 @@
                                 <div class="row">
                                     <div class="col-9">
                                         <p>Skripsi adalah makanan yang digandrungi oleh sejuta umat. Dan repository skripsi adalah pameran skripsi agar pengunjung bisa melihat-lihat mana tau tertarik</p>
-                                        <form class="d-flex" role="search">
-                                            <input class="form-control me-2 rounded-pill" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
-                                            <button class="btn btn-repository rounded-pill" type="submit">Cari</button>
+
+                                        <form action="{{ route('cari.landingpage') }}" method="GET" class="d-flex">
+                                            @csrf
+
+                                            <input class="form-control me-2 rounded-pill" type="text" placeholder="Cari Tugas Akhir" aria-label="Search" id="search" name="search">
+                                            <button type="submit" class="btn btn-repository rounded-pill">Cari</button>
                                         </form>
+
                                     </div>
                                 </div>
                                 <br>
@@ -66,7 +70,7 @@
          <div class="card-body">
              <p>
                 <b>| Melalui mahasiswa-mahasiswa yang sudah menyelesaikan tugas akhir,
-                saat in sudah terdapat sebanyak xxx tugas akhir di dalam repository skripsi
+                saat in sudah terdapat sebanyak <i>{{$totalTugasAkhir}}</i> tugas akhir di dalam repository skripsi ini
                 </b>
             </p>
          </div>

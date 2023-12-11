@@ -23,8 +23,10 @@ class RoleMiddleware
                 return redirect()->route('dashboard.staff');
             case 'dosen':
                 return redirect()->route('landingpage.dosen');
-            default:
+            case 'mahasiswa':
                 return redirect()->route('landingpage.mahasiswa');
+            default:
+                return redirect()->route('landingpage');
         }
     }
 }

@@ -49,7 +49,7 @@ class AuthenticatedSessionController extends Controller
         }
 
         return back()->withErrors([
-            'username' => 'The provided credentials do not match our records.',
+            'username' => 'Username tidak terdaftar',
         ]);
     }
 
@@ -64,6 +64,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/landingpage');
+        return redirect()->route('landingpage');
     }
 }

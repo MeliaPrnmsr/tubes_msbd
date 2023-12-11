@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('log_akuns', function (Blueprint $table) {
+            $table->string('action');
             $table->date('waktu'); 
             $table->text('deskripsi');
             $table->string('sebelum')->nullable();

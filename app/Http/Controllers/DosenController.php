@@ -9,6 +9,8 @@ use App\Models\TugasAkhir;
 use App\Models\Like;
 use App\Models\Dosenpembimbing;
 use App\Models\Dosen;
+use App\Models\Prodi;
+use App\Models\Kategori;
 
 class DosenController extends Controller
 {
@@ -17,12 +19,13 @@ class DosenController extends Controller
      */
     public function landingDosen(Request $request)
     {
+        $totalTugasAkhir = TugasAkhir::count();
         $popular_skripsi = DB::table('v_tugasakhir_terpopuler')
-        ->join('tugas_akhirs', 'v_tugasakhir_terpopuler.tugasakhir_id', '=', 'tugas_akhirs.id_tugasakhir')
-        ->join('mahasiswas', 'tugas_akhirs.author', '=', 'mahasiswas.NIM')
-        ->select('tugas_akhirs.*', 'v_tugasakhir_terpopuler.jumlah_like', 'mahasiswas.nama_mahasiswa')
-        ->orderByDesc('v_tugasakhir_terpopuler.jumlah_like')
-        ->get();
+            ->join('tugas_akhirs', 'v_tugasakhir_terpopuler.tugasakhir_id', '=', 'tugas_akhirs.id_tugasakhir')
+            ->join('mahasiswas', 'tugas_akhirs.author', '=', 'mahasiswas.NIM')
+            ->select('tugas_akhirs.*', 'v_tugasakhir_terpopuler.jumlah_like', 'mahasiswas.nama_mahasiswa')
+            ->orderByDesc('v_tugasakhir_terpopuler.jumlah_like')
+            ->get();
 
 
         $results = DB::table('tugas_akhirs')
@@ -32,7 +35,8 @@ class DosenController extends Controller
 
         return view('dosen.dlandingpage', [
             'popular_skripsi' => $popular_skripsi,
-            'results' => $results
+            'results' => $results,
+            'totalTugasAkhir' => $totalTugasAkhir
         ]);
     }
 
@@ -41,50 +45,43 @@ class DosenController extends Controller
      */
     public function profileDosen()
     {
-        $profil = DB::table('profil_dosen')->where('user_id', auth()->user()->id_user)->first();
-        return view('dosen.dprofile', [
-            'nama_lengkap' => $profil->nama_dosen,
-            'email' => $profil->email,
-            'nip' => $profil->NIP,
-            'nidn' => $profil->NIDN,
-            'program_studi' => $profil->nama_prodi
-        ]);
+        $dosens = DB::table('v_data_dosen')->where('user_id', auth()->id())->first();
+        return view('dosen.dprofile', compact('dosens'));
     }
 
     public function editprofilDosen()
     {
-        $profil = DB::table('profil_dosen')->where('user_id', auth()->user()->id_user)->first();
-        return view('dosen.dprofile', [
-            'nama_lengkap' => $profil->nama_dosen,
-            'email' => $profil->email,
-            'nip' => $profil->NIP,
-            'nidn' => $profil->NIDN,
-            'program_studi' => $profil->nama_prodi
-        ]);
-
+        $dosens = DB::table('v_data_dosen')->where('user_id', auth()->user()->id_user)->first();
+        return view('dosen.deditprofil', compact('dosens'));
     }
 
     public function inserteditprofildosen(Request $request)
     {
-        $id = Dosen::where('user_id', auth()->user()->id_user)->value('user_id');
-        $nama = $request->input('nama');
-        // $request->validate([
-        //     'photo' => 'image|mimes:jpeg,png,jpg|max:2048'
-        // ]);
-        // $foto = $request->file('photo')->store('dosenfoto');
-        $email = $request->input('email');
+        $user_login = auth()->user()->id_user;
+        $emailBaru = $request->input('email');
+        $namaBaru = $request->input('nama');
 
-        DB::select('CALL p_editprofil_dosen(?, ?, ?)', [
-        $id,
-        $nama,
-        $email
-        // $foto
-        ]); 
-        
+        $user = auth()->user();
+        $pathFoto = $user->dosen->foto ?? $user->foto;
+
+        if ($request->hasFile('foto')) {
+            $fotoBaru = $request->file('foto');
+            $namaFoto = $user->username . '.' . $fotoBaru->getClientOriginalExtension();
+            $path = public_path('asset/img/');
+            $fotoBaru->move($path, $namaFoto);
+            $pathFoto = $namaFoto;
+        }
+
+        DB::select('CALL p_editprofil_dosen(?, ?, ?, ?)', [
+            $user_login,
+            $emailBaru,
+            $namaBaru,
+            $pathFoto,
+        ]);
+
         return redirect()->route('profile.dosen')->with('succes', 'Data Dosen Berhasil Diubah!');
     }
 
-    
     public function bimbinganDosen()
     {
        
@@ -101,58 +98,55 @@ class DosenController extends Controller
 
     public function searchDosen(Request $request)
     {
-        $jenis = $request->input('jenis_koleksi');
         $search = $request->input('search');
+        $prodi = $request->input('prodi');
+        $kategori = $request->input('kategori');
 
-        session(['pilihan_jeniskoleksi' => $jenis]);
+        $query = DB::table('v_data_tugasakhir');
 
-        $results = DB::table('v_seluruh_tugas_akhirs')
-        ->select('judul', 'sampul', 'abstrak', 'author')
-        ->orWhere(function ($query) use ($jenis, $search){
+        if (!empty($search)) {
+            $query->where('judul', 'LIKE', "%$search%");
+        }
 
-            if($jenis == 'skripsi'){
-                $query->where('judul', 'LIKE', '%' . $search . '%')
-                ->where('tipe_ta', '=', 'skripsi');
-            }
-            elseif($jenis == 'tesis'){
-                $query->where('judul', 'LIKE', '%' . $search . '%')
-                ->where('tipe_ta', '=', 'tesis');
-            }
-            elseif($jenis == 'disertasi'){
-                $query->where('judul', 'LIKE', '%' . $search . '%')
-                ->where('tipe_ta', '=', 'disertasi');
-            }else{
-                $query->where('judul', 'LIKE', '%' . $search . '%');
-            }
-        })->get();
+        if (!empty($prodi)) {
+            $query->where('prodi_id', $prodi);
+        }
 
-        return view('dosen.dsearch', [
-            'results' => $results,
-            'search' => $search
-        ]);
+        if (!empty($kategori)) {
+            $query->where('kategori_id', $kategori);
+        }
+
+        $tugasAkhir = $query->get();
+
+
+        $prodis = Prodi::all();
+        $kategoris = Kategori::orderBy('prodi_id')->get();
+        
+
+        return view('dosen.dsearch', compact('tugasAkhir', 'prodis', 'kategoris', 'search'));
     }
 
     public function browseallDosen()
     {
         $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')
-        ->orderBy('tahun_terbit', 'DESC')
-        ->get();
+            ->orderBy('tahun_terbit', 'DESC')
+            ->get();
 
         $kategori = DB::table('v_tugasakhir_kategori')
-        ->orderBy('nama_kategori', 'ASC')
-        ->get();
+            ->orderBy('nama_kategori', 'ASC')
+            ->get();
 
         $skripsi = DB::table('v_tugasakhir_skripsi')
-        ->orderBy('judul', 'ASC')
-        ->get();
+            ->orderBy('judul', 'ASC')
+            ->get();
 
         $tesis = DB::table('v_tugasakhir_tesis')
-        ->orderBy('judul', 'ASC')
-        ->get();
+            ->orderBy('judul', 'ASC')
+            ->get();
 
         $disertasi = DB::table('v_tugasakhir_disertasi')
-        ->orderBy('judul', 'ASC')
-        ->get();
+            ->orderBy('judul', 'ASC')
+            ->get();
         //dd($tahun_terbit);
         return view('dosen.dbrowseall', [
             'tahun_terbit' => $tahun_terbit,
@@ -162,12 +156,12 @@ class DosenController extends Controller
             'disertasi' => $disertasi
         ]);
     }
-    
+
     public function abstrakDosen()
     {
         return view('dosen.dabstrak');
     }
-      
+
     public function detailskripsiDosen($id_tugasakhir)
     {
         //$tugasakhir = TugasAkhir::find($id_tugasakhir);
@@ -177,13 +171,6 @@ class DosenController extends Controller
         //dd($tugasakhir);
         return view('dosen.dopenskrip', ['tugasakhir' => $tugasakhir, 'dosen_pembimbing' => $dosen_pembimbing]);
     }
-
-    // public function search(Request $request){
-    //     $jenis = $request->input('jenis_koleksi');
-    //     $search = $request->input('search');
-
-
-    // }
 
     /**
      * Show the form for creating a new resource.
