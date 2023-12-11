@@ -32,6 +32,7 @@
                     {{-- teks --}}
                     <br>
                     <div id="hasil_search">
+                        @if($results->count() > 0)
                         @foreach($results as $result)
                         <div class="card mb-3  ">
                             <div class="row p-2">
@@ -47,6 +48,11 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                            <div class="row p-2">
+                                <b>Tidak ditemukan Hasil Untuk {{ $search }}</b>
+                            </div>
+                        @endif
                     </div>
 
                     <br>
