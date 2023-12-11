@@ -5,18 +5,14 @@
     {{-- menu start --}}
     <br>
     <div class="d-flex justify-content-center">
-        <a href="#" class="btn rounded square-btn bg-repository">
-            <i class="fas fa-hourglass-half icon"></i>
-            <small>Lastest</small>
+        <a href="/dsearch" class="btn rounded square-btn bg-repository">
+            <i class="fa-solid fa-magnifying-glass icon"></i>
+            <small>Search</small>
         </a>
         <a href="{{ route('browseall.dosen') }}" class="btn rounded square-btn bg-repository">
             <i class="fas fa-list icon"></i>
             <small>Browse All</small>
         </a>
-        {{-- <a href="#" class="btn rounded square-btn bg-repository">
-            <i class="fa-solid fa-fire icon"></i>
-            <small>Popular</small>
-        </a> --}}
         <a href="#" class="btn rounded square-btn bg-repository">
             <i class="fas fa-info-circle icon"></i>
             <small>About Us</small>
@@ -148,7 +144,7 @@
         <div class="col">
             <ul class="list-unstyled text-muted">
                 <li><small>{{ $skripsi->nama_mahasiswa }}</small></li>
-                <li><a href="#" class="text-black"><b>{{ $skripsi->judul }}</b></a></li>
+                <li><a href="{{ route('detail.dosen', ['id_tugasakhir' => $skripsi->id_tugasakhir]) }}" class="text-black"><b>{{ $skripsi->judul }}</b></a></li>
                 <li><small>{{ $skripsi->tahun_terbit }}</small></li>
             </ul>
         </div>

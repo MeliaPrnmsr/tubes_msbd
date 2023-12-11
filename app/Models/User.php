@@ -13,9 +13,14 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     public function staff()
-{
-    return $this->hasOne(Staff::class, 'user_id', 'id_user');
-}
+    {
+        return $this->hasOne(Staff::class, 'user_id', 'id_user');
+    }
+
+    public function dosen()
+    {
+        return $this->hasOne(Dosen::class, 'user_id', 'id_user');
+    }
     protected $primaryKey = 'id_user';
 
     /**

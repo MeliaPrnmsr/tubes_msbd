@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="{{asset('asset/css/bootstrap.min.css')}}">
         <link rel="stylesheet" href="{{asset('asset/css/tambahan.css')}}">
         <link rel="stylesheet" href="{{asset('asset/icon/css/all.min.css')}}">
+        @livewireStyles
     </head>
 <body>
     <!-- Navbar -->
@@ -19,7 +20,7 @@
             <div class="row px-2 w-100 "> <!-- Menggunakan justify-content-center dan px-2 -->
                 
                 <div class="col p-2 d-flex justify-content-start"> <!-- Update disini -->
-                    <a class="navbar-brand text-white" href="#">
+                    <a class="navbar-brand text-white" href="/landingpage">
                         <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
                         RepositorySkripsi
                       </a>
@@ -50,5 +51,11 @@
     </div>
 
         <script src="{{asset('asset/js/bootstrap.bundle.min.js')}}"></script>
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script>
+        @livewireScripts
 </body>
 </html>

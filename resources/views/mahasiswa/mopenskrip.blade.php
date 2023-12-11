@@ -10,7 +10,11 @@
 
                 <div class="row p-2">
                     {{-- kolom judul start --}}
-                    <div class="col-9">
+                    <div class="col-1">
+                        <button class="btn btn-hijau rounded-circle" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></button>
+                    </div>
+
+                    <div class="col-8">
                         <h3 style="color: #006633;"><b>{{$tugasakhir->judul}}</b></h3>
                     </div>
                     {{-- kolom judul end --}}
@@ -18,17 +22,31 @@
                     {{-- kolom button start --}}
                     
                         <div class="col-3 d-flex justify-content-end">
-                            <form action="" method="post">
-                            <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
-                            <input type="hidden" name="id_user" value="{{ Auth::user()->username }}">
-                            <button class="btn" type="submit"><i class="fa-regular fa-heart"></i></button>
-                        </form>
+                            <form action="/like" method="post">
+                                @csrf
+                                <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
+                                <input type="hidden" name="id_user" value="{{ Auth::user()->id_user }}">
+                                <button class="btn" type="submit">
+                                    @if($isLikedByUser)
+                                        <i class="fa-solid fa-heart"></i>
+                                    @else
+                                        <i class="fa-regular fa-heart"></i>
+                                    @endif
+                                </button>
+                            </form>
 
-                        <form action="" method="post">
-                            <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
-                            <input type="hidden" name="id_user" value="{{ Auth::user()->username }}">
-                            <button class="btn" type="submit"><i class="fa-regular fa-bookmark"></i></button>
-                        </form>
+                            <form action="/bookmark" method="post">
+                                @csrf
+                                <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
+                                <input type="hidden" name="id_user" value="{{ Auth::user()->id_user  }}">
+                                <button class="btn" type="submit">
+                                    @if($isBookmarkByUser)
+                                        <i class="fa-solid fa-bookmark"></i>
+                                    @else
+                                        <i class="fa-regular fa-bookmark"></i>
+                                    @endif
+                                </button>
+                            </form>
                         </div>
 
                     {{-- kolom sampul start --}}
@@ -164,14 +182,13 @@
             <div class="col-3">
                 <small>serupa :</small>
                 <br><br>
+                @foreach ($serupa as $item)
                 <div class="card p-2 mb-3">
-                    <p><b>Judul Skripsi</b></p>
-                    <small>nama_penulis(tahun_terbit)</small>
+                    <p><b><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $item->id_tugasakhir]) }}"
+                        class="text-decoration-none text-black"><b>{{$item->judul}}</b></a></b></p>
+                    <small>{{$item->nama_mahasiswa}} ({{$item->tahun_terbit}})</small>
                 </div>
-                <div class="card p-2 mb-3">
-                    <p><b>Judul Skripsi</b></p>
-                    <small>nama_penulis(tahun_terbit)</small>
-                </div>
+                @endforeach
             </div>
             {{-- saran serupa end--}}
 

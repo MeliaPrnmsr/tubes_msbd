@@ -11,8 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithPagination;
 
-
-class TugasAkhirs extends Component
+class PTugasakhir extends Component
 {
     use WithPagination;
     public $search;
@@ -20,7 +19,6 @@ class TugasAkhirs extends Component
     public $byKategori;
     public $byProdi;
     public $sortBy;
-
 
     public function hasil_search()
     {
@@ -45,10 +43,9 @@ class TugasAkhirs extends Component
         $this->render();
 
     }
-
-   public function render()
-        {
-            $tipe_ta_lists = DB::table('v_data_tugasakhir')->distinct()->get('tipe_ta');
+    public function render()
+    {
+        $tipe_ta_lists = DB::table('v_data_tugasakhir')->distinct()->get('tipe_ta');
             $prodis = Prodi::all();
             $kategoris = Kategori::all();
 
@@ -77,12 +74,11 @@ class TugasAkhirs extends Component
 
             $results = $query->paginate(20);
 
-            return view('livewire.tugas-akhirs', [
+            return view('livewire.p-tugasakhir', [
                 'results' => $results,
                 'tipe_ta_lists' => $tipe_ta_lists,
                 'prodis' => $prodis,
                 'kategoris' => $kategoris
             ]);
-        }
+    }
 }
-

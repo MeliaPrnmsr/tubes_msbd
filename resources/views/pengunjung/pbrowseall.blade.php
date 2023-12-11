@@ -35,7 +35,7 @@
             <nav class="d-flex justify-content-center">
                 <div class="nav nav-pills" id="nav-tab" role="tablist">
                     <button class="nav-link mx-1 active" id="nav-tanggal-tab" data-bs-toggle="tab" data-bs-target="#nav-tanggal" type="button" role="tab" aria-controls="nav-tanggal" aria-selected="true">Tanggal</button>
-                    <button class="nav-link mx-1" id="nav-kategori-tab" data-bs-toggle="tab" data-bs-target="#nav-kategori" type="button" role="tab" aria-controls="nav-kategori" aria-selected="false">Jurusan</button>
+                    <button class="nav-link mx-1" id="nav-kategori-tab" data-bs-toggle="tab" data-bs-target="#nav-kategori" type="button" role="tab" aria-controls="nav-kategori" aria-selected="false">Kategori</button>
                     <button class="nav-link mx-1" id="nav-skripsi-tab" data-bs-toggle="tab" data-bs-target="#nav-skripsi" type="button" role="tab" aria-controls="nav-skripsi" aria-selected="false">Skripsi</button>
                     <button class="nav-link mx-1" id="nav-tesis-tab" data-bs-toggle="tab" data-bs-target="#nav-tesis" type="button" role="tab" aria-controls="nav-tesis" aria-selected="false">Tesis</button>
                     <button class="nav-link mx-1" id="nav-disertasi-tab" data-bs-toggle="tab" data-bs-target="#nav-disertasi" type="button" role="tab" aria-controls="nav-disertasi" aria-selected="false">Disertasi</button>
