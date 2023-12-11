@@ -18,7 +18,7 @@
                         </div>
                         <div class="w-75">
                             <div class="d-flex justify-content-center w-100">
-                                <input class="form-control me-2" type="text" placeholder="Cari Tugas Akhir" aria-label="search" wire:model="search" wire:keyup="hasil_search" value="{{ $search }}">
+                                <input class="form-control me-2" type="text" placeholder="Cari Tugas Akhir" aria-label="search" wire:model="search" wire:keyup="hasil_search">
                             </div>
                         </div>
                     </div>

@@ -42,12 +42,13 @@ class TugasAkhirs extends Component
 
     }
 
-    public function render()
+    public function render(Request $request)
     {
     
         $tipe_ta_lists = TugasAkhir::distinct()->get('tipe_ta');
         $prodis = Prodi::all();
         $kategoris = Kategori::all();
+        $this->search = $request->input('search', '');
 
         $search = '%' . $this->search . '%';
         $results = DB::table('v_data_tugasakhir')->where('judul', 'like', $search)->get();
