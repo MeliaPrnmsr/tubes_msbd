@@ -142,7 +142,7 @@ class AdminController extends Controller
 
         }
 
-        $cariStaff = $query->paginate(2);
+        $cariStaff = $query->paginate(10);
 
         return view('admin.datastaff_admin',compact('cariStaff','search'));
     }
@@ -190,6 +190,38 @@ class AdminController extends Controller
 
         return redirect()->route('datastaff.admin')->with('success', 'Data Staff berhasil ditambahkan');
     }
+
+
+    public function editStaff($kode_staff)
+    {
+        $prodis = Prodi::all();
+        $staff = DB::table('v_data_staff')->where('kode_staff', $kode_staff)->first();
+        return view('admin.updateStaff', ['prodis' => $prodis, 'staff' => $staff]);
+    }
+
+    public function updateStaff(Request $request) {        
+        
+        $kode_staff = $request->input('kode');
+        $nama_staff = $request->input('nama');
+        $email = $request->input('email');
+        $prodi = $request->input('prodi');
+        $id_user = $request->input('user_id');
+
+
+        DB::select('CALL p_perbarui_staff(?, ?, ?, ?, ?)', [
+            $kode_staff,
+            $nama_staff,
+            $email,
+            $prodi,
+            $id_user    
+            
+        ]);
+
+        return redirect()->route('datastaff.admin')->with('success', 'Data Dosen berhasil diperbarui');
+
+    }
+
+
     public function dataTugasakhir(Request $request)
     {
 

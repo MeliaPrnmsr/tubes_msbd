@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dosenpembimbing extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     protected $table = 'dosenpembimbings'; // Nama tabel di database
     protected $primaryKey = 'id_dosen_pembimbing'; // Nama kolom kunci utama

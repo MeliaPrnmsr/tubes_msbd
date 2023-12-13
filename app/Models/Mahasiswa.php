@@ -9,6 +9,7 @@ class Mahasiswa extends Model
 {
     use HasFactory;
     
+    public $timestamps = false;
     protected $table = 'mahasiswas'; // Nama tabel di database
     protected $primaryKey = 'NIM'; // Nama kolom kunci utama
 

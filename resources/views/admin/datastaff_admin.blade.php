@@ -46,7 +46,7 @@
   <div class="card-body mx-auto justify-content-center" style="width: 90%">
     <div class="row bg-hijau shadow p-3 mb-2">
       <div class="col-1">No</div>
-      <div class="col-4">Nama</div>
+      <div class="col-3">Nama</div>
       <div class="col-2">Kode Staff</div>
       <div class="col-3">Prodi</div>
       <div class="col-2">Aksi</div>
@@ -60,9 +60,9 @@
 
     <div class="row shadow p-3 mb-2 align-items-center">
       <div class="col-1">{{ $i }}</div>
-      <div class="col-4">{{ $data->nama_staff }}</div>
+      <div class="col-3">{{ $data->nama_staff }}</div>
       <div class="col-2">{{ $data->kode_staff }}</div>
-      <div class="col-3">{{ $data->nama_prodi }}</div>
+      <div class="col-3">{{ $data->jenjang }} {{ $data->nama_prodi }}</div>
       <div class="col-2">
         <a href="{{ route('detailStaff.admin', ['kode_staff' => $data->kode_staff]) }}" class="btn btn-repository">Detail</a>
       </div>
