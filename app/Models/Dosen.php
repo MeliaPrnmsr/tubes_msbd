@@ -15,7 +15,7 @@ class Dosen extends Model
     protected $table = 'dosens'; 
     protected $primaryKey = 'kode_dosen';
 
-    public $timestamps = false;
+  
 
     public function prodi()
     {
