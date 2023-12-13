@@ -14,9 +14,6 @@ class Dosen extends Model
     
     protected $table = 'dosens'; 
     protected $primaryKey = 'kode_dosen';
-
-  
-
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');

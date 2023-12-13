@@ -14,6 +14,8 @@ use App\Models\TugasAkhir;
 use App\Models\Dosenpembimbing;
 use App\Models\DokumenFile;
 
+use App\Models\DokumenFile;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -231,6 +233,7 @@ class DatabaseSeeder extends Seeder
             'alamat_prodi' => "Gedung C Fasilkom-TI, Universitas Sumatera Utara, Jl. Alumni No.3, Padang Bulan, Kec. Medan Baru, Kota Medan, Sumatera Utara 20155"
         ]); 
         
+        
         Prodi::create([
             'jenjang' => "S1",
             'nama_prodi' => "Ilmu Komputer",
@@ -255,6 +258,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => 5,
             'prodi_id' => 1
         ]);
+        
         
         Mahasiswa::create([
             'nim' => "221402133",
