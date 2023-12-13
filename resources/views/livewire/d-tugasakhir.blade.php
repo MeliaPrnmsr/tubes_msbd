@@ -69,7 +69,7 @@
                        <img src="{{asset('asset/img/'.$result->sampul)}}" alt="" class="w-75">
                    </div>
                    <div class="col-10 justify-content-start">
-                       <h6><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $result->id_tugasakhir]) }}"
+                       <h6><a href="{{ route('detail.dosen', ['id_tugasakhir' => $result->id_tugasakhir]) }}"
                                class="text-decoration-none text-black"><b>{{$result->judul}}</b></a>
                        </h6>
                        <small style="font-size: 75%">Penulis :

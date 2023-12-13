@@ -50,7 +50,6 @@
         <div class="col-3">Prodi</div>
         <div class="col-2">Aksi</div>
       </div>
-
       @if(isset($noDataMessage))
         <p>{{ $noDataMessage }}</p>
       @else

@@ -68,9 +68,12 @@
 
 
 <script src="{{asset('asset/js/bootstrap.bundle.min.js')}}"></script>
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 @livewireScripts
 
-{{-- <script src="{{asset('node_modules/jquery/dist/jquery.min.js')}}"></script>
-<script src="{{asset('node_modules/@popperjs/core/dist/umd/popper.min.js')}}"></script> --}}
 </body>
 </html>

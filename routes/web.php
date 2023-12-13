@@ -122,10 +122,11 @@ Route::middleware(['role:mahasiswa', 'auth', 'verified'])->group(function () {
     Route::get('/msearch', [MahasiswaController::class,'searchMhs'])->name('search.mahasiswa');
     Route::get('/hasil_search', [MahasiswaController::class,'hasil_search']);
     Route::get('/mdetailTugasakhir/{id_tugasakhir}', [MahasiswaController::class,'detailMhs'])->name('detail.mahasiswa');
+    Route::post('/like', [MahasiswaController::class,'likeTugasAkhir']);
+    Route::post('/bookmark', [MahasiswaController::class,'bookmarkTugasAkhir']);
     Route::get('/mbrowseall', [MahasiswaController::class,'browseallMhs'])->name('browseall.mahasiswa');
     Route::get('/mabstrak', [MahasiswaController::class,'abstrakMhs'])->name('abstrak.mahasiswa');    
 });
-
 
 
 //ROUTE DOSEN
@@ -138,6 +139,8 @@ Route::middleware(['role:dosen', 'auth', 'verified'])->group(function () {
     Route::match(['get', 'post'], '/dupdateprofil', [DosenController::class, 'inserteditprofildosen'])->name('update.dosen');
     Route::get('/dbimbingan', [DosenController::class,'bimbinganDosen'])->name('bimbingan.dosen');
     Route::get('/dbookmark', [DosenController::class,'bookmarkDosen'])->name('bookmark.dosen');
+    Route::post('/like', [DosenController::class,'likeTugasAkhir']);
+    Route::post('/bookmark', [DosenController::class,'bookmarkTugasAkhir']);
     Route::get('/dsearch', [DosenController::class,'searchDosen'])->name('search.dosen');
     Route::get('/dbrowseall', [DosenController::class,'browseallDosen'])->name('browseall.dosen');
     Route::get('/dabstrak', [DosenController::class,'abstrakDosen'])->name('abstrak.dosen');

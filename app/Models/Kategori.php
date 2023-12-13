@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kategori extends Model
 {
     use HasFactory;
+    public $timestamps = false;
 
     public $timestamps = false;
     protected $table = 'kategoris'; // Nama tabel di database
