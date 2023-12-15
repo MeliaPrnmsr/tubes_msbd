@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 use App\Models\TugasAkhir;
 use App\Models\Like;
 use App\Models\Dosenpembimbing;
+use App\Models\Bookmark;
 
 
 class PengunjungController extends Controller
@@ -17,12 +20,13 @@ class PengunjungController extends Controller
      */
     public function index()
     {
+        $totalTugasAkhir = TugasAkhir::count();
         $popular_skripsi = DB::table('v_tugasakhir_terpopuler')
-        ->join('tugas_akhirs', 'v_tugasakhir_terpopuler.tugasakhir_id', '=', 'tugas_akhirs.id_tugasakhir')
-        ->join('mahasiswas', 'tugas_akhirs.author', '=', 'mahasiswas.NIM')
-        ->select('tugas_akhirs.*', 'v_tugasakhir_terpopuler.jumlah_like', 'mahasiswas.nama_mahasiswa')
-        ->orderByDesc('v_tugasakhir_terpopuler.jumlah_like')
-        ->get();
+            ->join('tugas_akhirs', 'v_tugasakhir_terpopuler.tugasakhir_id', '=', 'tugas_akhirs.id_tugasakhir')
+            ->join('mahasiswas', 'tugas_akhirs.author', '=', 'mahasiswas.NIM')
+            ->select('tugas_akhirs.*', 'v_tugasakhir_terpopuler.jumlah_like', 'mahasiswas.nama_mahasiswa')
+            ->orderByDesc('v_tugasakhir_terpopuler.jumlah_like')
+            ->get();
 
 
         $results = DB::table('tugas_akhirs')
@@ -32,7 +36,8 @@ class PengunjungController extends Controller
 
         return view('pengunjung.plandingpage', [
             'popular_skripsi' => $popular_skripsi,
-            'results' => $results
+            'results' => $results,
+            'totalTugasAkhir' => $totalTugasAkhir
         ]);
     }
 
@@ -46,41 +51,40 @@ class PengunjungController extends Controller
 
     public function detailTugasakhir($id_tugasakhir)
     {
-        $tugasakhir = TugasAkhir::find($id_tugasakhir);
-        $author_nim = $tugasakhir->author;
-        $dosen_pembimbing = Dosenpembimbing::where('NIM', $author_nim)->with('dosen')->get();
+        $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
 
-        return view('pengunjung.popenskrip', ['tugasakhir' => $tugasakhir, 'dosen_pembimbing' => $dosen_pembimbing]);
+        $kategoriId = $tugasakhir->kategori_id ?? null;
+    
+        $serupa = DB::table('v_data_tugasakhir')
+                    ->where('kategori_id', $kategoriId)
+                    ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                    ->limit(7)
+                    ->get();
+
+        return view('pengunjung.popenskrip', ['tugasakhir' => $tugasakhir, 'serupa' =>  $serupa
+        ]);
     }
 
     public function browseAll()
     {
-        $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')
-        ->orderBy('tahun_terbit', 'DESC')
-        ->get();
+        $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')->get();
+        $groupedTahun = $tahun_terbit->groupBy('tahun_terbit');
 
-        $kategori = DB::table('v_tugasakhir_kategori')
-        ->orderBy('nama_kategori', 'ASC')
-        ->get();
+        $kategori = DB::table('v_tugasakhir_kategori')->get();
+        $groupedKategori = $kategori->groupBy('nama_kategori');
+        
+        $skripsi = DB::table('v_tugasakhir_skripsi')->get();
+        $tesis = DB::table('v_tugasakhir_tesis')->get();
+        $disertasi = DB::table('v_tugasakhir_disertasi')->get();
 
-        $skripsi = DB::table('v_tugasakhir_skripsi')
-        ->orderBy('judul', 'ASC')
-        ->get();
-
-        $tesis = DB::table('v_tugasakhir_tesis')
-        ->orderBy('judul', 'ASC')
-        ->get();
-
-        $disertasi = DB::table('v_tugasakhir_disertasi')
-        ->orderBy('judul', 'ASC')
-        ->get();
-        //dd($tahun_terbit);
         return view('pengunjung.pbrowseall', [
             'tahun_terbit' => $tahun_terbit,
             'kategori' => $kategori,
             'skripsi' => $skripsi,
             'tesis' => $tesis,
-            'disertasi' => $disertasi
+            'disertasi' => $disertasi,
+            'groupedKategori' => $groupedKategori,
+            'groupedTahun' => $groupedTahun
         ]);
         
     }

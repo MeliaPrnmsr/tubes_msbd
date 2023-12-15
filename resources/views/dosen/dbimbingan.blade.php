@@ -6,7 +6,7 @@
     <h3 class="text-center"><b>Bimbingan Saya</b></h3>   
 </div>
 <div class="container-fluid">
-    <!--bookmark-->
+    <!--bimbingan-->
     <div class="card border-0">
         <div class="card-body">
           <div class="row d-flex justify-content-center">
@@ -22,72 +22,51 @@
             </div>
           </div>
         </div>
-      
-          {{-- tabel daftar mhs start --}}
-          <div class="card-body mx-auto justify-content-center" style="width: 90%">
-            <div class="row bg-hijau shadow p-3 mb-2">
-              <div class="col-1">No</div>
-              <div class="col-5">Judul</div>
-              <div class="col-2">Penulis</div>
-              <div class="col-2 text-center">Tahun Terbit</div>
-              <div class="col-2 text-center">Aksi</div>
-            </div>
 
-            @foreach($tugasbimbings as $data)
-            <div class="row shadow p-3 mb-2 align-items-center">
-              <div class="col-1">{{$loop->iteration + 1}}</div>
-              <div class="col-5">{{$data->nama_mahasiswa}}</div>
-              <div class="col-2">{{$data->NIM}}</div>
-              <div class="col-2 text-center">{{$data ->tahun_terbit}}</div>
-              <div class="col-2 text-center">
-                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
-              </div>
+            @if ($bimbingans->isEmpty())
+            <div class="alert alert-repository-no" role="alert">
+              <small><i class="fa-solid fa-circle-info"></i>&nbsp; Tidak ada bimbingan yang disimpan.</small>
             </div>
-            @endforeach
-            <!-- <div class="row shadow p-3 mb-2 align-items-center">
-              <div class="col-1">2</div>
-              <div class="col-5">Kim Min Seok</div>
-              <div class="col-2">12021992</div>
-              <div class="col-2 text-center">Teknologi Informasi</div>
-              <div class="col-2 text-center">
-                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
+        @else      
+              {{-- tabel daftar mhs start --}}
+              <div class="card-body mx-auto justify-content-center" style="width: 90%">
+                <div class="row bg-hijau shadow p-3 mb-2">
+                  <div class="col-1">No</div>
+                  <div class="col-5">Judul</div>
+                  <div class="col-2">Tipe Tugas Akhir</div>
+                  <div class="col-2">Tahun Terbit</div>
+                  <div class="col-2 text-center">Aksi</div>
+                </div>
+          
+                @php
+                $i=1;
+                @endphp
+                @foreach ($bimbingans as $bimbingan)
+                <div class="row shadow p-3 mb-2">
+                  <div class="col-1">{{$i}}</div>
+                  <div class="col-5">{{$bimbingan->judul}}</div>
+                  <div class="col-2">{{$bimbingan->tipe_ta}}</div>
+                  <div class="col-2">{{$bimbingan->tahun_terbit}}</div>
+                  <div class="col-2 text-center">
+                    <a href="{{ route('detail.dosen', ['id_tugasakhir' => $bimbingan->id_tugasakhir]) }}"
+                      class="btn btn-repository">Detail</a>
+                  </div>
+                </div>
+                @php
+                $i++;
+                @endphp
+                @endforeach
+                
+          
               </div>
-            </div>
-      
-            <div class="row shadow p-3 mb-2 align-items-center">
-              <div class="col-1">3</div>
-              <div class="col-5">Kim Seok Jin</div>
-              <div class="col-2">12021992</div>
-              <div class="col-2 text-center">Teknologi Informasi</div>
-              <div class="col-2 text-center">
-                {{-- <a href="{{ route('detail.dosen') }}" class="btn btn-repository">Detail</a> --}}
+              {{-- tabel daftar mhs end --}}
+              <br>
+              {{-- pagination start --}}
+              <div class="d-flex justify-content-center card-body">
+                {{$bimbingans->links()}}
               </div>
-            </div> -->
-      
-          </div>
-          {{-- tabel daftar mhs end --}}
-          <br>
-          {{-- pagination start --}}
-          <div class="d-flex justify-content-center card-body">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous" style="color: #3dae2b">
-                    <span aria-hidden="true">&laquo;</span>
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">1</a></li>
-                <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">2</a></li>
-                <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">3</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next"  style="color: #3dae2b">
-                    <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-          {{-- pagination end --}}
+              {{-- pagination end --}}
+              @endif
       </div>
 </div>
 @endsection

@@ -1,126 +1,95 @@
-<div class="container-fluid">
+<div class="container">
     {{-- <form action="/hasil_search" method="get">
         @csrf --}}
 
-        <form wire:submit.prevent="render">
-            <div class="row m-2">
-
-                <div class="col-9">
-                    {{-- search button start --}}
-                    <div class="d-flex mb-2">
-                        <div class="me-2 w-25">
-                            <select class="form-select" aria-label="tipe">
-                                <option selected>All</option>
-                                @foreach ($tipe_ta_lists as $tipe_ta_list)
-                                <option value="{{$tipe_ta_list->tipe_ta}}">{{$tipe_ta_list->tipe_ta}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="w-75">
-                            <div class="d-flex justify-content-center w-100">
-                                <input class="form-control me-2" type="text" placeholder="Cari Tugas Akhir" aria-label="search" wire:model="search" wire:keyup="hasil_search">
-                            </div>
-                        </div>
-                    </div>
-                    {{-- search button end --}}
-
-                    {{-- teks --}}
-                    <div class="alert alert-repository-no" role="alert">
-                        <small><i class="fa-solid fa-circle-info"></i> menampilkan <b>xx</b> tugas akhir untuk
-                            pencarian</small>
-                    </div>
-                    {{-- teks --}}
-                    <br>
-                    <div id="hasil_search">
-                        @if($results->count() > 0)
-                        @foreach($results as $result)
-                        <div class="card mb-3  ">
-                            <div class="row p-2">
-                                <div class="col-2">
-                                    <img src="{{asset('asset/img/'.$result->sampul)}}" alt="" class="w-75">
-                                </div>
-                                <div class="col-10 justify-content-start">
-                                    <h6><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $result->id_tugasakhir]) }}" class="text-decoration-none text-black"><b>{{$result->judul}}</b></a></h6>
-                                    <small style="font-size: 75%">Penulis : <b>{{$result->nama_mahasiswa}}</b></small>
-                                    <hr>
-                                    <small style="font-size: 70%"><i>{{$result->abstrak}}</i></small>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                        @else
-                            <div class="row p-2">
-                                <b>Tidak ditemukan Hasil Untuk {{ $search }}</b>
-                            </div>
-                        @endif
-                    </div>
-
-                    <br>
-                    {{-- pagination start --}}
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous" style="color: #3dae2b">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #3dae2b">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #3dae2b">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#" style="color: #3dae2b">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next" style="color: #3dae2b">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    {{-- pagination end --}}
-
+        <form wire:submit.prevent="hasil_search">
+            <div>
+                {{-- search button start --}}
+                <div class="d-flex justify-content-center w-100">
+                    <input class="form-control me-2 rounded-pill" type="text" placeholder="Cari Tugas Akhir"
+                        aria-label="search" wire:model="search" wire:keyup="hasil_search">
                 </div>
-                <!--End of col 1-->
+                {{-- search button end --}}
 
-                <div class="col-3">
-                    <h6><i class="fa-solid fa-filter"></i> &nbsp;<b>Filter Pencarian</b></h6>
-                    {{-- Filter 1 --}}
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-hijau">
-                            Kategori
-                        </div>
-                        <div class="card-body">
+                <div class="row row-cols-3 mt-3 mb-3">
+                    <div class="col-3">
+                        <select class="form-select" wire:model="byTipe_ta" wire:change="hasil_search">
+                            <option value="">Tipe Tugas Akhir</option>
+                            @foreach ($tipe_ta_lists as $tipe_ta_list)
+                            <option value="{{$tipe_ta_list->tipe_ta}}">{{$tipe_ta_list->tipe_ta}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <select class="form-select" wire:model="byKategori" wire:change="hasil_search">
+                            <option value="">Kategori</option>
                             @foreach ($kategoris as $kategori)
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" wire:model="kategori"
-                                    wire:click="hasil_kategori('kategori_search','{{$kategori->id_kategori}}' )"
-                                    value="{{$kategori->id_kategori}}" id="{{$kategori->id_kategori}}">
-                                {{-- {{$kategori}} --}}
-                                <label class="form-check-label" for="kategori">{{$kategori->nama_kategori}}</label>
-                            </div>
+                            <option value="{{$kategori->id_kategori}}">{{$kategori->nama_kategori}}</option>
                             @endforeach
-                        </div>
+                        </select>
                     </div>
-                    <br>
-                    {{-- Filter 1 --}}
-
-                    {{-- Filter 2 --}}
-                    <div class="card rounded-0">
-                        <div class="card-header rounded-0 bg-hijau">
-                            Prodi
-                        </div>
-                        <div class="card-body">
+                    <div class="col-3">
+                        <select class="form-select" wire:model="byProdi" wire:change="hasil_search">
+                            <option value="">Prodi</option>
                             @foreach ($prodis as $prodi)
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" wire:model="prodi"
-                                    value="{{$prodi->id_prodi}}" id="{{$prodi->id_prodi}}">
-                                <label class="form-check-label" for="prodi">{{$prodi->jenjang}} -
-                                    {{$prodi->nama_prodi}}</label>
-                            </div>
+                            <option value="{{$prodi->id_prodi}}">{{$prodi->jenjang}} {{$prodi->nama_prodi}}</option>
                             @endforeach
-                        </div>
+                        </select>
                     </div>
-                    {{-- Filter 2 --}}
-
+                    <div class="col-3">
+                        <select class="form-select" wire:model="sortBy" wire:change="hasil_search">
+                            <option value="asc">Ascending</option>
+                            <option value="dsc">Descending</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
+
         </form>
+
+        {{-- teks --}}
+        <div class="alert alert-repository-no" role="alert">
+            @if($search === null)
+                <small><i class="fa-solid fa-circle-info"></i> Cari Tugas Akhir Anda</small>
+            @elseif($results->isEmpty())
+                <small><i class="fa-solid fa-circle-info"></i> Tidak ada data yang ditemukan untuk pencarian <b>{{ $search }}</b></small>
+            @else
+                <small><i class="fa-solid fa-circle-info"></i> Menampilkan <b>{{ $results->count() }}</b> tugas akhir untuk pencarian <b>{{ $search }}</b></small>
+            @endif
+        </div>
+        {{-- teks --}}
         <br>
+        <div id="hasil_search">
+           @if ($results->isEmpty())
+               <p>Hasil tidak tersedia</p>
+           @else
+           @foreach($results as $result)
+           <div class="card mb-3  ">
+               <div class="row p-2">
+                   <div class="col-2">
+                       <img src="{{asset('asset/img/'.$result->sampul)}}" alt="" class="w-75">
+                   </div>
+                   <div class="col-10 justify-content-start">
+                       <h6><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $result->id_tugasakhir]) }}"
+                               class="text-decoration-none text-black"><b>{{$result->judul}}</b></a>
+                       </h6>
+                       <small style="font-size: 75%">Penulis :
+                           <b>{{$result->nama_mahasiswa}}</b></small>
+                       <hr>
+                       <small style="font-size: 70%"><i>{{$result->abstrak}}</i></small>
+                   </div>
+               </div>
+           </div>
+           @endforeach
+           @endif
+        </div>
+
+        <br>
+        {{-- pagination start --}}
+        <div class="d-flex justify-content-end">
+            {{ $results->links() }}
+        </div>
+        {{-- pagination end --}}
+
+</div>
+<br>
 </div>

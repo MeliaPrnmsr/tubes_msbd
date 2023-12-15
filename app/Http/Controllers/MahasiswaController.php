@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 use App\Models\Prodi;
 use App\Models\TugasAkhir;
 use App\Models\Kategori;
 use App\Models\Like;
 use App\Models\Mahasiswa;
-// use App\Models\Dosenpembimbing;
+use App\Models\Bookmark;
 // use App\Models\User;
 
 class MahasiswaController extends Controller
@@ -55,7 +56,26 @@ class MahasiswaController extends Controller
     public function detailMhs($id_tugasakhir)
     {
         $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
-        return view('mahasiswa.mopenskrip', ['tugasakhir' => $tugasakhir]);
+
+        $kategoriId = $tugasakhir->kategori_id ?? null;
+    
+        $serupa = DB::table('v_data_tugasakhir')
+                    ->where('kategori_id', $kategoriId)
+                    ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                    ->limit(7)
+                    ->get();
+
+        $isLikedByUser = Like::where('tugasakhir_id', $id_tugasakhir)
+                         ->where('user_id', Auth::user()->id_user)
+                         ->exists();
+        
+        $isBookmarkByUser = Bookmark::where('tugasakhir_id', $id_tugasakhir)
+        ->where('user_id', Auth::user()->id_user)
+        ->exists();
+
+        return view('mahasiswa.mopenskrip', ['tugasakhir' => $tugasakhir, 'isLikedByUser' =>  $isLikedByUser,
+        'isBookmarkByUser' =>  $isBookmarkByUser, 'serupa' =>  $serupa
+        ]);
     }
 
     public function profilMhs()
@@ -97,30 +117,57 @@ class MahasiswaController extends Controller
         return redirect()->route('profile.mahasiswa')->with('success', 'Profil berhasil diperbarui');
     }
 
-
     public function bookmarkMhs()
     {
-        return view('mahasiswa.mbookmark');
+        $userId = Auth::id();
+
+        $bookmarks = Bookmark::where('user_id', $userId)->get();
+        $tugasAkhirIds = $bookmarks->pluck('tugasakhir_id')->toArray();
+
+        $bookmarks = DB::table('v_data_tugasakhir')->whereIn('id_tugasakhir', $tugasAkhirIds)->paginate(10);
+    
+        return view('mahasiswa.mbookmark', ['bookmarks' => $bookmarks]);
+    }
+
+
+    public function bookmarkTugasAkhir(Request $request)
+    {
+        $idTugasAkhir = $request->input('id_tugasakhir');
+        $idUser = $request->input('id_user');
+
+        $existingBookmark = Bookmark::where('tugasakhir_id', $idTugasAkhir)
+                            ->where('user_id', $idUser)
+                            ->first();
+
+        if ($existingBookmark) {
+            $existingBookmark->delete();
+        } else {
+            Bookmark::create([
+                'tanggal' => Carbon::now(),
+                'tugasakhir_id' => $idTugasAkhir,
+                'user_id' => $idUser,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Tugas Akhir liked successfully!');
     }
 
     public function likeTugasAkhir(Request $request)
     {
-        $tugasAkhirId = $request->input('id_tugasakhir');
-        $userId = $request->input('id_user');
+        $idTugasAkhir = $request->input('id_tugasakhir');
+        $idUser = $request->input('id_user');
 
-        $existingLike = Like::where('tugasakhir_id', $tugasAkhirId)
-                            ->where('user_id', $userId)
+        $existingLike = Like::where('tugasakhir_id', $idTugasAkhir)
+                            ->where('user_id', $idUser)
                             ->first();
 
-        if (!$existingLike) {
-            Like::create([
-                'tugasakhir_id' => $tugasAkhirId,
-                'user_id' => $userId,
-                'status' => 1
-            ]);
+        if ($existingLike) {
+            $existingLike->delete();
         } else {
-            $existingLike->status = $existingLike->status === null ? 1 : ($existingLike->status == 1 ? 0 : 1);
-            $existingLike->save();
+            Like::create([
+                'tugasakhir_id' => $idTugasAkhir,
+                'user_id' => $idUser,
+            ]);
         }
 
         return redirect()->back()->with('success', 'Tugas Akhir liked successfully!');
@@ -141,31 +188,24 @@ class MahasiswaController extends Controller
 
     public function browseallMhs()
     {
-        $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')
-            ->orderBy('tahun_terbit', 'DESC')
-            ->get();
+        $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')->get();
+        $groupedTahun = $tahun_terbit->groupBy('tahun_terbit');
 
-        $kategori = DB::table('v_tugasakhir_kategori')
-            ->orderBy('nama_kategori', 'ASC')
-            ->get();
+        $kategori = DB::table('v_tugasakhir_kategori')->get();
+        $groupedKategori = $kategori->groupBy('nama_kategori');
+        
+        $skripsi = DB::table('v_tugasakhir_skripsi')->get();
+        $tesis = DB::table('v_tugasakhir_tesis')->get();
+        $disertasi = DB::table('v_tugasakhir_disertasi')->get();
 
-        $skripsi = DB::table('v_tugasakhir_skripsi')
-            ->orderBy('judul', 'ASC')
-            ->get();
-
-        $tesis = DB::table('v_tugasakhir_tesis')
-            ->orderBy('judul', 'ASC')
-            ->get();
-
-        $disertasi = DB::table('v_tugasakhir_disertasi')
-            ->orderBy('judul', 'ASC')
-            ->get();
         return view('mahasiswa.mbrowseall', [
             'tahun_terbit' => $tahun_terbit,
             'kategori' => $kategori,
             'skripsi' => $skripsi,
             'tesis' => $tesis,
-            'disertasi' => $disertasi
+            'disertasi' => $disertasi,
+            'groupedKategori' => $groupedKategori,
+            'groupedTahun' => $groupedTahun
         ]);
     }
 

@@ -29,8 +29,8 @@
                     <input type="prodi" class="form-control" id="prodi" aria-describedby="prodi" value="{{ $staff->jenjang }} - {{ $staff->nama_prodi }}" readonly>
                 </div>
                 <div class="text-center mt-4">
-                    <button type="submit" href="#" class="btn btn-hijau mt-3" style="width: 20%">Edit</button>
-                    <button type="cancel" href="/datastaffstaff" class="btn btn-secondary mt-3" style="width: 20%">Kembali</button>
+                    <a href="{{route('editstaff.admin', ['kode_staff' => $staff->kode_staff])}}" class="btn btn-hijau mt-3" style="width: 20%">Perbarui</a>
+                    <a href="{{route('datastaff.admin')}}" class="btn btn-secondary mt-3" style="width: 20%">Kembali</a>
                 </div>
             </form>
         </div>

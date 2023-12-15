@@ -1,7 +1,7 @@
 <div>
     <br>
     <div class="alert alert-repository-no" role="alert">
-        <small><i class="fa-solid fa-circle-info"></i> menampilkan <b>xx</b> tugas akhir </small>
+        <small><i class="fa-solid fa-circle-info"></i> menampilkan <b>{{$tesis->count()}}</b> tugas akhir </small>
     </div>
     @foreach ($tesis as $item)
     <div class="card border-0 m-2">

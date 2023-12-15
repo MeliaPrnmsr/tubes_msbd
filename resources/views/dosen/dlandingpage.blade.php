@@ -1,30 +1,26 @@
 @extends('dosen.dlayout')
 
 @section('content')
-    <div class="container-fluid bg-orange">
-        {{-- menu start --}}
-        <br>
-        <div class="d-flex justify-content-center">
-            <a href="#" class="btn rounded square-btn bg-repository">
-                <i class="fas fa-hourglass-half icon"></i>
-                <small>Lastest</small>
-            </a>
-            <a href="{{ route('browseall.dosen') }}" class="btn rounded square-btn bg-repository">
-                <i class="fas fa-list icon"></i>
-                <small>Browse All</small>
-            </a>
-            {{-- <a href="#" class="btn rounded square-btn bg-repository">
-                <i class="fa-solid fa-fire icon"></i>
-                <small>Popular</small>
-            </a> --}}
-            <a href="#" class="btn rounded square-btn bg-repository">
-                <i class="fas fa-info-circle icon"></i>
-                <small>About Us</small>
-            </a>
-        </div>
-        {{-- menu end --}}
-        <br>
+<div class="container-fluid bg-orange">
+    {{-- menu start --}}
+    <br>
+    <div class="d-flex justify-content-center">
+        <a href="/dsearch" class="btn rounded square-btn bg-repository">
+            <i class="fa-solid fa-magnifying-glass icon"></i>
+            <small>Search</small>
+        </a>
+        <a href="{{ route('browseall.dosen') }}" class="btn rounded square-btn bg-repository">
+            <i class="fas fa-list icon"></i>
+            <small>Browse All</small>
+        </a>
+        <a href="#" class="btn rounded square-btn bg-repository">
+            <i class="fas fa-info-circle icon"></i>
+            <small>About Us</small>
+        </a>
     </div>
+    {{-- menu end --}}
+    <br>
+</div>
 
 <div class="container-fluid" style="display: flex; flex-direction: column; background-color: #006633">
     <br>
@@ -34,21 +30,20 @@
                 <div id="baris1" style="flex: 1; display: flex; align-items: center;">
                     <div class="card p-2">
                         <div class="card-body">
-                            <h2 style="color: #006633"><b>Repository Skripsi</b></h2>
+                            <h2 style="color: #006633"><b>Repository Tugas Akhir</b></h2>
                             <div class="row">
-                                <div class="col-9">
-                                    <p>Skripsi adalah makanan yang digandrungi oleh sejuta umat. Dan repository skripsiadalah pameran skripsi agar pengunjung bisa melihat-lihat mana tau tertarik</p>
-                                    <form class="d-flex" role="search" method="GET" action="{{ route('search.dosen') }}"> 
-                                        <input class="form-control me-2 rounded-pill" type="search" placeholder="Cari Tugas Akhir" aria-label="Search" name="search">
-                                        <button class="btn btn-repository rounded-pill" type="submit">Cari</button>
-                                    </form>
+                                <div class="col-10">
+                                    <p style="text-align: justify">
+                                        Selamat datang di repository Tugas Akhir, tempat di mana pengetahuan dan inovasi berkumpul dalam karya akademis mahasiswa. Jelajahi koleksi tugas akhir dari berbagai bidang ilmu, menggali pemikiran-pemikiran segar dan penelitian terkini.
+                                        Untuk memulai penelusuran, silakan jelajahi kategori-kategori kami atau lihat karya-karya terpopuler pada halaman utama.
+                                    </p>
+
                                 </div>
                             </div>
-                            <br>
-                            <small><a href="#">Lebih lanjut--</a></small>
+                            <small><a href="/dsearch">Lebih lanjut--</a></small>
                             <br>
                         </div>
-                    </div>
+                       </div>
                 </div>
             </div>
         </div>
@@ -145,7 +140,7 @@
         <div class="col">
             <ul class="list-unstyled text-muted">
                 <li><small>{{ $skripsi->nama_mahasiswa }}</small></li>
-                <li><a href="#" class="text-black"><b>{{ $skripsi->judul }}</b></a></li>
+                <li><a href="{{ route('detail.dosen', ['id_tugasakhir' => $skripsi->id_tugasakhir]) }}" class="text-black"><b>{{ $skripsi->judul }}</b></a></li>
                 <li><small>{{ $skripsi->tahun_terbit }}</small></li>
             </ul>
         </div>

@@ -9,61 +9,80 @@ use App\Models\Kategori;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithPagination;
 
 
 class TugasAkhirs extends Component
 {
-    public $search; 
-    public $kategori;
-    public $prodi;
+    use WithPagination;
+    public $search;
+    public $byTipe_ta;
+    public $byKategori;
+    public $byProdi;
+    public $sortBy;
+
 
     public function hasil_search()
     {
-        
+        $this->render();
+
     }
 
-    public function hasil_kategori($kategori_search)
+    public function hasil_kategori()
     {
-        $filters = DB::table('v_data_tugasakhir')->query()
-            ->when($this->search, function ($query) {
+        $this->render();
+
+    }
+
+    public function hasil_prodi()
+    {
+        $this->render();
+
+    }
+
+    public function hasil_sort()
+    {
+        $this->render();
+
+    }
+
+   public function render()
+        {
+            $tipe_ta_lists = DB::table('v_data_tugasakhir')->distinct()->get('tipe_ta');
+            $prodis = Prodi::all();
+            $kategoris = Kategori::all();
+
+            $query = TugasAkhir::query();
+
+            if ($this->search) {
                 $query->where('judul', 'like', '%' . $this->search . '%');
-            })
-            ->when($this->kategori, function ($query) {
-                $query->whereHas('kategori', function ($q) {
-                    $q->where('id_kategori', $this->kategori);
-                });
-            })
-            ->when($this->prodi, function ($query) {
-                $query->whereHas('kategori.prodi', function ($q) {
-                    $q->where('id_prodi', $this->prodi);
-                });
-            })
-            ->get();
+            }
 
-    }
+            if ($this->byTipe_ta) {
+                $query->where('tipe_ta', $this->byTipe_ta);
+            }
 
-    public function render(Request $request)
-    {
-    
-        $tipe_ta_lists = TugasAkhir::distinct()->get('tipe_ta');
-        $prodis = Prodi::all();
-        $kategoris = Kategori::all();
-        $this->search = $request->input('search');
+            if ($this->byKategori) {
+                $query->where('kategori_id', $this->byKategori);
+            }
 
-        $search = '%' . $this->search . '%';
-        $results = DB::table('v_data_tugasakhir')->where('judul', 'like', $search)->get();
+            if ($this->byProdi) {
+                $tugasAkhirIds = Kategori::where('prodi_id', $this->byProdi)->pluck('id_kategori')->toArray();
+                $query->whereIn('kategori_id', $tugasAkhirIds);
+            }
 
-        $kategori = '%' . $this->kategori . '%';
-        $filters = DB::table('v_data_tugasakhir')->where('judul', 'like', $kategori)->get();
-    
-        return view('livewire.tugas-akhirs', [
-            'results' => $results,
-            'tipe_ta_lists' => $tipe_ta_lists,
-            'prodis' => $prodis,
-            'kategoris' => $kategoris,
-            'filters'   => $filters
-        ]);
+            if ($this->sortBy) {
+                $query->orderBy('judul', $this->sortBy === 'asc' ? 'asc' : 'desc');
+            }
 
-            
-    }
+            $results = $query->paginate(20);
+
+            return view('livewire.tugas-akhirs', [
+                'results' => $results,
+                'tipe_ta_lists' => $tipe_ta_lists,
+                'prodis' => $prodis,
+                'kategoris' => $kategoris
+            ]);
+        }
 }
+
