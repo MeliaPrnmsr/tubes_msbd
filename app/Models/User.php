@@ -17,10 +17,6 @@ class User extends Authenticatable
         return $this->hasOne(Staff::class, 'user_id', 'id_user');
     }
 
-    public function dosen()
-    {
-        return $this->hasOne(Dosen::class, 'user_id', 'id_user');
-    }
     protected $primaryKey = 'id_user';
 
     /**
@@ -57,5 +53,9 @@ class User extends Authenticatable
 
     public function dosen(){
         return $this->hasOne(Dosen::class, 'user_id');
+    }
+
+    public function mahasiswa(){
+        return $this->hasOne(Mahasiswa::class, 'user_id');
     }
 }

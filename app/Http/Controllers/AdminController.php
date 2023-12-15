@@ -142,7 +142,7 @@ class AdminController extends Controller
 
         }
 
-        $cariStaff = $query->paginate(2);
+        $cariStaff = $query->paginate(10);
 
         return view('admin.datastaff_admin',compact('cariStaff','search'));
     }

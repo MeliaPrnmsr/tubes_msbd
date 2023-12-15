@@ -27,7 +27,7 @@
                     <a class="navbar-brand text-white" href="/dlandingpage">
                         <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35"
                             class="d-inline-block align-text-top">
-                        RepositorySkripsi
+                        RepositoryTugasAkhir
                     </a>
                 </div>
 
@@ -37,7 +37,7 @@
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            halo, <b>{{ Auth::user()->username }}</b>
+                            halo, <b>{{ Auth::user()->dosen->nama_dosen }}</b>
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ route('landingpage.dosen') }}"><i
@@ -72,9 +72,9 @@
     <!-- END KONTEN UTAMA-->
 
     <!--Footer-->
-    <div class="navbar navbar-inverse navbar-fixed-bottom" style="background-color: #1d1d1d">
+    <div class="navbar navbar-inverse navbar-fixed-bottom" style="background-color: #000000">
         <div class="container d-flex justify-content-center p-2">
-            <p class="text-white">helpdesk?<br>011-22-33</p>
+            <p class="text-white text-center">Copyright kelompok 5 MSBD</p>
         </div>
     </div>
 

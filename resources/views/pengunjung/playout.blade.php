@@ -44,9 +44,9 @@
     <!-- END KONTEN UTAMA-->        
         
     <!--Footer-->
-    <div class="navbar navbar-inverse navbar-fixed-bottom" style="background-color: #1d1d1d">
+    <div class="navbar navbar-inverse navbar-fixed-bottom" style="background-color:  #000000">
         <div class="container d-flex justify-content-center p-2">
-          <p class="text-white">helpdesk?<br>011-22-33</p>
+            <p class="text-white text-center">Copyright kelompok 5 MSBD</p>
         </div>
     </div>
 

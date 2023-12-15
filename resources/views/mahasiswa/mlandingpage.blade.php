@@ -34,22 +34,17 @@
                     <div id="baris1" style="flex: 1; display: flex; align-items: center;">
                         <div class="card p-2">
                             <div class="card-body">
-                                <h2 style="color: #006633"><b>Repository Skripsi</b></h2>
+                                <h2 style="color: #006633"><b>Repository Tugas Akhir</b></h2>
                                 <div class="row">
-                                    <div class="col-9">
-                                        <p>Skripsi adalah makanan yang digandrungi oleh sejuta umat. Dan repository skripsi adalah pameran skripsi agar pengunjung bisa melihat-lihat mana tau tertarik</p>
-
-                                        <form action="{{ route('cari.landingpage') }}" method="GET" class="d-flex">
-                                            @csrf
-
-                                            <input class="form-control me-2 rounded-pill" type="text" placeholder="Cari Tugas Akhir" aria-label="Search" id="search" name="search">
-                                            <button type="submit" class="btn btn-repository rounded-pill">Cari</button>
-                                        </form>
+                                    <div class="col-10">
+                                        <p style="text-align: justify">
+                                            Selamat datang di repository Tugas Akhir, tempat di mana pengetahuan dan inovasi berkumpul dalam karya akademis mahasiswa. Jelajahi koleksi tugas akhir dari berbagai bidang ilmu, menggali pemikiran-pemikiran segar dan penelitian terkini.
+                                            Untuk memulai penelusuran, silakan jelajahi kategori-kategori kami atau lihat karya-karya terpopuler pada halaman utama.
+                                        </p>
 
                                     </div>
                                 </div>
-                                <br>
-                                <small><a href="#">Lebih lanjut--</a></small>
+                                <small><a href="/msearch">Lebih lanjut--</a></small>
                                 <br>
                             </div>
                            </div>
