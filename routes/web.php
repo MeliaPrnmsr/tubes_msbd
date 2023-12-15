@@ -47,9 +47,11 @@ Route::middleware(['role:admin', 'auth', 'verified'])->group(function () {
     Route::get('/detaildosen_admin/{kode_dosen}', [AdminController::class,'detailDosen'])->name('detaildosen.admin');
     //datastaff
     Route::get('/datastaff_admin', [AdminController::class,'dataStaff'])->name('datastaff.admin');
-    Route::get('/detailStaff/{kode_staff}', [AdminController::class,'detailStaff'])->name('detailStaff.admin');
+    Route::get('/detailStaff/{kode_staff}', [AdminController::class,'detailStaff'])->name('detailStaff.admin'); 
     Route::get('/tambahStaff', [AdminController::class,'tambahStaff'])->name('tambahStaff.admin');
     Route::post('/insertStaff', [AdminController::class,'insertStaff']);
+    Route::get('/editStaff/{kode_staff}', [AdminController::class,'editStaff'])->name('editstaff.admin');
+    Route::post('/updateStaff', [AdminController::class,'updateStaff']);
 
     Route::get('/datatugasakhir_admin', [AdminController::class,'dataTugasakhir'])->name('datatugas.admin');
     Route::get('/detailtugasakhir_admin/{id_tugasakhir}', [AdminController::class,'detailTugasakhir'])->name('detailtugas.admin');

@@ -30,7 +30,7 @@ class StaffController extends Controller
         $jumlahTugasakhir = DB::table('v_data_tugasakhir')
         ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
         ->where('kategoris.prodi_id', $prodiStaff)->count();
-
+{{  }}{{  }}
         //View
         $topLikeTugasAkhir = DB::table('top_like_tugas_akhir')->get();
         $baruDitambah = DB::table('judul_baru_ditambahkan')->get();
@@ -70,7 +70,7 @@ class StaffController extends Controller
         return view('staff.detailMahasiswa_staff', ['mahasiswa' => $mahasiswa]);
     }
 
-    public function tambahMahasiswa()
+    public function tambahMahasiswa() 
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
         $prodis = Prodi::where('id_prodi', $prodiStaff)->get();
@@ -118,30 +118,21 @@ class StaffController extends Controller
 
     public function updateMahasiswa(Request $request)
     {
-        $request->validate([
-            'NIM' => 'required|unique:mahasiswas,NIM|numeric|digits:9',
-            'nama_mahasiswa' => ['required', 'regex:/^[A-Za-z\s\-]+$/u'],
-            'email' => 'required|email|unique:users,email',
-            'prodi' => 'required|not_in:0'
-        ]);
+
 
         $nim = $request->input('NIM');
-        $nimString = strval($nim);
         $nama_mahasiswa = $request->input('nama_mahasiswa');
-        $username = $nimString;
         $email = $request->input('email');
-        $password = Hash::make($nimString);
-        $role = 'mahasiswa';
         $prodi_id = $request->input('prodi');
+        $id_user= $request->input('user_id');
+        
 
-        DB::select('CALL p_tambah_user_mahasiswa(?, ?, ?, ?, ?, ?, ?)', [
+        DB::select('CALL p_perbarui_mahasiswa(?, ?, ?, ?, ?)', [
             $nim,
             $nama_mahasiswa,
-            $username,
             $email,
-            $password,
-            $role,
-            $prodi_id
+            $prodi_id,
+            $id_user
         ]);
 
         return redirect()->route('datamahasiswa.staff')->with('success', 'Data Mahasiswa berhasil diperbarui');
@@ -234,37 +225,25 @@ class StaffController extends Controller
 
     public function updateDosen(Request $request)
     {
-        $validasidata = $request->validate([
-            'kode_dosen' => ['required', 'unique:dosens,kode_dosen', 'size:3', 'alpha', 'uppercase'],
-            'NIP' => 'required|unique:dosens,NIP|numeric|digits:14',
-            'NIDN' => 'required|unique:dosens,NIDN|numeric|digits:7',
-            'nama_dosen' => ['required', 'regex:/^[A-Za-z\s\-,\.]+$/u'],
-            'email' => 'required|email|unique:users,email',
-            'prodi' => 'required|not_in:0'
-        ]);
-
-        $NIDN = $request->input('NIDN');
+        
+        $kode_dosen = $request->input('kode');
+        $nama_dosen = $request->input('nama');
         $NIP = $request->input('NIP');
-        $NIPString = strval($NIP);
-        $username = $NIPString;
-        $password = Hash::make($NIPString);
+        $NIDN = $request->input('NIDN');
         $email = $request->input('email');
-        $kode_dosen = $request->input('kode_dosen');
-        $nama_dosen = $request->input('nama_dosen');
-        $role = 'dosen';
-        $prodi_id = $request->input('prodi');
+        $prodi = $request->input('prodi');
+        $id_user = $request->input('user_id');
 
 
-        DB::select('CALL p_tambah_user_dosen(?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-            $username,
-            $email,
-            $password,
-            $role,
+        DB::select('CALL p_perbarui_dosen(?, ?, ?, ?, ?, ?, ?)', [
             $kode_dosen,
+            $nama_dosen,
             $NIP,
             $NIDN,
-            $nama_dosen,
-            $prodi_id
+            $email,
+            $prodi,
+            $id_user    
+            
         ]);
 
         return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil diperbarui');
@@ -362,7 +341,7 @@ class StaffController extends Controller
         return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
     }
 
-    public function editTugasakhir($id_tugasakhir )
+    public function editTugasakhir($id_tugasakhir)
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
         $dosens = Dosen::where('prodi_id', $prodiStaff)->get();
@@ -374,26 +353,11 @@ class StaffController extends Controller
 
     public function updateTugasakhir(Request $request)
     {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'author' => 'required|string',
-            'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
-            'dospem1' => 'required|string',
-            'dospem2' => 'nullable|string',
-            'tahun_terbit' => 'required|numeric|min:1900|max:2099',
-            'kategori' => 'required',
-            'abstrak' => 'required',
-            'sampul' => 'required|mimes:jpeg,png,jpg',
-            'file_metodologi' => 'required|mimes:pdf',
-            'file_pustaka' => 'required|mimes:pdf',
-            'file_tugasakhir' => 'required|mimes:pdf',
-        ]);
+        
 
         $judul = $request->input('judul');
         $abstrak = $request->input('abstrak');
         $author = $request->input('author');
-        $dospem1 = $request->input('dospem1');
-        $dospem2 = $request->input('dospem2');
         $tipe_ta = $request->input('tipe_ta');
         $tahun_terbit = $request->input('tahun_terbit');
         $kategori = $request->input('kategori');
@@ -415,23 +379,24 @@ class StaffController extends Controller
         $nama_file_tugasakhir = 'Isi TA' . $author . '.' . $request->file('file_tugasakhir')->getClientOriginalExtension();
         $file_tugasakhir->move('asset/file/', $nama_file_tugasakhir);
 
+        $id_tugasakhir= $request->input('id_tugasakhir');
 
-        DB::select('CALL p_tambah_tugas_akhir(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+
+        DB::select('CALL p_perbarui_tugas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
             $judul,
             $abstrak,
             $nama_sampul,
             $tipe_ta,
             $author,
             $kategori,
-            $dospem1,
-            $dospem2,
             $tahun_terbit,
             $nama_file_metodologi,
             $nama_file_pustaka,
-            $nama_file_tugasakhir
+            $nama_file_tugasakhir,
+            $id_tugasakhir
         ]);
 
-        return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil diperbarui');
+        return redirect()->route('datatugas.staff')->with('success', 'Data Tugas Akhir berhasil diperbarui');
     }
 
     public function dataKategori()

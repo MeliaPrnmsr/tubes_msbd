@@ -9,10 +9,9 @@ class Mahasiswa extends Model
 {
     use HasFactory;
     
+    public $timestamps = false;
     protected $table = 'mahasiswas'; // Nama tabel di database
     protected $primaryKey = 'NIM'; // Nama kolom kunci utama
-
-    public $timestamps = false;
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');

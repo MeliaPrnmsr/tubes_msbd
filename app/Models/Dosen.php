@@ -9,13 +9,11 @@ class Dosen extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
     protected $keyType = 'string';
     
     protected $table = 'dosens'; 
     protected $primaryKey = 'kode_dosen';
-
-    public $timestamps = false;
-
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');

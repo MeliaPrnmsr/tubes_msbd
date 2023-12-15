@@ -10,6 +10,7 @@ class Kategori extends Model
     use HasFactory;
     public $timestamps = false;
 
+    
     protected $table = 'kategoris'; // Nama tabel di database
     protected $primaryKey = 'id_kategori'; // Nama kolom kunci utama
 
