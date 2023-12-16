@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        $procedure = "
+        $procedure = " DROP PROCEDURE IF EXISTS p_perbarui_dosen;
         CREATE PROCEDURE p_perbarui_dosen(
             IN p_kode_dosen CHAR(5),
             IN p_nama_dosen VARCHAR(255),

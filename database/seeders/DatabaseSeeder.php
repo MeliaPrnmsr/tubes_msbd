@@ -12,6 +12,7 @@ use App\Models\Staff;
 use App\Models\Kategori;
 use App\Models\TugasAkhir;
 use App\Models\Dosenpembimbing;
+use App\Models\DokumenFile;
 
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +22,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // \App\Models\User::factory(10)->create();
+
+        // \App\Models\User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        // ]);
 
         User::create([
             'username' => "221402133", 
@@ -258,7 +265,7 @@ class DatabaseSeeder extends Seeder
 
         Mahasiswa::create([
             'nim' => "221402138",
-            'nama_mahasiswa' => "Yeni Aulia Sinaga",
+            'nama_mahasiswa' => "Serafim Edgar Pandamei Sitorus",
             'user_id' => 6,
             'prodi_id' => 1
         ]);
@@ -421,21 +428,21 @@ class DatabaseSeeder extends Seeder
 
         Staff::create([
             'kode_staff' => "SP001",
-            'nama_staff' => "Benjamin Wijaya",
+            'nama_staff' => "Benjamin Netanyahu",
             'user_id' => 13,
             'prodi_id' => 1
         ]);
 
         Staff::create([
             'kode_staff' => "SP002",
-            'nama_staff' => "Alderich",
+            'nama_staff' => "Saddam Husein",
             'user_id' => 14,
             'prodi_id' => 2
         ]);
 
         Staff::create([
             'kode_staff' => "SP003",
-            'nama_staff' => "Lily Matilda",
+            'nama_staff' => "Khabib Nurmagomedov",
             'user_id' => 15,
             'prodi_id' => 3
         ]);
@@ -557,7 +564,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         TugasAkhir::create([
-            'judul' => "Internet of Things Dalam Lingkup Daerah",
+            'judul' => "Perdamaian Israel dan Palestina atas Partisipan Serafim Sitorus",
             'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
             'tahun_terbit' => 2027,
             'tipe_ta' => "skripsi",
@@ -593,7 +600,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         TugasAkhir::create([
-            'judul' => "Aplikasi Simulasi Bencana",
+            'judul' => "Aplikasi penangkal 'halo dek' terhadap Wanita dari Abdi Negara",
             'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
             'tahun_terbit' => 2010,
             'tipe_ta' => "tesis",
@@ -602,7 +609,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         TugasAkhir::create([
-            'judul' => "Menggunakan Neural Networks sebagai Kecerdasan Buatan",
+            'judul' => "Duplikasi Kedunguan Satria Mahatir dengan Menggunakan Neural Networks sebagai Kecerdasan Buatan",
             'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
             'tahun_terbit' => 2010,
             'tipe_ta' => "skripsi",
@@ -620,7 +627,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         TugasAkhir::create([
-            'judul' => "Persandian kriptografi Sebagai Rahasia Keamanan Data",
+            'judul' => "Persandian kriptografi Sebagai Rahasia Member Sungut Lele",
             'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
             'tahun_terbit' => 2023,
             'tipe_ta' => "skripsi",
@@ -656,7 +663,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         TugasAkhir::create([
-            'judul' => "Pengaktifan Lampu Otomatis menggunakan Internet Of Things",
+            'judul' => "Pengaktifan Lampu Otomatis menggunakan Mikrokontroller",
             'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
             'tahun_terbit' => 2026,
             'tipe_ta' => "Tesis",
@@ -796,6 +803,97 @@ class DatabaseSeeder extends Seeder
             'status_pembimbing' => "dospem2"
         ]);
 
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi220402001.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA220402001.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka220402001.pdf",
+            'tugasakhir_id' => 2
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 1
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 3
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 4
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 5
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 6
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 7
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 8
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 9
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 10
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 11
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 12
+        ]);
+
+        DokumenFile::create([
+            'file_metodologi' => "public\asset\file\Metodologi221401056.pdf",
+            'file_tugasakhir' => "public\asset\file\Isi TA221401056.pdf",
+            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka221401056.pdf",
+            'tugasakhir_id' => 13
+        ]);
         
     }
 }

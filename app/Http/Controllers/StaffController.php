@@ -339,7 +339,7 @@ class StaffController extends Controller
         ]);
 
         return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
-    }
+    } 
 
     public function editTugasakhir($id_tugasakhir)
     {
@@ -348,11 +348,24 @@ class StaffController extends Controller
         $mahasiswas = Mahasiswa::where('prodi_id', $prodiStaff)->get();
         $kategoris = Kategori::where('prodi_id', $prodiStaff)->get();
         $tugas_akhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
+
         return view('staff.updateTugasakhir_staff', ['mahasiswas' => $mahasiswas, 'dosens' => $dosens, 'kategoris' => $kategoris, 'tugas_akhir' => $tugas_akhir]);
     }
 
     public function updateTugasakhir(Request $request)
     {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'author' => 'required|string',
+            'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
+            'tahun_terbit' => 'required|numeric|min:1900|max:2099',
+            'kategori' => 'required',
+            'abstrak' => 'required',
+            'sampul' => 'required|mimes:jpeg,png,jpg',
+            'file_metodologi' => 'required|mimes:pdf',
+            'file_pustaka' => 'required|mimes:pdf',
+            'file_tugasakhir' => 'required|mimes:pdf',
+        ]);
         
 
         $judul = $request->input('judul');
@@ -379,24 +392,28 @@ class StaffController extends Controller
         $nama_file_tugasakhir = 'Isi TA' . $author . '.' . $request->file('file_tugasakhir')->getClientOriginalExtension();
         $file_tugasakhir->move('asset/file/', $nama_file_tugasakhir);
 
-        $id_tugasakhir= $request->input('id_tugasakhir');
+        $id_tugasakhir= $request->input('tugasakhir_id');
 
+        try {
+            DB::select('CALL p_perbarui_tugas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $judul,
+                $abstrak,
+                $nama_sampul,
+                $tipe_ta,
+                $author,
+                $kategori,
+                $tahun_terbit,
+                $nama_file_metodologi,
+                $nama_file_pustaka,
+                $nama_file_tugasakhir,
+                $id_tugasakhir
+            ]);
+    
+            return redirect()->route('datatugas.staff')->with('success', 'Data Tugas Akhir berhasil diperbarui');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
 
-        DB::select('CALL p_perbarui_tugas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-            $judul,
-            $abstrak,
-            $nama_sampul,
-            $tipe_ta,
-            $author,
-            $kategori,
-            $tahun_terbit,
-            $nama_file_metodologi,
-            $nama_file_pustaka,
-            $nama_file_tugasakhir,
-            $id_tugasakhir
-        ]);
-
-        return redirect()->route('datatugas.staff')->with('success', 'Data Tugas Akhir berhasil diperbarui');
     }
 
     public function dataKategori()
