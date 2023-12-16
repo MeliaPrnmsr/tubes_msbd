@@ -29,7 +29,7 @@ class DosenController extends Controller
             ->select('tugas_akhirs.*', 'v_tugasakhir_terpopuler.jumlah_like', 'mahasiswas.nama_mahasiswa')
             ->orderByDesc('v_tugasakhir_terpopuler.jumlah_like')
             ->get();
-
+ 
 
         $results = DB::table('tugas_akhirs')
             ->select('tipe_ta', DB::raw('COUNT(*) as jumlah'))

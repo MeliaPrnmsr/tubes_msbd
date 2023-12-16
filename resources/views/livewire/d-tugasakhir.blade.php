@@ -7,7 +7,7 @@
                 {{-- search button start --}}
                 <div class="d-flex justify-content-center w-100">
                     <input class="form-control me-2 rounded-pill" type="text" placeholder="Cari Tugas Akhir"
-                        aria-label="search" wire:model="search" wire:keyup="hasil_search">
+                        aria-label="search" wire:model="search" wire:keyup="hasil_search" value="">
                 </div>
                 {{-- search button end --}}
 

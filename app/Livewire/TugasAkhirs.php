@@ -21,6 +21,11 @@ class TugasAkhirs extends Component
     public $byProdi;
     public $sortBy;
 
+    public function mount(Request $request)
+    {
+        $this->search = $request->input('search');
+        $this->render();
+    }
 
     public function hasil_search()
     {
@@ -81,7 +86,8 @@ class TugasAkhirs extends Component
                 'results' => $results,
                 'tipe_ta_lists' => $tipe_ta_lists,
                 'prodis' => $prodis,
-                'kategoris' => $kategoris
+                'kategoris' => $kategoris,
+                'search' => $this->search
             ]);
         }
 }

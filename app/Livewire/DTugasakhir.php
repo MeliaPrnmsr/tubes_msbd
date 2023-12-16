@@ -20,6 +20,12 @@ class DTugasakhir extends Component
     public $byProdi;
     public $sortBy;
 
+    public function mount(Request $request)
+    {
+        $this->search = $request->input('search');
+        $this->render();
+    }
+
     public function hasil_search()
     {
         $this->render();
@@ -51,10 +57,15 @@ class DTugasakhir extends Component
             $kategoris = Kategori::all();
 
             $query = TugasAkhir::query();
-
+            // $cari = $request->input('search');
+            
             if ($this->search) {
                 $query->where('judul', 'like', '%' . $this->search . '%');
-            }
+            } 
+            // elseif($cari)
+            // {
+            //     $query->where('judul', 'like', '%' . $cari . '%');
+            // }
 
             if ($this->byTipe_ta) {
                 $query->where('tipe_ta', $this->byTipe_ta);
@@ -79,7 +90,8 @@ class DTugasakhir extends Component
                 'results' => $results,
                 'tipe_ta_lists' => $tipe_ta_lists,
                 'prodis' => $prodis,
-                'kategoris' => $kategoris
+                'kategoris' => $kategoris,
+                'search' => $this->search
             ]);
     }
 }

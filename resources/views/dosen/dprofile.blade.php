@@ -75,7 +75,7 @@
                     <br>
                     <div class="d-flex justify-content-center">
                         <a href="{{route('editprofile.dosen')}}" class="btn btn-hijau" style="width: 15%">Edit</a> &nbsp;
-                        <button class="btn btn-secondary" style="width: 15%">Back</button>
+                        <a href="{{ route('landingpage.dosen') }}" class="btn btn-secondary" style="width: 15%">Back</a>
                     </div>
                 </form>
                 {{-- end --}}
