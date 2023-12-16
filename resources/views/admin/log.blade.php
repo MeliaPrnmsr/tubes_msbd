@@ -1,7 +1,5 @@
 @extends('admin.adminlayout')
-@php
-    $active = 'log';
-@endphp
+
 @section('content')
 <br>
 <h3 class="text-center"><b>Log</b></h3> 
