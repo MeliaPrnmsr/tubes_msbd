@@ -15,8 +15,6 @@ class Staff extends Model
     protected $table = 'staff'; 
     protected $primaryKey = 'kode_staff';
 
-    public $timestamps = false;
-
     public function prodi()
     {
         return $this->belongsTo(Prodi::class, 'prodi_id', 'id_prodi');

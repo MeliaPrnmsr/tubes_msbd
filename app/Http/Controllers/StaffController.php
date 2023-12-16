@@ -30,7 +30,7 @@ class StaffController extends Controller
         $jumlahTugasakhir = DB::table('v_data_tugasakhir')
         ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
         ->where('kategoris.prodi_id', $prodiStaff)->count();
-{{  }}{{  }}
+
         //View
         $topLikeTugasAkhir = DB::table('top_like_tugas_akhir')->get();
         $baruDitambah = DB::table('judul_baru_ditambahkan')->get();

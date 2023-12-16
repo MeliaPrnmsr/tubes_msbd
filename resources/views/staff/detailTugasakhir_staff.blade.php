@@ -73,8 +73,8 @@
                     </div>
         
                     <div class="mb-4">
-                        <label for="file_metodologi" class="form-label"><b>File metodologi</b></label>
-                        <input class="form-control" type="file" id="file_metodologi" name="file_metodologi" value="{{ $tugas_akhir->file_metodologi }}" readonly>
+                        <label for="file_metodologi" class="form-label"><b>File metodologi</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->file_metodologi)}}" target="_blank">File Metodologi</a>
                     </div>
         
                     <div class="mb-4">

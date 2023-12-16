@@ -49,38 +49,44 @@
         {{-- teks --}}
         <div class="alert alert-repository-no" role="alert">
             @if($search === null)
-                <small><i class="fa-solid fa-circle-info"></i> Cari Tugas Akhir Anda</small>
+            <small><i class="fa-solid fa-circle-info"></i> Cari Tugas Akhir Anda</small>
             @elseif($results->isEmpty())
-                <small><i class="fa-solid fa-circle-info"></i> Tidak ada data yang ditemukan untuk pencarian <b>{{ $search }}</b></small>
+            <small><i class="fa-solid fa-circle-info"></i> Tidak ada data yang ditemukan untuk pencarian <b>{{ $search
+                    }}</b></small>
             @else
-                <small><i class="fa-solid fa-circle-info"></i> Menampilkan <b>{{ $results->count() }}</b> tugas akhir untuk pencarian <b>{{ $search }}</b></small>
+            <small><i class="fa-solid fa-circle-info"></i> Menampilkan <b>{{ $results->count() }}</b> tugas akhir untuk
+                pencarian <b>{{ $search }}</b></small>
             @endif
         </div>
         {{-- teks --}}
         <br>
         <div id="hasil_search">
-           @if ($results->isEmpty())
-               <p>Hasil tidak tersedia</p>
-           @else
-           @foreach($results as $result)
-           <div class="card mb-3  ">
-               <div class="row p-2">
-                   <div class="col-2">
-                       <img src="{{asset('asset/img/'.$result->sampul)}}" alt="" class="w-75">
-                   </div>
-                   <div class="col-10 justify-content-start">
-                       <h6><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $result->id_tugasakhir]) }}"
-                               class="text-decoration-none text-black"><b>{{$result->judul}}</b></a>
-                       </h6>
-                       <small style="font-size: 75%">Penulis :
-                           <b>{{$result->nama_mahasiswa}}</b></small>
-                       <hr>
-                       <small style="font-size: 70%"><i>{{$result->abstrak}}</i></small>
-                   </div>
-               </div>
-           </div>
-           @endforeach
-           @endif
+            @if ($results->isEmpty())
+            <p>Hasil tidak tersedia</p>
+            @else
+            @foreach($results as $result)
+            <div class="card mb-3  ">
+                <div class="row p-2">
+                    <div class="col-2">
+                        @if ($result->sampul != null)
+                        <img src="{{asset('asset/img/'.$result->sampul)}}" alt="" class="w-75 border">
+                        @else
+                        <img src="{{asset('asset/img/sampul.jpg')}}" alt="" class="w-75 border">
+                        @endif
+                    </div>
+                    <div class="col-10 justify-content-start">
+                        <h6><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $result->id_tugasakhir]) }}"
+                                class="text-decoration-none text-black"><b>{{$result->judul}}</b></a>
+                        </h6>
+                        <small style="font-size: 75%">Penulis :
+                            <b>{{$result->nama_mahasiswa}}</b></small>
+                        <hr>
+                        <small style="font-size: 70%"><i>{{ Illuminate\Support\Str::limit($result->abstrak, $limit = 250, $end = '...') }}</i></small>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            @endif
         </div>
 
         <br>
