@@ -38,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        DB::unprepared('DROP TRIGGER IF EXISTS trg_after_insert_like');
     }
 };
