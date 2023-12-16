@@ -48,9 +48,14 @@
                     <div class="col">
                         <div class="mb-4">
                             <label for="kategori" class="form-label"><b>Kategori</b></label>
-                            <input type="text" class="form-control" id="judul" name="nama_kategori" placeholder="judul" value="{{ old('nama_kategori', $tugas_akhir->nama_kategori) }}">
+                            <select class="form-select @error('kategori') is-invalid @enderror" id="kategori" name="kategori">
+                                @foreach($kategoris as $kategori)
+                                    <option value="{{ $kategori->id_kategori }}" {{ $tugas_akhir->kategori_id ? 'selected' : ''}}>{{ $kategori->nama_kategori }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
+
 
                     <div class="mb-4">
                         <label for="abstrak" class="form-label"><b>Abstrak</b></label>
