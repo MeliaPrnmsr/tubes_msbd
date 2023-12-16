@@ -263,33 +263,31 @@ class AdminController extends Controller
 
     public function notifikasi()
     {
-        // $query = DB::table('log_likes')
-        //             ->orderBy('waktu_dibuat', 'desc')
-        //             ->paginate(3);
+        $query = DB::table('log_likes')
+                    ->orderBy('waktu_dibuat', 'desc')
+                    ->paginate(3);
 
 
-        // return view('admin.notifikasi_admin',compact('query'));
-        return view('admin.notifikasi_admin');
+        return view('admin.notifikasi_admin',compact('query'));
     }
 
     public function log(Request $request)
     {
 
-        // $search = $request->input('search');
-        // $query = DB::table('view_log_admin')
-        //         ->orderBy('waktu', 'desc');
+        $search = $request->input('search');
+        $query = DB::table('log_akuns')
+                ->orderBy('waktu', 'desc');
 
-        // if(!empty(request('search')))
-        // {
-        //     $query->where('action','like','%'. $search .'%')
-        //                     ->orWhere('waktu','like','%'. $search .'%')
-        //                     ->orWhere('deskripsi', 'like', '%' . $search . '%');
-        // }
+        if(!empty(request('search')))
+        {
+            $query->where('action','like','%'. $search .'%')
+                            ->orWhere('waktu','like','%'. $search .'%')
+                            ->orWhere('deskripsi', 'like', '%' . $search . '%');
+        }
 
-        // $cariLog = $query->paginate(3);
+        $cariLog = $query->paginate(3);
 
-        // return view('admin.log',compact('cariLog','search'));
-        return view('admin.log');
+        return view('admin.log',compact('cariLog','search'));
     }
 
     public function tambahSkripsi()
