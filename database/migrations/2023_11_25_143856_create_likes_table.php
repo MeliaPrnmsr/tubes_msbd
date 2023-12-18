@@ -18,7 +18,6 @@ return new class extends Migration
 
             $table->unsignedInteger('user_id');            
             $table->foreign('user_id')->references('id_user')->on('users')->onUpdate('cascade');
-            $table->enum('status', ['0','1']);
         });
     }
 

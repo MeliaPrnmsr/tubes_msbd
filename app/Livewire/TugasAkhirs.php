@@ -9,18 +9,22 @@ use App\Models\Kategori;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Livewire\WithPagination;
+
 
 
 class TugasAkhirs extends Component
 {
-    use WithPagination;
     public $search;
     public $byTipe_ta;
     public $byKategori;
     public $byProdi;
     public $sortBy;
 
+    public function mount(Request $request)
+    {
+        $this->search = $request->input('search');
+        $this->render();
+    }
 
     public function hasil_search()
     {
@@ -52,7 +56,7 @@ class TugasAkhirs extends Component
             $prodis = Prodi::all();
             $kategoris = Kategori::all();
 
-            $query = TugasAkhir::query();
+            $query = DB::table('v_data_tugasakhir');
 
             if ($this->search) {
                 $query->where('judul', 'like', '%' . $this->search . '%');
@@ -81,7 +85,8 @@ class TugasAkhirs extends Component
                 'results' => $results,
                 'tipe_ta_lists' => $tipe_ta_lists,
                 'prodis' => $prodis,
-                'kategoris' => $kategoris
+                'kategoris' => $kategoris,
+                'search' => $this->search
             ]);
         }
 }

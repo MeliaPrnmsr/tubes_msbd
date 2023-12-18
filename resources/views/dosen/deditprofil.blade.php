@@ -12,8 +12,9 @@
                 <form action="/dupdateprofil" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="text-center">
-                        <img src="{{ $dosens->foto ? asset('asset/img/'.$dosens->foto) : asset('asset/img/dosen.png') }}" class="rounded-circle" width="20%" height="20%">
+                        <img src="{{ asset('asset/img/'.$dosens->foto) }}" class="rounded-circle" width="20%">
                         <br><br>
+                        <input type="file" id="foto" name="foto" accept="image/*" value="{{ old('foto', $dosens->foto) }}">
                     </div>
                     <div class="row">
                         {{-- col-2 --}}

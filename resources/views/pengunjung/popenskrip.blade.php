@@ -85,18 +85,9 @@
                         <button class="nav-link nav-link-hijau mx-1 active" id="nav-abstrak-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-abstrak" type="button" role="tab" aria-controls="nav-abstrak"
                             aria-selected="true">Abstrak</button>
-                        <button class="nav-link nav-link-hijau mx-1" id="nav-metodologi-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-metodologi" type="button" role="tab" aria-controls="nav-metodologi"
-                            aria-selected="false">Metodologi Penelitian</button>
-                        <button class="nav-link nav-link-hijau mx-1" id="nav-isiskripsi-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-isiskripsi" type="button" role="tab" aria-controls="nav-isiskripsi"
-                            aria-selected="false">Tugas Akhir</button>
-                        <button class="nav-link nav-link-hijau mx-1" id="nav-pustaka-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-pustaka" type="button" role="tab" aria-controls="nav-pustaka"
-                            aria-selected="false">Daftar Pustaka</button>
-                        <button class="nav-link nav-link-hijau mx-1" id="nav-detail-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-detail" type="button" role="tab" aria-controls="nav-detail"
-                            aria-selected="false">Detail</button>
+                        <button class="nav-link nav-link-hijau mx-1" id="nav-login-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-login" type="button" role="tab" aria-controls="nav-login"
+                            aria-selected="false">Lihat Detail</button>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
@@ -111,44 +102,15 @@
                     {{-- isi tab 1 start --}}
 
                     {{-- isi tab 2 start --}}
-                    <div class="tab-pane fade bg-white" id="nav-pustaka" role="tabpanel"
-                        aria-labelledby="nav-pustaka-tab" tabindex="0">
+                    <div class="tab-pane fade bg-white" id="nav-login" role="tabpanel"
+                        aria-labelledby="nav-login-tab" tabindex="0">
                         <div class="container">
                             <br>
-                            <embed src="{{ asset('asset/file/'.$tugasakhir->file_daftarpustaka) }}"
-                                type="application/pdf" width="80%" height="700px" />
+                            <p style="text-align:justify;">Login untuk melihat detail</p>
+                            <a href="/login" class="btn btn-repository">Login</a>
                         </div>
                     </div>
-                    {{-- isi tab 2 end --}}
-
-                    {{-- isi tab 3 start --}}
-                    <div class="tab-pane fade bg-white" id="nav-isiskripsi" role="tabpanel"
-                        aria-labelledby="nav-isiskripsi-tab" tabindex="0">
-                        <div class="container">
-                            <br>
-                            <embed src="{{ asset('asset/file/'.$tugasakhir->file_tugasakhir) }}" type="application/pdf"
-                                width="80%" height="700px" />
-                        </div>
-                    </div>
-                    {{-- isi tab 3 end --}}
-
-                    {{-- isi tab 4 start --}}
-                    <div class="tab-pane fade bg-white" id="nav-metodologi" role="tabpanel"
-                        aria-labelledby="nav-metodologi-tab" tabindex="0">
-                        <div class="container">
-                            <br>
-                            <embed src="{{ asset('asset/file/'.$tugasakhir->file_metodologi) }}" type="application/pdf"
-                                width="80%" height="700px" />
-                        </div>
-                    </div>
-                    {{-- isi tab 4 end --}}
-
-                    {{-- isi tab 4 start --}}
-                    <div class="tab-pane fade bg-white" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab"
-                        tabindex="0">
-                        Detail ini
-                    </div>
-                    {{-- isi tab 4 end --}}
+                    {{-- isi tab 2 start --}}
                 </div>
 
             </div>

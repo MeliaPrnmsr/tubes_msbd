@@ -16,9 +16,7 @@
                         <div class="text-center">
                             <img src="{{ asset('asset/img/'.$mahasiswas->foto) }}" class="rounded-circle" width="20%">
                             <br><br>
-                            {{-- <input type="file" id="foto" name="foto" style="display: none;" accept="image/*" value="{{ old('foto', $mahasiswas->foto) }}"> --}}
                             <input type="file" id="foto" name="foto" accept="image/*" value="{{ old('foto', $mahasiswas->foto) }}">
-                            <label for="foto" class="btn btn-secondary">Ganti Profil</label>
                         </div>
                     </div>
 

@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         $p_user_mahasiswa = "DROP PROCEDURE IF EXISTS `p_tambah_user_mahasiswa`;
-                CREATE PROCEDURE `p_tambah_user_mahasiswa`(IN `p_NIM` CHAR(9),
+                CREATE PROCEDURE `p_tambah_user_mahasiswa`(
+                IN `p_NIM` CHAR(9),
                 IN `p_nama_mahasiswa` VARCHAR(255),
                 IN `p_username` VARCHAR(255),
                 IN `p_email` VARCHAR(255),
@@ -27,7 +28,7 @@ return new class extends Migration
                     SET id_user_baru = LAST_INSERT_ID();
                 
                     INSERT INTO mahasiswas (NIM, nama_mahasiswa, user_id, prodi_id)
-                    VALUES (p_nim, p_nama_mahasiswa, id_user_baru, p_prodi_id);
+                    VALUES (p_NIM, p_nama_mahasiswa, id_user_baru, p_prodi_id);
                 END";
                 \DB::unprepared($p_user_mahasiswa);
     

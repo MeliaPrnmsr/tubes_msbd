@@ -26,10 +26,10 @@ $active = 'datatugas';
                         <label for="author" class="form-label"><b>Penulis</b></label>
                         <select class="form-select @error('author') is-invalid @enderror" id="author" name="author">
                             @foreach($mahasiswas as $mahasiswa)
-                            <option value="{{ $mahasiswa->NIM }}">{{ $mahasiswa->nama_mahasiswa }}</option>
+                            <option value="{{ sprintf('%09d', $mahasiswa->NIM) }}">{{ $mahasiswa->nama_mahasiswa }}</option>
                             @endforeach
                         </select>
-                        @error('autho')
+                        @error('author')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -150,8 +150,7 @@ $active = 'datatugas';
             </div>
             <br>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn" style="background-color:  #3dae2b; width: 25%; color:white">Tambah
-                    Skripsi</button> &nbsp; &nbsp;
+                <button type="submit" class="btn" style="background-color:  #3dae2b; width: 25%; color:white">Tambah</button> &nbsp; &nbsp;
                 <a class="btn btn-secondary" href="{{route('datatugas.staff')}}" style=" width: 25%">Batal</a>
             </div>
         </form>

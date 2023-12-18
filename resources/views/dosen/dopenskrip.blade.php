@@ -21,7 +21,7 @@
     
                         {{-- kolom button start --}}
                         <div class="col-3 d-flex justify-content-end">
-                            <form action="/like" method="post">
+                            <form action="/dslike" method="post">
                                 @csrf
                                 <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
                                 <input type="hidden" name="id_user" value="{{ Auth::user()->id_user }}">
@@ -34,7 +34,7 @@
                                 </button>
                             </form>
 
-                            <form action="/bookmark" method="post">
+                            <form action="/dsbookmark" method="post">
                                 @csrf
                                 <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
                                 <input type="hidden" name="id_user" value="{{ Auth::user()->id_user  }}">
@@ -118,9 +118,6 @@
                             <button class="nav-link nav-link-hijau mx-1" id="nav-pustaka-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-pustaka" type="button" role="tab" aria-controls="nav-pustaka"
                                 aria-selected="false">Daftar Pustaka</button>
-                            <button class="nav-link nav-link-hijau mx-1" id="nav-detail-tab" data-bs-toggle="tab"
-                                data-bs-target="#nav-detail" type="button" role="tab" aria-controls="nav-detail"
-                                aria-selected="false">Detail</button>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
@@ -164,13 +161,6 @@
                                 <embed src="{{ asset('asset/file/'.$tugasakhir->file_metodologi) }}" type="application/pdf"
                                     width="80%" height="700px" />
                             </div>
-                        </div>
-                        {{-- isi tab 4 end --}}
-    
-                        {{-- isi tab 4 start --}}
-                        <div class="tab-pane fade bg-white" id="nav-detail" role="tabpanel" aria-labelledby="nav-detail-tab"
-                            tabindex="0">
-                            Detail ini
                         </div>
                         {{-- isi tab 4 end --}}
                     </div>

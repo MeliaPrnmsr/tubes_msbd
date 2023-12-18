@@ -91,9 +91,9 @@
 
         <br>
         {{-- pagination start --}}
-        <div class="d-flex justify-content-end">
+        {{-- <div class="d-flex justify-content-end">
             {{ $results->links() }}
-        </div>
+        </div> --}}
         {{-- pagination end --}}
 
 </div>
