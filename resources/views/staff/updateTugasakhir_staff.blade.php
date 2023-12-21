@@ -76,19 +76,19 @@ $active = 'datatugas';
 
             <div class="mb-4">
                 <label for="file_metodologi" class="form-label"><b>File metodologi</b></label>
-                <input class="form-control" type="file" id="file_metodologi" name="file_metodologi"
+                <input class="form-control" type="file" id="file_baru_metodologi" name="file_baru_metodologi"
                     value="{{ old('file_metodologi', $tugas_akhir->file_metodologi) }}">
             </div>
 
             <div class="mb-4">
                 <label for="file_pustaka" class="form-label"><b>File pustaka</b></label>
-                <input class="form-control" type="file" id="file_pustaka" name="file_pustaka"
+                <input class="form-control" type="file" id="file_baru_pustaka" name="file_baru_pustaka"
                     value="{{ old('file_daftarpustaka', $tugas_akhir->file_daftarpustaka) }}">
             </div>
 
             <div class="mb-4">
                 <label for="file_tugasakhir" class="form-label"><b>File Tugas Akhir</b></label>
-                <input class="form-control" type="file" id="file_tugasakhir" name="file_tugasakhir"
+                <input class="form-control" type="file" id="file_baru_tugasakhir" name="file_baru_tugasakhir"
                     value="{{ old('file_tugasakhir', $tugas_akhir->file_tugasakhir)}}">
             </div>
     </div> <!-- row -->

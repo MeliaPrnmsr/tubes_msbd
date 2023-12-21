@@ -24,13 +24,13 @@ $active = 'datatugas';
                 <div class="col">
                     <div class="mb-4">
                         <label for="author" class="form-label"><b>Penulis</b></label>
-                        <select class="form-select @error('author') is-invalid @enderror" id="author" name="author">
+                        <select class="form-control ch @error('author') is-invalid @enderror" id="author" name="author">
                             @foreach($mahasiswas as $mahasiswa)
-                            <option value="{{ sprintf('%09d', $mahasiswa->NIM) }}">{{ $mahasiswa->nama_mahasiswa }}</option>
+                                <option value="{{ $mahasiswa->NIM }}" @if(old('author') == $mahasiswa->NIM) selected @endif>{{ $mahasiswa->nama_mahasiswa }}</option>
                             @endforeach
                         </select>
                         @error('author')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -38,42 +38,45 @@ $active = 'datatugas';
                 <div class="col">
                     <div class="mb-4">
                         <label for="tipe_ta" class="form-label"><b>Tipe Tugas Akhir</b></label>
-                        <select class="form-select @error('tipe_ta') is-invalid @enderror" id="tipe_ta" name="tipe_ta">
-                            <option value="skripsi">Skripsi</option>
-                            <option value="tesis">Tesis</option>
-                            <option value="disertasi">Disertasi</option>
+                        <select class="ch form-select @error('tipe_ta') is-invalid @enderror" id="tipe_ta" name="tipe_ta">
+                            <option value="skripsi" @if(old('tipe_ta') == 'skripsi') selected @endif>Skripsi</option>
+                            <option value="tesis" @if(old('tipe_ta') == 'tesis') selected @endif>Tesis</option>
+                            <option value="disertasi" @if(old('tipe_ta') == 'disertasi') selected @endif>Disertasi</option>
                         </select>
                         @error('tipe_ta')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                        
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="mb-4">
                         <label for="dospem1" class="form-label"><b>Pembimbing 1</b></label>
-                        <select class="form-select @error('dospem1') is-invalid @enderror" id="dospem1" name="dospem1">
+                        <select class="ch form-select @error('dospem1') is-invalid @enderror" id="dospem1" name="dospem1">
                             @foreach($dosens as $dosen)
-                            <option value="{{ $dosen->kode_dosen }}">{{ $dosen->nama_dosen }}</option>
+                                <option value="{{ $dosen->kode_dosen }}" @if(old('dospem1') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
                             @endforeach
                         </select>
                         @error('dospem1')
                             <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @enderror
+                        
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="mb-4">
                         <label for="dospem2" class="form-label"><b>Pembimbing 2</b></label>
-                        <select class="form-select @error('dospem2') is-invalid @enderror" id="dospem2" name="dospem2">
+                        <select class="ch form-select @error('dospem2') is-invalid @enderror" id="dospem2" name="dospem2">
                             @foreach($dosens as $dosen)
-                            <option value="{{ $dosen->kode_dosen }}">{{ $dosen->nama_dosen }}</option>
+                                <option value="{{ $dosen->kode_dosen }}" @if(old('dospem2') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
                             @endforeach
                         </select>
                         @error('dospem2')
                             <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @enderror
+                        
 
                     </div>
                 </div>
@@ -93,17 +96,17 @@ $active = 'datatugas';
                 <div class="col">
                     <div class="mb-4">
                         <label for="kategori" class="form-label"><b>Kategori</b></label>
-                        <select class="form-select @error('kategori') is-invalid @enderror" id="kategori"
-                            name="kategori">
+                        <select class="ch form-select @error('kategori') is-invalid @enderror" id="kategori" name="kategori">
                             @foreach($kategoris as $kategori)
-                            <option value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}</option>
+                                <option value="{{ $kategori->id_kategori }}" @if(old('kategori') == $kategori->id_kategori) selected @endif>{{ $kategori->nama_kategori }}</option>
                             @endforeach
                         </select>
                         @error('kategori')
                             <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @enderror
                     </div>
                 </div>
+
             </div> <!-- row -->
             <div class="mb-4">
                 <label for="abstrak" class="form-label"><b>Abstrak</b></label>

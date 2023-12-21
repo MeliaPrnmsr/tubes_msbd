@@ -14,20 +14,19 @@ return new class extends Migration
         DB::statement("DROP VIEW IF EXISTS v_seluruh_tugas_akhirs");
 
         DB::statement("
-            CREATE VIEW v_seluruh_tugas_akhirs AS
-            SELECT t.id_tugasakhir AS id_tugasakhir,
-            t.judul AS judul,
-            t.abstrak AS abstrak,
-            t.sampul AS sampul,
-            t.date_added AS data_added,
-            t.tahun_terbit AS tahun_terbit,
-            t.tipe_ta AS tipe_ta,
-            m.nama_mahasiswa AS author,
-            k.nama_kategori AS nama_kategori
-
-            FROM tugas_akhirs t JOIN mahasiswas m ON t.author = m.nim
-            JOIN kategoris k ON t.kategori_id = k.id_kategori
-
+        CREATE VIEW v_seluruh_tugas_akhirs AS 
+        SELECT DISTINCT
+            ta.*, m.nama_mahasiswa, df.*, k.nama_kategori,
+            d1.nama_dosen AS nama_dosen_dospem1,
+            d2.nama_dosen AS nama_dosen_dospem2
+        FROM tugas_akhirs ta
+        JOIN mahasiswas m ON ta.author = m.NIM
+        JOIN dosenpembimbings dp1 ON ta.author = dp1.NIM AND dp1.status_pembimbing = 'dospem1'
+        JOIN dosenpembimbings dp2 ON ta.author = dp2.NIM AND dp2.status_pembimbing = 'dospem2'
+        JOIN dosens d1 ON dp1.kode_dosen = d1.kode_dosen
+        JOIN dosens d2 ON dp2.kode_dosen = d2.kode_dosen
+        JOIN dokumen_files df ON ta.id_tugasakhir = df.tugasakhir_id
+        JOIN kategoris k ON ta.kategori_id = k.id_kategori;
         ");
     }
 

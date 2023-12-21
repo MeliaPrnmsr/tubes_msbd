@@ -13,6 +13,7 @@ use App\Models\TugasAkhir;
 use App\Models\Prodi;
 use App\Models\Kategori;
 use App\Models\User;
+use App\Models\DokumenFile;
 
 class StaffController extends Controller
 {
@@ -251,13 +252,25 @@ class StaffController extends Controller
 
     //TUGAS AKHIR
     //TUGAS AKHIR
-    public function dataTugasakhir()
+    public function dataTugasakhir(Request $request)
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
-        $tugas_akhirs = DB::table('v_data_tugasakhir')
+        $search = $request->input('search');
+        $query = DB::table('v_data_tugasakhir')
             ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
-            ->where('kategoris.prodi_id', $prodiStaff)
-            ->paginate(10);
+            ->where('kategoris.prodi_id', $prodiStaff);
+
+            if(!empty(request('search')))
+            {
+                $query->where('judul','like','%'. $search .'%')
+                                ->orWhere('tipe_ta','like','%'. $search .'%')
+                                ->orWhere('nama_mahasiswa','like','%'. $search .'%')
+                                ->orWhere('tahun_terbit','like','%'. $search .'%');
+    
+            }
+
+            $tugas_akhirs = $query->paginate(10);
+
         return view('staff.datatugasakhir_staff', ['tugas_akhirs' => $tugas_akhirs]);
     }
 
@@ -288,7 +301,7 @@ class StaffController extends Controller
             'author' => 'required|string',
             'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
             'dospem1' => 'required|string',
-            'dospem2' => 'nullable|string',
+            'dospem2' => 'required|string',
             'tahun_terbit' => 'required|numeric|min:1900|max:2099',
             'kategori' => 'required',
             'abstrak' => 'required',
@@ -357,18 +370,21 @@ class StaffController extends Controller
     public function updateTugasakhir(Request $request)
     {
         $request->validate([
-            'judul' => 'required|string|max:255',
-            'author' => 'required|string',
-            'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
-            'tahun_terbit' => 'required|numeric|min:1900|max:2099',
-            'kategori' => 'required',
-            'abstrak' => 'required',
-            'sampul' => 'required|mimes:jpeg,png,jpg',
-            'file_metodologi' => 'required|mimes:pdf',
-            'file_pustaka' => 'required|mimes:pdf',
-            'file_tugasakhir' => 'required|mimes:pdf',
+            'judul' => 'string|max:255',
+            'author' => 'string',
+            'tipe_ta' => 'string|in:skripsi,tesis,disertasi',
+            'tahun_terbit' => 'numeric|min:1900|max:2099',
+            'sampul' => 'mimes:jpeg,png,jpg',
+            'file_baru_metodologi' => 'mimes:pdf',
+            'file_baru_pustaka' => 'mimes:pdf',
+            'file_baru_tugasakhir' => 'mimes:pdf',
         ]);
-        
+
+
+        $dokumen_files = DokumenFile::where('tugasakhir_id', $request->input('tugasakhir_id'))->firstOrFail();
+        $tugas_akhir = TugasAkhir::where('id_tugasakhir', $request->input('tugasakhir_id'))->firstOrFail();
+
+        // dd($dokumen_files);
 
         $judul = $request->input('judul');
         $abstrak = $request->input('abstrak');
@@ -376,25 +392,42 @@ class StaffController extends Controller
         $tipe_ta = $request->input('tipe_ta');
         $tahun_terbit = $request->input('tahun_terbit');
         $kategori = $request->input('kategori');
+
         //foto_sampul
+        if ($request->hasFile('sampul')) {
         $sampul = $request->file('sampul');
         $nama_sampul = 'Sampul' . $author . '.' . $request->file('sampul')->getClientOriginalExtension();
         $sampul->move('asset/img/', $nama_sampul);
+        } else {
+            $nama_sampul = $tugas_akhir->sampul;
+        }
 
         //file_tugas_akhir
-        $file_metodologi = $request->file('file_metodologi');
-        $nama_file_metodologi = 'Metodologi' . $author . '.' . $request->file('file_metodologi')->getClientOriginalExtension();
-        $file_metodologi->move('asset/file/', $nama_file_metodologi);
+        if ($request->hasFile('file_baru_metodologi')) {
+            $file_metodologi = $request->file('file_baru_metodologi');
+            $nama_file_metodologi = 'Metodologi' . $author . '.' . $file_metodologi->getClientOriginalExtension();
+            $file_metodologi->move('asset/file/', $nama_file_metodologi);
+        } else {
+            $nama_file_metodologi = $dokumen_files->file_metodologi;
+        }
 
-        $file_pustaka = $request->file('file_pustaka');
-        $nama_file_pustaka = 'Daftar Pustaka' . $author . '.' . $request->file('file_pustaka')->getClientOriginalExtension();
-        $file_pustaka->move('asset/file/', $nama_file_pustaka);
+        if ($request->hasFile('file_baru_pustaka')) {
+            $file_pustaka = $request->file('file_baru_pustaka');
+            $nama_file_pustaka = 'Daftar Pustaka' . $author . '.' . $file_pustaka->getClientOriginalExtension();
+            $file_pustaka->move('asset/file/', $nama_file_pustaka);
+        } else {
+            $nama_file_pustaka = $dokumen_files->file_daftarpustaka;
+        }
 
-        $file_tugasakhir = $request->file('file_tugasakhir');
-        $nama_file_tugasakhir = 'Isi TA' . $author . '.' . $request->file('file_tugasakhir')->getClientOriginalExtension();
-        $file_tugasakhir->move('asset/file/', $nama_file_tugasakhir);
+        if ($request->hasFile('file_baru_tugasakhir')) {
+            $file_tugasakhir = $request->file('file_baru_tugasakhir');
+            $nama_file_tugasakhir = 'Isi TA' . $author . '.' . $file_tugasakhir->getClientOriginalExtension();
+            $file_tugasakhir->move('asset/file/', $nama_file_tugasakhir);
+        } else {
+            $nama_file_tugasakhir = $dokumen_files->file_tugasakhir;
+        }
 
-        $id_tugasakhir= $request->input('tugasakhir_id');
+        $id_tugasakhir = $request->input('tugasakhir_id');
 
         try {
             DB::select('CALL p_perbarui_tugas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
@@ -410,7 +443,7 @@ class StaffController extends Controller
                 $nama_file_tugasakhir,
                 $id_tugasakhir
             ]);
-    
+
             return redirect()->route('datatugas.staff')->with('success', 'Data Tugas Akhir berhasil diperbarui');
         } catch (\Throwable $th) {
             dd($th);
@@ -427,59 +460,8 @@ class StaffController extends Controller
     }
 
 
-
-
     public function notifikasi_staff()
     {
         return view('staff.notifikasi_staff');
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

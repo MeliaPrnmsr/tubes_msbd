@@ -233,6 +233,7 @@ class AdminController extends Controller
         {
             $query->where('judul','like','%'. $search .'%')
                             ->orWhere('tipe_ta','like','%'. $search .'%')
+                            ->orWhere('nama_mahasiswa','like','%'. $search .'%')
                             ->orWhere('tahun_terbit','like','%'. $search .'%');
 
         }
@@ -253,7 +254,7 @@ class AdminController extends Controller
     {
         $query = DB::table('v_data_kategori')
                     ->orderBy('jenjang','asc')
-                    ->groupBy('nama_prodi')
+                    ->groupBy('prodi_id')
                     ->get();
 
         $collection = DB::table('v_data_kategori')->get();
@@ -285,7 +286,7 @@ class AdminController extends Controller
                             ->orWhere('deskripsi', 'like', '%' . $search . '%');
         }
 
-        $cariLog = $query->paginate(10);
+        $cariLog = $query->paginate(15);
 
         return view('admin.log',compact('cariLog','search'));
     }

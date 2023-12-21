@@ -5,7 +5,7 @@ $active = 'staff';
 @section('content')
 <!-- Register -->
 <div class="container mt-5">
-    <h3 class="card-title text-center mt-3"><b>Tambah Data Dosen</b></h3>
+    <h3 class="card-title text-center mt-3"><b>Tambah Data Staff</b></h3>
     <br>
     <div class="card mx-auto">
         <div class="card-body">
@@ -13,7 +13,7 @@ $active = 'staff';
                 @csrf
 
                 <div class="mt-3">
-                    <label for="kode_staff" class="form-label">Kode Dosen</label>
+                    <label for="kode_staff" class="form-label">Kode Staff</label>
                     <input type="text" class="form-control @error('kode_staff') is-invalid @enderror" id="kode_staff"
                         name="kode_staff" aria-describedby="kode_staff" value="{{ old('kode_staff')}}">
                     @error('kode_staff')
@@ -22,7 +22,7 @@ $active = 'staff';
                 </div>
 
                 <div class="mt-3">
-                    <label for="nama_staff" class="form-label">Nama</label>
+                    <label for="nama_staff" class="form-label">Nama Staff</label>
                     <input type="text" class="form-control @error('nama_staff') is-invalid @enderror" id="nama_staff"
                         name="nama_staff" aria-describedby="nama_staff" value="{{ old('nama_staff')}}">
                     @error('nama_staff')
