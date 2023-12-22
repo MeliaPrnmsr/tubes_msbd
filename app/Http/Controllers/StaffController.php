@@ -276,6 +276,7 @@ class StaffController extends Controller
 
     public function detailTugasakhir($id_tugasakhir)
     {
+        
         $tugas_akhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
 
         return view('staff.detailTugasakhir_staff', ['tugas_akhir' => $tugas_akhir]);
@@ -284,76 +285,177 @@ class StaffController extends Controller
     public function tambahTugasakhir()
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
+        $jenjangStaff = Prodi::find($prodiStaff)->jenjang;
 
         $dosens = Dosen::all();
         $mahasiswas = Mahasiswa::where('prodi_id', $prodiStaff)->get();
         $kategoris = Kategori::where('prodi_id', $prodiStaff)->get();
 
-        // dd($mahasiswas);
+        // dd($jenjangStaff);
 
-        return view('staff.tambahTugasakhir_staff', compact('dosens', 'mahasiswas', 'kategoris'));
+        return view('staff.tambahTugasakhir_staff', compact('dosens', 'mahasiswas', 'kategoris','jenjangStaff'));
     }
 
     public function insertTugasakhir(Request $request)
     {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'author' => 'required|string',
-            'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
-            'dospem1' => 'required|string',
-            'dospem2' => 'required|string',
-            'tahun_terbit' => 'required|numeric|min:1900|max:2099',
-            'kategori' => 'required',
-            'abstrak' => 'required',
-            'sampul' => 'required|mimes:jpeg,png,jpg',
-            'file_metodologi' => 'required|mimes:pdf',
-            'file_pustaka' => 'required|mimes:pdf',
-            'file_tugasakhir' => 'required|mimes:pdf',
-        ]);
+        $prodiJenjang = auth()->user()->staff->prodi->jenjang;
 
-        $judul = $request->input('judul');
-        $abstrak = $request->input('abstrak');
-        $author = $request->input('author');
-        $dospem1 = $request->input('dospem1');
-        $dospem2 = $request->input('dospem2');
-        $tipe_ta = $request->input('tipe_ta');
-        $tahun_terbit = $request->input('tahun_terbit');
-        $kategori = $request->input('kategori');
-        //foto_sampul
-        $sampul = $request->file('sampul');
-        $nama_sampul = 'Sampul' . $author . '.' . $request->file('sampul')->getClientOriginalExtension();
-        $sampul->move('asset/img/', $nama_sampul);
+        if ($prodiJenjang == 'S1' || $prodiJenjang == 'S2') {
+    
 
-        //file_tugas_akhir
-        $file_metodologi = $request->file('file_metodologi');
-        $nama_file_metodologi = 'Metodologi' . $author . '.' . $request->file('file_metodologi')->getClientOriginalExtension();
-        $file_metodologi->move('asset/file/', $nama_file_metodologi);
+            $request->validate([
+                'judul' => 'required|string|max:255',
+                'author' => 'required|string',
+                'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
+                'dospem1' => 'required|string',
+                'dospem2' => 'required|string',
+                'tahun_terbit' => 'required|numeric|min:1900|max:2099',
+                'kategori' => 'required',
+                'abstrak' => 'required',
+                'sampul' => 'required|mimes:jpeg,png,jpg',
+                'file_metodologi' => 'required|mimes:pdf',
+                'file_pustaka' => 'required|mimes:pdf',
+                'file_tugasakhir' => 'required|mimes:pdf',
+            ]);
+    
+            $judul = $request->input('judul');
+            $abstrak = $request->input('abstrak');
+            $author = $request->input('author');
+            $dospem1 = $request->input('dospem1');
+            $dospem2 = $request->input('dospem2');
+            $tipe_ta = $request->input('tipe_ta');
+            $tahun_terbit = $request->input('tahun_terbit');
+            $kategori = $request->input('kategori');
+            //foto_sampul
+            $sampul = $request->file('sampul');
+            $nama_sampul = 'Sampul' . $author . '.' . $request->file('sampul')->getClientOriginalExtension();
+            $sampul->move('asset/img/', $nama_sampul);
+    
+            //file_tugas_akhir
+            $file_metodologi = $request->file('file_metodologi');
+            $nama_file_metodologi = 'Metodologi' . $author . '.' . $request->file('file_metodologi')->getClientOriginalExtension();
+            $file_metodologi->move('asset/file/', $nama_file_metodologi);
+    
+            $file_pustaka = $request->file('file_pustaka');
+            $nama_file_pustaka = 'Daftar Pustaka' . $author . '.' . $request->file('file_pustaka')->getClientOriginalExtension();
+            $file_pustaka->move('asset/file/', $nama_file_pustaka);
+    
+            $file_tugasakhir = $request->file('file_tugasakhir');
+            $nama_file_tugasakhir = 'Isi TA' . $author . '.' . $request->file('file_tugasakhir')->getClientOriginalExtension();
+            $file_tugasakhir->move('asset/file/', $nama_file_tugasakhir);
+    
+    
+            DB::select('CALL p_tambah_tugas_akhir(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
+                $judul,
+                $abstrak,
+                $nama_sampul,
+                $tipe_ta,
+                $author,
+                $kategori,
+                $dospem1,
+                $dospem2,
+                $tahun_terbit,
+                $nama_file_metodologi,
+                $nama_file_pustaka,
+                $nama_file_tugasakhir
+            ]); 
+    
+            return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
 
-        $file_pustaka = $request->file('file_pustaka');
-        $nama_file_pustaka = 'Daftar Pustaka' . $author . '.' . $request->file('file_pustaka')->getClientOriginalExtension();
-        $file_pustaka->move('asset/file/', $nama_file_pustaka);
 
-        $file_tugasakhir = $request->file('file_tugasakhir');
-        $nama_file_tugasakhir = 'Isi TA' . $author . '.' . $request->file('file_tugasakhir')->getClientOriginalExtension();
-        $file_tugasakhir->move('asset/file/', $nama_file_tugasakhir);
+        } elseif ($prodiJenjang == 'S3') {
+            $request->validate([
+                'judul' => 'required|string|max:255',
+                'author' => 'required|string',
+                'tipe_ta' => 'required|string|in:skripsi,tesis,disertasi',
+                'promotor1' => 'required|string',
+                'promotor2' => 'required|string',
+                'promotor3' => 'required|string',
+                'tahun_terbit' => 'required|numeric|min:1900|max:2099',
+                'kategori' => 'required',
+                'abstrak' => 'required',
+                'sampul' => 'required|mimes:jpeg,png,jpg',
+                'file_metodologi' => 'required|mimes:pdf',
+                'file_pustaka' => 'required|mimes:pdf',
+                'bab1' => 'required|mimes:pdf',
+                'bab2' => 'required|mimes:pdf',
+                'bab3' => 'required|mimes:pdf',
+                'bab4' => 'required|mimes:pdf',
+                'bab5' => 'required|mimes:pdf'
+            ]);
+    
+            $judul = $request->input('judul');
+            $abstrak = $request->input('abstrak');
+            $author = $request->input('author');
+            $promotor1 = $request->input('promotor1');
+            $promotor2 = $request->input('promotor2');
+            $promotor3 = $request->input('promotor3');
+            $tipe_ta = $request->input('tipe_ta');
+            $tahun_terbit = $request->input('tahun_terbit');
+            $kategori = $request->input('kategori');
+            //foto_sampul
+            $sampul = $request->file('sampul');
+            $nama_sampul = 'Sampul' . $author . '.' . $request->file('sampul')->getClientOriginalExtension();
+            $sampul->move('asset/img/', $nama_sampul);
+    
+            //file_tugas_akhir
+            $file_metodologi = $request->file('file_metodologi');
+            $nama_file_metodologi = 'Metodologi' . $author . '.' . $request->file('file_metodologi')->getClientOriginalExtension();
+            $file_metodologi->move('asset/file/', $nama_file_metodologi);
+    
+            $file_pustaka = $request->file('file_pustaka');
+            $nama_file_pustaka = 'Daftar Pustaka' . $author . '.' . $request->file('file_pustaka')->getClientOriginalExtension();
+            $file_pustaka->move('asset/file/', $nama_file_pustaka);
+    
+            $bab1 = $request->file('bab1');
+            $nama_bab1 = 'Isi Bab1' . $author . '.' . $request->file('bab1')->getClientOriginalExtension();
+            $bab1->move('asset/file/', $nama_bab1);
+    
+            $bab2 = $request->file('bab2');
+            $nama_bab2 = 'Isi Bab2' . $author . '.' . $request->file('bab2')->getClientOriginalExtension();
+            $bab2->move('asset/file/', $nama_bab2);
+    
+            $bab3 = $request->file('bab3');
+            $nama_bab3 = 'Isi Bab3' . $author . '.' . $request->file('bab3')->getClientOriginalExtension();
+            $bab3->move('asset/file/', $nama_bab3);
+    
+            $bab4 = $request->file('bab4');
+            $nama_bab4 = 'Isi Bab4' . $author . '.' . $request->file('bab4')->getClientOriginalExtension();
+            $bab4->move('asset/file/', $nama_bab4);
+    
+            $bab5 = $request->file('bab5');
+            $nama_bab5 = 'Isi Bab5' . $author . '.' . $request->file('bab5')->getClientOriginalExtension();
+            $bab5->move('asset/file/', $nama_bab5);
+    
+    
+    
+    
+            DB::select('CALL p_tambah_tugas_akhir_s3(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?)', [
+                $judul,
+                $abstrak,
+                $nama_sampul,
+                $tipe_ta,
+                $author,
+                $kategori,
+                $promotor1,
+                $promotor2,
+                $promotor3,
+                $tahun_terbit,
+                $nama_file_metodologi,
+                $nama_file_pustaka,
+                $bab1,
+                $bab2,
+                $bab3,
+                $bab4,
+                $bab5
+            ]); 
+    
+            return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
+        } else {
+            dd($request);
+        }
 
-
-        DB::select('CALL p_tambah_tugas_akhir(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
-            $judul,
-            $abstrak,
-            $nama_sampul,
-            $tipe_ta,
-            $author,
-            $kategori,
-            $dospem1,
-            $dospem2,
-            $tahun_terbit,
-            $nama_file_metodologi,
-            $nama_file_pustaka,
-            $nama_file_tugasakhir
-        ]);
-
-        return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
+      
     }
 
     public function editTugasakhir($id_tugasakhir)
