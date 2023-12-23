@@ -375,7 +375,6 @@ class StaffController extends Controller
                 'kategori' => 'required',
                 'abstrak' => 'required',
                 'sampul' => 'required|mimes:jpeg,png,jpg',
-                'file_metodologi' => 'required|mimes:pdf',
                 'file_pustaka' => 'required|mimes:pdf',
                 'bab1' => 'required|mimes:pdf',
                 'bab2' => 'required|mimes:pdf',
@@ -398,10 +397,6 @@ class StaffController extends Controller
             $nama_sampul = 'Sampul' . $author . '.' . $request->file('sampul')->getClientOriginalExtension();
             $sampul->move('asset/img/', $nama_sampul);
     
-            //file_tugas_akhir
-            $file_metodologi = $request->file('file_metodologi');
-            $nama_file_metodologi = 'Metodologi' . $author . '.' . $request->file('file_metodologi')->getClientOriginalExtension();
-            $file_metodologi->move('asset/file/', $nama_file_metodologi);
     
             $file_pustaka = $request->file('file_pustaka');
             $nama_file_pustaka = 'Daftar Pustaka' . $author . '.' . $request->file('file_pustaka')->getClientOriginalExtension();
@@ -428,8 +423,6 @@ class StaffController extends Controller
             $bab5->move('asset/file/', $nama_bab5);
     
     
-    
-    
             DB::select('CALL p_tambah_tugas_akhir_s3(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?)', [
                 $judul,
                 $abstrak,
@@ -441,7 +434,6 @@ class StaffController extends Controller
                 $promotor2,
                 $promotor3,
                 $tahun_terbit,
-                $nama_file_metodologi,
                 $nama_file_pustaka,
                 $bab1,
                 $bab2,
