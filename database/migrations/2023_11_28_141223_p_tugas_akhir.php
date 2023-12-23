@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         $p_tambah_tugasakhir = "DROP PROCEDURE IF EXISTS `p_tambah_tugas_akhir`;
-        CREATE PROCEDURE `p_tambah_tugas_akhir`(IN `p_judul` VARCHAR(255),
+        CREATE PROCEDURE `p_tambah_tugas_akhir`(
+        IN `p_judul` VARCHAR(255),
         IN `p_abstrak` TEXT,
         IN `p_sampul` VARCHAR(255),
         IN `p_tipe_ta` VARCHAR(50),
@@ -21,7 +22,6 @@ return new class extends Migration
         IN `p_dospem1` CHAR(5),
         IN `p_dospem2` CHAR(5),
         IN `p_tahun_terbit` INT(5),
-        IN `p_file_metodologi` VARCHAR(255),
         IN `p_file_pustaka` VARCHAR(255),
         IN `p_bab1` VARCHAR(255),
         IN `p_bab2` VARCHAR(255),
@@ -39,8 +39,8 @@ return new class extends Migration
             INSERT INTO dosenpembimbings (NIM, kode_dosen, status_pembimbing)
             VALUES (p_author, p_dospem1, 'dospem1'), (p_author, p_dospem2, 'dospem2');
 
-            INSERT INTO dokumen_files (file_metodologi, bab1, bab2, bab3, bab4, bab5, file_daftarpustaka, tugasakhir_id)
-            VALUES (p_file_metodologi, p_bab1, p_bab2, p_bab3, p_bab4, p_bab5, p_file_pustaka, tugas_akhir_id);
+            INSERT INTO dokumen_files (bab1, bab2, bab3, bab4, bab5, file_daftarpustaka, tugasakhir_id)
+            VALUES (p_bab1, p_bab2, p_bab3, p_bab4, p_bab5, p_file_pustaka, tugas_akhir_id);
 
         END";
         \DB::unprepared($p_tambah_tugasakhir);

@@ -190,14 +190,7 @@ $active = 'datatugas';
                     @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="file_metodologi" class="form-label"><b>File metodologi</b></label>
-                <input class="form-control @error('file_metodologi') is-invalid @enderror" type="file" value="{{ old('file_metodologi')}}"
-                    id="file_metodologi" name="file_metodologi">
-                    @error('file_metodologi')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-            </div>
+
 
             <div class="mb-4">
                 <label for="file_pustaka" class="form-label"><b>File pustaka</b></label>

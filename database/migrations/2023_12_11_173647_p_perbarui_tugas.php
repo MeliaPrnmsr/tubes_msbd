@@ -21,9 +21,12 @@ return new class extends Migration
             IN p_author CHAR(9),
             IN p_kategori INT,
             IN p_tahun_terbit INT(5),
-            IN p_file_metodologi VARCHAR(255),
             IN p_file_pustaka VARCHAR(255), 
-            IN p_file_tugasakhir VARCHAR(255),
+            IN `p_bab1` VARCHAR(255),
+            IN `p_bab2` VARCHAR(255),
+            IN `p_bab3` VARCHAR(255),
+            IN `p_bab4` VARCHAR(255),
+            IN `p_bab5` VARCHAR(255),
             IN p_id_tugasakhir INT
         )
         BEGIN
@@ -40,8 +43,11 @@ return new class extends Migration
                 id_tugasakhir = p_id_tugasakhir;
             UPDATE dokumen_files 
             SET
-                file_metodologi = p_file_metodologi,
-                file_tugasakhir = p_file_tugasakhir,
+                bab1 = p_bab1,
+                bab2 = p_bab2,
+                bab3 = p_bab3,
+                bab4 = p_bab4,
+                bab5 = p_bab5,
                 file_daftarpustaka = p_file_pustaka
             WHERE
                 tugasakhir_id = p_id_tugasakhir;

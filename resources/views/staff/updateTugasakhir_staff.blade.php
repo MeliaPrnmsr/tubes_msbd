@@ -74,11 +74,6 @@ $active = 'datatugas';
 
             </div>
 
-            <div class="mb-4">
-                <label for="file_metodologi" class="form-label"><b>File metodologi</b></label>
-                <input class="form-control" type="file" id="file_baru_metodologi" name="file_baru_metodologi"
-                    value="{{ old('file_metodologi', $tugas_akhir->file_metodologi) }}">
-            </div>
 
             <div class="mb-4">
                 <label for="file_pustaka" class="form-label"><b>File pustaka</b></label>
@@ -86,11 +81,43 @@ $active = 'datatugas';
                     value="{{ old('file_daftarpustaka', $tugas_akhir->file_daftarpustaka) }}">
             </div>
 
+
             <div class="mb-4">
-                <label for="file_tugasakhir" class="form-label"><b>File Tugas Akhir</b></label>
-                <input class="form-control" type="file" id="file_baru_tugasakhir" name="file_baru_tugasakhir"
-                    value="{{ old('file_tugasakhir', $tugas_akhir->file_tugasakhir)}}">
+                <label for="bab1" class="form-label"><b>Bab 1</b></label>
+                <input class="form-control" type="file" id="bab1_baru" name="bab1_baru"
+                    value="{{ old('bab1', $tugas_akhir->bab1)}}">
             </div>
+
+
+            <div class="mb-4">
+                <label for="bab2" class="form-label"><b>Bab 2</b></label>
+                <input class="form-control" type="file" id="bab2_baru" name="bab2_baru"
+                    value="{{ old('bab2', $tugas_akhir->bab2)}}">
+            </div>
+
+
+            <div class="mb-4">
+                <label for="bab3" class="form-label"><b>Bab 3</b></label>
+                <input class="form-control" type="file" id="bab3_baru" name="bab3_baru"
+                    value="{{ old('bab3', $tugas_akhir->bab3)}}">
+            </div>
+
+
+            <div class="mb-4">
+                <label for="bab4" class="form-label"><b>Bab 4</b></label>
+                <input class="form-control" type="file" id="bab4_baru" name="bab4_baru"
+                    value="{{ old('bab4', $tugas_akhir->bab4)}}">
+            </div>
+
+
+            <div class="mb-4">
+                <label for="bab5" class="form-label"><b>Bab 5</b></label>
+                <input class="form-control" type="file" id="bab5_baru" name="bab5_baru"
+                    value="{{ old('bab5', $tugas_akhir->bab5)}}">
+            </div>
+
+
+
     </div> <!-- row -->
 
     <input type="hidden" name="tugasakhir_id" value="{{ old('tugasakhir_id', $tugas_akhir->id_tugasakhir) }}">

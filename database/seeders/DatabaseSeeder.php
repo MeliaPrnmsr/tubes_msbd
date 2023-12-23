@@ -1051,37 +1051,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        // TUGAS AHIR START
-
-        TugasAkhir::create([
-            'judul' => "Strategi Coping Mechanism Menggunakan Algoritma Kruskal",
-            'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
-            'tahun_terbit' => 2010,
-            'tipe_ta' => "disertasi",
-            'author' => "228123031",
-            'kategori_id' => 22
-        ]);
-
-        Dosenpembimbing::create([
-            'NIM' => "221402133",
-            'kode_dosen' => "DDY",
-            'status_pembimbing' => "dospem1"
-        ]);
-
-        Dosenpembimbing::create([
-            'NIM' => "221402133",
-            'kode_dosen' => "DDY",
-            'status_pembimbing' => "dospem2"
-        ]);
-
-        DokumenFile::create([
-            'file_metodologi' => "public\asset\file\Metodologi220402001.pdf",
-            'file_tugasakhir' => "public\asset\file\Isi TA220402001.pdf",
-            'file_daftarpustaka' => "public\asset\file\Daftar Pustaka220402001.pdf",
-            'tugasakhir_id' => 2
-        ]);
-
-        //<!-- END --> 
+     
         
     }
 }
