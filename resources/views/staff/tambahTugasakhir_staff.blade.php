@@ -26,7 +26,7 @@ $active = 'datatugas';
                         <label for="author" class="form-label"><b>Penulis</b></label>
                         <select class="form-control ch @error('author') is-invalid @enderror" id="author" name="author">
                             @foreach($mahasiswas as $mahasiswa)
-                                <option value="{{ $mahasiswa->NIM }}" @if(old('author') == $mahasiswa->NIM) selected @endif>{{ $mahasiswa->nama_mahasiswa }}</option>
+                                <option value="{{ sprintf('%09d', $mahasiswa->NIM) }}" @if(old('author') == $mahasiswa->NIM) selected @endif>{{ $mahasiswa->nama_mahasiswa }}</option>
                             @endforeach
                         </select>
                         @error('author')
@@ -91,7 +91,7 @@ $active = 'datatugas';
 
                 <div class="col">
                     <div class="mb-4">
-                        <label for="promotor1" class="form-label"><b>Promotor1 1</b></label>
+                        <label for="promotor1" class="form-label"><b>Promotor 1</b></label>
                         <select class="ch form-select @error('promotor1') is-invalid @enderror" id="promotor1" name="promotor1">
                             @foreach($dosens as $dosen)
                                 <option value="{{ $dosen->kode_dosen }}" @if(old('promotor1') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
@@ -138,11 +138,6 @@ $active = 'datatugas';
 
                     
                 @endif
-
-
-               
-
-
 
 
                 <div class="col">

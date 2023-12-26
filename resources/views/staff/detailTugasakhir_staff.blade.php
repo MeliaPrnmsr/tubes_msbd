@@ -32,7 +32,7 @@
                     </div>
 
 
-                    @if ($tugas_akhir->tipe_ta=='disertasi')
+                    @if ($tugas_akhir->tipe_ta =='disertasi')
 
                     <div class="col">
                         <div class="mb-4">
@@ -76,13 +76,6 @@
                     </div>
 
                     @endif
-
-
-                   
-                  
-
-
-
 
                     <div class="col">
                         <div class="mb-4">

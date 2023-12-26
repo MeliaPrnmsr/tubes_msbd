@@ -27,7 +27,7 @@
 
                     {{-- kolom sampul start --}}
                     <div class="col-4 d-flex align-items-center justify-content-center">
-                        <img src="{{asset('asset/img/'.$tugasakhir->sampul)}}" alt="" class="w-75 h-75">
+                        <img src="{{asset('asset/img/'.$tugasakhir->sampul)}}" alt="" class="w-75 h-75 border">
                     </div>
                     {{-- kolom sampul start --}}
 
@@ -39,19 +39,39 @@
                                 <td style="width: 5%">:</td>
                                 <td>{{$tugasakhir->nama_mahasiswa}}</td>
                             </tr>
-                            <tr>
-                                <td><b>Pembimbing 1</b></td>
-                                <td>:</td>
-                                <td><a href="#" class="btn btn-hijau text-start">{{ $tugasakhir->nama_dosen_dospem1
-                                        }}</a></td>
-                            </tr>
+                            @if ($tugasakhir->tipe_ta =='disertasi')
+                                <tr>
+                                    <td><b>Promotor 1</b></td>
+                                    <td>:</td>
+                                    <td><a href="#" class="btn btn-hijau text-start">{{ $tugasakhir->nama_promotor1}}</a></td>
+                                </tr>
 
-                            <tr>
-                                <td><b>Pembimbing 2</b></td>
-                                <td>:</td>
-                                <td><a href="#" class="btn btn-warning text-start">{{ $tugasakhir->nama_dosen_dospem2
-                                        }}</a></td>
-                            </tr>
+                                <tr>
+                                    <td><b>Promotor 2</b></td>
+                                    <td>:</td>
+                                    <td><a href="#" class="btn btn-warning text-start">{{ $tugasakhir->nama_promotor2}}</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Promotor 3</b></td>
+                                    <td>:</td>
+                                    <td><a href="#" class="btn btn-danger text-start">{{ $tugasakhir->nama_promotor3}}</a></td>
+                                </tr>
+                            @else
+                                <tr>
+                                    <td><b>Pembimbing 1</b></td>
+                                    <td>:</td>
+                                    <td><a href="#" class="btn btn-hijau text-start">{{ $tugasakhir->nama_dosen_dospem1
+                                            }}</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><b>Pembimbing 2</b></td>
+                                    <td>:</td>
+                                    <td><a href="#" class="btn btn-warning text-start">{{ $tugasakhir->nama_dosen_dospem2
+                                            }}</a></td>
+                                </tr>
+                            @endif
                             <tr>
                                 <td><b>Tipe TA</b></td>
                                 <td>:</td>

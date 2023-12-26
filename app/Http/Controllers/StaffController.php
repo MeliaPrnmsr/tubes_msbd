@@ -20,19 +20,29 @@ class StaffController extends Controller
 
     public function index()
     {
+        //mencari prodi staff yang login
         $prodiStaff = auth()->user()->staff->prodi_id;
         $prodi_data = Prodi::where("id_prodi", $prodiStaff)->first();
 
-        $jumlahDosen = DB::table('v_data_dosen')->where('prodi_id', $prodiStaff)->count();
+        //mencari jenjang prodi staff yang login
+        $prodiJenjang = auth()->user()->staff->prodi->jenjang;
+        $prodi_jenjang = Prodi::where("jenjang", $prodiJenjang)->first();
 
+        $jumlahDosen = DB::table('v_data_dosen')->where('prodi_id', $prodiStaff)->count();
 
         $jumlahMahasiswa = DB::table('v_data_mahasiswa')->where('prodi_id', $prodiStaff)->count();
 
-        $jumlahTugasakhir = DB::table('v_data_tugasakhir')
-            ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
-            ->where('kategoris.prodi_id', $prodiStaff)->count();
+        //Jumlah Tugaa Akhir Per-Prodi
+        if ($prodiJenjang == 'S1' || $prodiJenjang == 'S2') {
+            $jumlahTugasakhir = DB::table('v_data_tugasakhir')
+                ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
+                ->where('kategoris.prodi_id', $prodiStaff)->count();
+        } else {
+            $jumlahTugasakhir = DB::table('v_data_disertasi')
+                ->join('kategoris', 'v_data_disertasi.kategori_id', '=', 'kategoris.id_kategori')
+                ->where('kategoris.prodi_id', $prodiStaff)->count();
+        }
 
-        //View
         $topLikeTugasAkhir = DB::table('top_like_tugas_akhir')->get();
         $baruDitambah = DB::table('judul_baru_ditambahkan')->get();
 
@@ -549,11 +559,11 @@ class StaffController extends Controller
                 'sampul' => 'mimes:jpeg,png,jpg',
                 'file_baru_pustaka' => 'mimes:pdf',
                 'file_baru_tugasakhir' => 'mimes:pdf',
-                'bab1_baru' => 'required|mimes:pdf',
-                'bab2_baru' => 'required|mimes:pdf',
-                'bab3_baru' => 'required|mimes:pdf',
-                'bab4_baru' => 'required|mimes:pdf',
-                'bab5_baru' => 'required|mimes:pdf'
+                'bab1_baru' => 'mimes:pdf',
+                'bab2_baru' => 'mimes:pdf',
+                'bab3_baru' => 'mimes:pdf',
+                'bab4_baru' => 'mimes:pdf',
+                'bab5_baru' => 'mimes:pdf'
             ]);
     
     
@@ -657,10 +667,6 @@ class StaffController extends Controller
             } catch (\Throwable $th) {
                 dd($th);
             }
-
-
-       
-
     }
 
     public function dataKategori()
