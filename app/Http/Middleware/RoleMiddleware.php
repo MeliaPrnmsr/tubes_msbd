@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // Tambahkan referensi ke kelas Auth
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class RoleMiddleware
 {
@@ -13,6 +14,7 @@ class RoleMiddleware
         $allowedRoles = $roles;
 
         if (Auth::check() && Auth::user() && in_array(Auth::user()->role, $allowedRoles)) {
+            DB::setDefaultConnection(Auth::user()->role);
             return $next($request);
         }
 
