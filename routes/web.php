@@ -20,9 +20,7 @@ use App\Http\Controllers\PengunjungController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/dashboard', function () { return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -102,6 +100,7 @@ Route::middleware(['role:staff', 'auth', 'verified'])->group(function () {
 //ROUTE PENGUNJUNG
 //ROUTE PENGUNJUNG
 //ROUTE PENGUNJUNG
+Route::get('/', [PengunjungController::class,'index'])->name('landingpage');
 Route::get('/landingpage', [PengunjungController::class,'index'])->name('landingpage');
 Route::get('/search', [PengunjungController::class,'search']);
 Route::get('/detailtugasakhir/{id_tugasakhir}', [PengunjungController::class,'detailTugasakhir'])->name('detailTugasakhir');
