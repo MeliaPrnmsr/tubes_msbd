@@ -21,22 +21,22 @@ class StaffController extends Controller
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
         $prodi_data = Prodi::where("id_prodi", $prodiStaff)->first();
-       
+
         $jumlahDosen = DB::table('v_data_dosen')->where('prodi_id', $prodiStaff)->count();
 
 
         $jumlahMahasiswa = DB::table('v_data_mahasiswa')->where('prodi_id', $prodiStaff)->count();
 
         $jumlahTugasakhir = DB::table('v_data_tugasakhir')
-        ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
-        ->where('kategoris.prodi_id', $prodiStaff)->count();
-{{  }}{{  }}
+            ->join('kategoris', 'v_data_tugasakhir.kategori_id', '=', 'kategoris.id_kategori')
+            ->where('kategoris.prodi_id', $prodiStaff)->count();
+
         //View
         $topLikeTugasAkhir = DB::table('top_like_tugas_akhir')->get();
         $baruDitambah = DB::table('judul_baru_ditambahkan')->get();
 
         return view('staff.dashboard_staff', compact('prodi_data', 'jumlahDosen',
-        'jumlahMahasiswa', 'jumlahTugasakhir', 'topLikeTugasAkhir', 'baruDitambah'));
+            'jumlahMahasiswa', 'jumlahTugasakhir', 'topLikeTugasAkhir', 'baruDitambah'));
     }
 
     //Mahasiswa Part Start
@@ -70,7 +70,7 @@ class StaffController extends Controller
         return view('staff.detailMahasiswa_staff', ['mahasiswa' => $mahasiswa]);
     }
 
-    public function tambahMahasiswa() 
+    public function tambahMahasiswa()
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
         $prodis = Prodi::where('id_prodi', $prodiStaff)->get();
@@ -124,8 +124,8 @@ class StaffController extends Controller
         $nama_mahasiswa = $request->input('nama_mahasiswa');
         $email = $request->input('email');
         $prodi_id = $request->input('prodi');
-        $id_user= $request->input('user_id');
-        
+        $id_user = $request->input('user_id');
+
 
         DB::select('CALL p_perbarui_mahasiswa(?, ?, ?, ?, ?)', [
             $nim,
@@ -140,7 +140,7 @@ class StaffController extends Controller
     //Mahasiswa Part End
     //Mahasiswa Part End
 
-    public function dataDosen(Request $request) 
+    public function dataDosen(Request $request)
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
         $query = DB::table('v_data_dosen')->where('prodi_id', $prodiStaff);
@@ -174,8 +174,8 @@ class StaffController extends Controller
     {
         $validasidata = $request->validate([
             'kode_dosen' => ['required', 'unique:dosens,kode_dosen', 'size:3', 'alpha', 'uppercase'],
-            'NIP' => 'required|unique:dosens,NIP|numeric|digits:14',
-            'NIDN' => 'required|unique:dosens,NIDN|numeric|digits:7',
+            'NIP' => 'required|unique:dosens,NIP|numeric|digits:18',
+            'NIDN' => 'required|unique:dosens,NIDN|numeric|digits:10',
             'nama_dosen' => ['required', 'regex:/^[A-Za-z\s\-,\.]+$/u'],
             'email' => 'required|email|unique:users,email',
             'prodi' => 'required|not_in:0'
@@ -215,7 +215,7 @@ class StaffController extends Controller
         return view('staff.detailDosen', ['dosen' => $dosen]);
     }
 
-    public function editDosen($kode_dosen )
+    public function editDosen($kode_dosen)
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
         $prodis = Prodi::where('id_prodi', $prodiStaff)->get();
@@ -225,7 +225,7 @@ class StaffController extends Controller
 
     public function updateDosen(Request $request)
     {
-        
+
         $kode_dosen = $request->input('kode');
         $nama_dosen = $request->input('nama');
         $NIP = $request->input('NIP');
@@ -242,8 +242,8 @@ class StaffController extends Controller
             $NIDN,
             $email,
             $prodi,
-            $id_user    
-            
+            $id_user
+
         ]);
 
         return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil diperbarui');
@@ -272,9 +272,11 @@ class StaffController extends Controller
     {
         $prodiStaff = auth()->user()->staff->prodi_id;
 
-        $dosens = Dosen::where('prodi_id', $prodiStaff)->get();
+        $dosens = Dosen::all();
         $mahasiswas = Mahasiswa::where('prodi_id', $prodiStaff)->get();
         $kategoris = Kategori::where('prodi_id', $prodiStaff)->get();
+
+        // dd($mahasiswas);
 
         return view('staff.tambahTugasakhir_staff', compact('dosens', 'mahasiswas', 'kategoris'));
     }
@@ -339,7 +341,7 @@ class StaffController extends Controller
         ]);
 
         return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
-    } 
+    }
 
     public function editTugasakhir($id_tugasakhir)
     {

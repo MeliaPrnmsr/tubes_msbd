@@ -36,11 +36,21 @@
                             <div class="card-body">
                                 <h2 style="color: #006633"><b>Repository Tugas Akhir</b></h2>
                                 <div class="row">
-                                    <div class="col-10">
+                                    <div class="col-10 mb-2">
                                         <p style="text-align: justify">
-                                            Selamat datang di repository Tugas Akhir, tempat di mana pengetahuan dan inovasi berkumpul dalam karya akademis mahasiswa. Jelajahi koleksi tugas akhir dari berbagai bidang ilmu, menggali pemikiran-pemikiran segar dan penelitian terkini.
-                                            Untuk memulai penelusuran, silakan jelajahi kategori-kategori kami atau lihat karya-karya terpopuler pada halaman utama.
+                                            Selamat datang di repository Tugas Akhir, tempat di mana pengetahuan dan inovasi berkumpul dalam karya akademis mahasiswa.
                                         </p>
+
+                                        <div>
+                                            <form class="d-flex justify-content-start w-100" role="search" method="GET" action="{{ route('search.mahasiswa') }}">
+                                                <div class="w-75">
+                                                    <input class="form-control me-2" name="search" type="search" placeholder="Cari Tugas Akhir" aria-label="Search">
+                                                </div>
+                                                <div>
+                                                    <button class="ms-2 btn btn-repository-hijau" type="submit">Cari</button>
+                                                </div>
+                                            </form>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -143,7 +153,7 @@
             <div class="col">
                 <ul class="list-unstyled text-muted">
                     <li><small>{{ $skripsi->nama_mahasiswa }}</small></li>
-                    <li><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $skripsi->id_tugasakhir]) }}" class="text-black"><b>{{ $skripsi->judul }}</b></a></li>
+                    <li><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $skripsi->id_tugasakhir]) }}" class="text-black"><b>{{ Illuminate\Support\Str::limit($skripsi->judul, $limit = 50, $end = '...') }}</b></a></li>
                     <li><small>{{ $skripsi->tahun_terbit }}</small></li>
                 </ul>   
             </div>

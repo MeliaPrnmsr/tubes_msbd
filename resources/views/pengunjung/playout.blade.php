@@ -22,7 +22,7 @@
                 <div class="col p-2 d-flex justify-content-start"> <!-- Update disini -->
                     <a class="navbar-brand text-white" href="/landingpage">
                         <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
-                        RepositorySkripsi
+                        Repository TugasAkhir
                       </a>
                 </div>
         

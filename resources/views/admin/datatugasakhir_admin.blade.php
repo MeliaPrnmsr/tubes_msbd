@@ -43,7 +43,7 @@
 
     <div class="row shadow p-3 mb-2 align-items-center">
       <div class="col-1">{{ $i }}</div>
-      <div class="col-4">{{ $cari ->judul }}</div>
+      <div class="col-4">{{ Illuminate\Support\Str::limit($cari->judul, $limit = 50, $end = '...') }}</div>
       <div class="col-3">{{ $cari ->tipe_ta }}</div>
       <div class="col-2 text-center">{{ $cari ->tahun_terbit }}</div>
       <div class="col-2 text-center">

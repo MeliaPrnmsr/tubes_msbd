@@ -12,4 +12,8 @@
     </div>
     <br>
     @endforeach
+
+    <nav>
+        {{$disertasi->links()}}
+    </nav>
 </div>

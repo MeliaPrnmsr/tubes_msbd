@@ -27,7 +27,7 @@
                     <a class="navbar-brand text-white" href="/dlandingpage">
                         <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35"
                             class="d-inline-block align-text-top">
-                        RepositoryTugasAkhir
+                            Repository TugasAkhir
                     </a>
                 </div>
 

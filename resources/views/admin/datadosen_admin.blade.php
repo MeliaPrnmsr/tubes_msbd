@@ -45,7 +45,7 @@
       <div class="col-1">{{ $i }}</div>
       <div class="col-4">{{ $cari ->nama_dosen }}</div>
       <div class="col-2">{{ $cari ->NIP }}</div>
-      <div class="col-3">{{ $cari ->nama_prodi }}</div>
+      <div class="col-3">{{ $cari ->jenjang }} {{ $cari ->nama_prodi }}</div>
       <div class="col-2">
         <a href="{{ route('detaildosen.admin', ['kode_dosen' => $cari->kode_dosen]) }}" class="btn btn-repository">Detail</a>
       </div>

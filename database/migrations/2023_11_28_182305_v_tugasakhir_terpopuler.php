@@ -14,11 +14,25 @@ return new class extends Migration
         DB::statement("DROP VIEW IF EXISTS v_tugasakhir_terpopuler");
 
         DB::statement("
-            CREATE VIEW v_tugasakhir_terpopuler AS
-            SELECT `likes`.`tugasakhir_id` AS `tugasakhir_id`, COUNT(`likes`.`id_like`) AS `jumlah_like`
-            FROM `likes`
-            GROUP BY `likes`.`tugasakhir_id`
-            ORDER BY COUNT(`likes`.`id_like`) DESC
+        CREATE VIEW v_tugasakhir_terpopuler AS
+        SELECT 
+            t.id_tugasakhir,
+            t.judul,
+            t.tahun_terbit,
+            t.author AS NIM,
+            m.nama_mahasiswa,
+            COUNT(l.id_like) AS jumlah_like
+        FROM 
+            tugas_akhirs t
+        JOIN 
+            mahasiswas m ON t.author = m.NIM
+        LEFT JOIN 
+            likes l ON t.id_tugasakhir = l.tugasakhir_id
+        GROUP BY 
+            t.id_tugasakhir, t.judul, t.tahun_terbit, t.author, m.nama_mahasiswa
+        ORDER BY 
+            COUNT(l.id_like) DESC;
+    
         ");
     }
 

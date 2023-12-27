@@ -9,11 +9,9 @@ use App\Models\Kategori;
 use Livewire\Component;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Livewire\WithPagination;
 
 class DTugasakhir extends Component
 {
-    use WithPagination;
     public $search;
     public $byTipe_ta;
     public $byKategori;
@@ -56,16 +54,11 @@ class DTugasakhir extends Component
             $prodis = Prodi::all();
             $kategoris = Kategori::all();
 
-            $query = TugasAkhir::query();
-            // $cari = $request->input('search');
+            $query = DB::table('v_data_tugasakhir');
             
             if ($this->search) {
                 $query->where('judul', 'like', '%' . $this->search . '%');
-            } 
-            // elseif($cari)
-            // {
-            //     $query->where('judul', 'like', '%' . $cari . '%');
-            // }
+            }
 
             if ($this->byTipe_ta) {
                 $query->where('tipe_ta', $this->byTipe_ta);

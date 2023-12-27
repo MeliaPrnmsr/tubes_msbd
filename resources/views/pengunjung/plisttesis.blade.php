@@ -14,21 +14,7 @@
     @endforeach
     {{-- pagination start --}}
     <nav aria-label="pagination">
-        <ul class="pagination">
-            <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous" style="color: #3dae2b">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">1</a></li>
-            <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">2</a></li>
-            <li class="page-item"><a class="page-link" href="#"  style="color: #3dae2b">3</a></li>
-            <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next"  style="color: #3dae2b">
-                <span aria-hidden="true">&raquo;</span>
-            </a>
-            </li>
-        </ul>
-        </nav>
+        {{ $tesis-> links()}}
+    </nav>
     {{-- pagination end --}}
 </div>

@@ -109,7 +109,7 @@
                         @foreach($baruDitambah as $tampilJudul)
                         <tbody>
                           <tr>
-                            <td><a href="#">{{ $tampilJudul -> judul }}</a></td>
+                            <td><a href="{{ route('detailtugas.admin', ['id_tugasakhir' => $tampilJudul->id_tugasakhir]) }}" class="text-decoration-none text-black">{{ Illuminate\Support\Str::limit($tampilJudul->judul, $limit = 50, $end = '...') }}</a></td>
                             <td id="tanggal">{{ $tampilJudul -> date_added }}</td>
                           </tr>
                         </tbody>
@@ -135,7 +135,7 @@
                         <tbody>
                             @foreach($topLikeTugasAkhir as $like)
                             <tr>
-                              <td><a href="#">{{ $like -> judul }}</a></td>
+                              <td><a href="{{ route('detailtugas.admin', ['id_tugasakhir' => $like->id_tugasakhir]) }}" class="text-decoration-none text-black">{{ Illuminate\Support\Str::limit($like->judul, $limit = 50, $end = '...') }}</a></td>
                               <td class="text-center">{{ $like -> total_likes }}</td>
                             </tr>
                             @endforeach

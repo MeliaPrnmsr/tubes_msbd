@@ -80,7 +80,7 @@ class AdminController extends Controller
     {
             $search = $request->input('search');
             $query = DB::table('v_data_mahasiswa')
-                    ->orderBy('nama_mahasiswa', 'asc');
+                    ->orderBy('prodi_id', 'asc');
     
             if(!empty(request('search')))
             {
@@ -107,7 +107,7 @@ class AdminController extends Controller
 
         $search = $request->input('search');
         $query = DB::table('v_data_dosen')
-                ->orderBy('nama_dosen', 'asc');
+                ->orderBy('prodi_id', 'asc');
 
         if(!empty(request('search')))
         {
@@ -132,7 +132,7 @@ class AdminController extends Controller
     {
         $search = $request->input('search');
         $query = DB::table('v_data_staff')
-                ->orderBy('nama_staff', 'asc');
+                ->orderBy('prodi_id', 'asc');
 
         if(!empty(request('search')))
         {
@@ -227,7 +227,7 @@ class AdminController extends Controller
 
         $search = $request->input('search');
         $query = DB::table('v_data_tugasakhir')
-                ->orderBy('judul', 'asc');
+                ->orderBy('tipe_ta', 'asc');
 
         if(!empty(request('search')))
         {
@@ -265,7 +265,7 @@ class AdminController extends Controller
     {
         $query = DB::table('log_likes')
                     ->orderBy('waktu_dibuat', 'desc')
-                    ->paginate(3);
+                    ->paginate(10);
 
 
         return view('admin.notifikasi_admin',compact('query'));
@@ -285,61 +285,8 @@ class AdminController extends Controller
                             ->orWhere('deskripsi', 'like', '%' . $search . '%');
         }
 
-        $cariLog = $query->paginate(3);
+        $cariLog = $query->paginate(10);
 
         return view('admin.log',compact('cariLog','search'));
-    }
-
-    public function tambahSkripsi()
-    {
-        return view('admin.tambahskripadmin');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

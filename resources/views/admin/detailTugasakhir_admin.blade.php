@@ -74,18 +74,18 @@
                     </div>
         
                     <div class="mb-4">
-                        <label for="file_metodologi" class="form-label"><b>File metodologi</b></label>
-                        <input class="form-control" type="file" id="file_metodologi" name="file_metodologi" value="{{ $tugasakhir->file_metodologi }}" readonly>
+                        <label for="file_metodologi" class="form-label"><b>File metodologi</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugasakhir->file_metodologi)}}" target="_blank">File Metodologi</a>
                     </div>
         
                     <div class="mb-4">
-                        <label for="file_pustaka" class="form-label"><b>File pustaka</b></label>
-                        <input class="form-control" type="file" id="file_pustaka" name="file_pustaka" value="{{ $tugasakhir->file_daftarpustaka }}" readonly>
+                        <label for="file_pustaka" class="form-label"><b>File pustaka</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugasakhir->file_daftarpustaka)}}" target="_blank">File Daftar Pustaka</a>
                     </div>
         
                     <div class="mb-4">
-                        <label for="file_tugasakhir" class="form-label"><b>File Tugas Akhir</b></label>
-                        <input class="form-control" type="file" id="file_tugasakhir" name="file_tugasakhir" value="{{ $tugasakhir->file_tugasakhir}}" readonly>
+                        <label for="file_tugasakhir" class="form-label"><b>File Tugas Akhir</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugasakhir->file_tugasakhir)}}" target="_blank">File Tugas Akhir</a>
                     </div>
             </div> <!-- row -->
             

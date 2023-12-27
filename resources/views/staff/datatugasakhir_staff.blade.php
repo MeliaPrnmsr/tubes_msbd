@@ -54,10 +54,10 @@
       @foreach($tugas_akhirs as $tugas_akhir)
       <div class="row shadow p-3 mb-2 align-items-center">
         <div class="col-1">{{ $i }}</div>
-        <div class="col-4">{{ $tugas_akhir->judul }}</div>
+        <div class="col-4">{{ Illuminate\Support\Str::limit($tugas_akhir->judul, $limit = 50, $end = '...') }}</div>
         <div class="col-3">{{ $tugas_akhir->nama_mahasiswa }}</div>
-        <div class="col-2">{{ $tugas_akhir->tahun_terbit }}</div>
-        <div class="col-2">
+        <div class="col-2 text-center">{{ $tugas_akhir->tahun_terbit }}</div>
+        <div class="col-2 text-center">
           <a href="{{ route('detailTugasakhir.staff', ['id_tugasakhir' => $tugas_akhir->id_tugasakhir]) }}" class="btn btn-repository">Detail</a>
         </div>
       </div>

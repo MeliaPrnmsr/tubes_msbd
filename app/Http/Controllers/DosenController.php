@@ -23,12 +23,7 @@ class DosenController extends Controller
     public function landingDosen(Request $request)
     {
         $totalTugasAkhir = TugasAkhir::count();
-        $popular_skripsi = DB::table('v_tugasakhir_terpopuler')
-            ->join('tugas_akhirs', 'v_tugasakhir_terpopuler.tugasakhir_id', '=', 'tugas_akhirs.id_tugasakhir')
-            ->join('mahasiswas', 'tugas_akhirs.author', '=', 'mahasiswas.NIM')
-            ->select('tugas_akhirs.*', 'v_tugasakhir_terpopuler.jumlah_like', 'mahasiswas.nama_mahasiswa')
-            ->orderByDesc('v_tugasakhir_terpopuler.jumlah_like')
-            ->get();
+        $popular_skripsi = DB::table('v_tugasakhir_terpopuler')->take(6)->get();
  
 
         $results = DB::table('tugas_akhirs')
@@ -177,15 +172,17 @@ class DosenController extends Controller
 
     public function browseallDosen()
     {
-        $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')->get();
+        $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')
+        ->orderBy('tahun_terbit','desc')
+        ->get();
         $groupedTahun = $tahun_terbit->groupBy('tahun_terbit');
 
         $kategori = DB::table('v_tugasakhir_kategori')->get();
         $groupedKategori = $kategori->groupBy('nama_kategori');
         
-        $skripsi = DB::table('v_tugasakhir_skripsi')->get();
-        $tesis = DB::table('v_tugasakhir_tesis')->get();
-        $disertasi = DB::table('v_tugasakhir_disertasi')->get();
+        $skripsi = DB::table('v_tugasakhir_skripsi')->paginate(10);
+        $tesis = DB::table('v_tugasakhir_tesis')->paginate(10);
+        $disertasi = DB::table('v_tugasakhir_disertasi')->paginate(10);
         return view('dosen.dbrowseall', [
             'tahun_terbit' => $tahun_terbit,
             'kategori' => $kategori,

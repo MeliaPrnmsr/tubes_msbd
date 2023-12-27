@@ -49,7 +49,7 @@
             <div class="col p-2 d-flex justify-content-start">
                 <a class="navbar-brand text-white" href="#" >
                     <img src="{{asset('asset/img/logo.png')}}" alt="Logo" width="35" height="35" class="d-inline-block align-text-top">
-                    RepositorySkripsi
+                    Repository TugasAkhir
                   </a>
             </div>
     

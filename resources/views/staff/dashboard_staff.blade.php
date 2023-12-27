@@ -64,7 +64,6 @@ $active = 'dashboard';
 <br><br>
 
 
-{{-- recently & popular --}}
 <div class="row row-cols-2">
     {{-- recently part start --}}
     <div class="col">
@@ -73,26 +72,20 @@ $active = 'dashboard';
             <div class="card-body">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col" class="w-75">Judul</th>
-                            <th scope="col" class="w-25">Date</th>
-                        </tr>
+                      <tr>
+                        <th scope="col" class="w-75">Judul</th>
+                        <th scope="col" class="w-25">Date</th>
+                      </tr>
                     </thead>
+                    @foreach($baruDitambah as $tampilJudul)
                     <tbody>
-                        <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>06/07/2004</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>06/07/2004</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>06/07/2004</td>
-                        </tr>
+                      <tr>
+                        <td><a href="{{ route('detailTugasakhir.staff', ['id_tugasakhir' => $tampilJudul->id_tugasakhir]) }}" class="text-decoration-none text-black">{{ Illuminate\Support\Str::limit($tampilJudul->judul, $limit = 50, $end = '...') }}</a></td>
+                        <td id="tanggal">{{ $tampilJudul -> date_added }}</td>
+                      </tr>
                     </tbody>
-                </table>
+                    @endforeach
+                  </table>
             </div>
         </div>
     </div>
@@ -105,26 +98,20 @@ $active = 'dashboard';
             <div class="card-body">
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th scope="col" class="w-75">Judul</th>
-                            <th scope="col" class="w-25">Suka</th>
-                        </tr>
+                      <tr>
+                        <th scope="col" class="w-75">Judul</th>
+                        <th scope="col" class="w-25 text-center">Suka</th>
+                      </tr>
                     </thead>
                     <tbody>
+                        @foreach($topLikeTugasAkhir as $like)
                         <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>200</td>
+                          <td><a href="{{ route('detailTugasakhir.staff', ['id_tugasakhir' => $like->id_tugasakhir]) }}" class="text-decoration-none text-black">{{ Illuminate\Support\Str::limit($like->judul, $limit = 50, $end = '...') }}</a></td>
+                          <td class="text-center">{{ $like -> total_likes }}</td>
                         </tr>
-                        <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>200</td>
-                        </tr>
-                        <tr>
-                            <td><a href="#">judul_skripsi</a></td>
-                            <td>200</td>
-                        </tr>
+                        @endforeach
                     </tbody>
-                </table>
+                  </table>
             </div>
         </div>
     </div>

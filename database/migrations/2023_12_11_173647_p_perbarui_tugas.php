@@ -13,18 +13,18 @@ return new class extends Migration
     {
         $procedure = "
         DROP PROCEDURE IF EXISTS p_perbarui_tugas;
-        CREATE PROCEDURE `p_perbarui_tugas`(
-            IN `p_judul` VARCHAR(255),
-            IN `p_abstrak` TEXT,
-            IN `p_sampul` VARCHAR(255),
-            IN `p_tipe_ta` VARCHAR(50),
-            IN `p_author` CHAR(9),
-            IN `p_kategori` INT,
-            IN `p_tahun_terbit` INT(5),
-            IN `p_file_metodologi` VARCHAR(255),
-            IN `p_file_pustaka` VARCHAR(255), 
-            IN `p_file_tugasakhir` VARCHAR(255),
-            IN `p_id_tugasakhir` INT
+        CREATE PROCEDURE p_perbarui_tugas(
+            IN p_judul VARCHAR(255),
+            IN p_abstrak TEXT,
+            IN p_sampul VARCHAR(255),
+            IN p_tipe_ta VARCHAR(50),
+            IN p_author CHAR(9),
+            IN p_kategori INT,
+            IN p_tahun_terbit INT(5),
+            IN p_file_metodologi VARCHAR(255),
+            IN p_file_pustaka VARCHAR(255), 
+            IN p_file_tugasakhir VARCHAR(255),
+            IN p_id_tugasakhir INT
         )
         BEGIN
             UPDATE tugas_akhirs 
