@@ -24,7 +24,7 @@ class DosenController extends Controller
     {
         $totalTugasAkhir = TugasAkhir::count();
         $popular_skripsi = DB::table('v_tugasakhir_terpopuler')->take(6)->get();
- 
+
 
         $results = DB::table('tugas_akhirs')
             ->select('tipe_ta', DB::raw('COUNT(*) as jumlah'))
@@ -77,34 +77,59 @@ class DosenController extends Controller
         return redirect()->route('profile.dosen')->with('succes', 'Data Dosen Berhasil Diubah!');
     }
 
-    public function bimbinganDosen()
+    public function bimbinganDosen(Request $request)
     {
         $user_login = auth()->user()->dosen->kode_dosen;
 
-        $bimbingans = DB::table('V_tugasakhir_dospem')->where('kode_dosen', $user_login)->paginate(10);
+        $query = DB::table('V_tugasakhir_dospem')->where('kode_dosen', $user_login);
+
+        $search = $request->input('search');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('tahun_terbit', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_ta', 'like', '%' . $search . '%');
+            });
+        }
+    
+        $bimbingans = $query->paginate(10);
         return view('dosen.dbimbingan', ['bimbingans' => $bimbingans]);
     }
 
-    public function bookmarkDosen()
+    //data yang di bookmark
+    public function bookmarkDosen(Request $request)
     {
         $userId = Auth::id();
 
         $bookmarks = Bookmark::where('user_id', $userId)->get();
         $tugasAkhirIds = $bookmarks->pluck('tugasakhir_id')->toArray();
 
-        $bookmarks = DB::table('v_data_tugasakhir')->whereIn('id_tugasakhir', $tugasAkhirIds)->paginate(10);
+        $query = DB::table('v_semua_tugasakhir')->whereIn('id_tugasakhir', $tugasAkhirIds);
+
+        $search = $request->input('search');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('tahun_terbit', 'like', '%' . $search . '%')
+                    ->orWhere('nama_prodi', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_ta', 'like', '%' . $search . '%');
+            });
+        }
     
-        return view('dosen.dbookmark', ['bookmarks' => $bookmarks]);
+        $bookmarks = $query->paginate(10);
+
+        return view('dosen.dbookmark', ['bookmarks' => $bookmarks, 'search' => $search]);
     }
 
+    //proses menambahkan bookmark
     public function bookmarkTugasAkhir(Request $request)
     {
         $idTugasAkhir = $request->input('id_tugasakhir');
         $idUser = $request->input('id_user');
 
         $existingBookmark = Bookmark::where('tugasakhir_id', $idTugasAkhir)
-                            ->where('user_id', $idUser)
-                            ->first();
+            ->where('user_id', $idUser)
+            ->first();
 
         if ($existingBookmark) {
             $existingBookmark->delete();
@@ -125,8 +150,8 @@ class DosenController extends Controller
         $idUser = $request->input('id_user');
 
         $existingLike = Like::where('tugasakhir_id', $idTugasAkhir)
-                            ->where('user_id', $idUser)
-                            ->first();
+            ->where('user_id', $idUser)
+            ->first();
 
         if ($existingLike) {
             $existingLike->delete();
@@ -165,7 +190,7 @@ class DosenController extends Controller
 
         $prodis = Prodi::all();
         $kategoris = Kategori::orderBy('prodi_id')->get();
-        
+
 
         return view('dosen.dsearch', compact('tugasAkhir', 'prodis', 'kategoris', 'search'));
     }
@@ -173,13 +198,13 @@ class DosenController extends Controller
     public function browseallDosen()
     {
         $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')
-        ->orderBy('tahun_terbit','desc')
-        ->get();
+            ->orderBy('tahun_terbit', 'desc')
+            ->get();
         $groupedTahun = $tahun_terbit->groupBy('tahun_terbit');
 
         $kategori = DB::table('v_tugasakhir_kategori')->get();
         $groupedKategori = $kategori->groupBy('nama_kategori');
-        
+
         $skripsi = DB::table('v_tugasakhir_skripsi')->paginate(10);
         $tesis = DB::table('v_tugasakhir_tesis')->paginate(10);
         $disertasi = DB::table('v_tugasakhir_disertasi')->paginate(10);
@@ -201,28 +226,53 @@ class DosenController extends Controller
 
     public function detailskripsiDosen($id_tugasakhir)
     {
-        $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
-        $kategoriId = $tugasakhir->kategori_id ?? null;
-    
-        $serupa = DB::table('v_data_tugasakhir')
-                    ->where('kategori_id', $kategoriId)
-                    ->where('id_tugasakhir', '!=', $id_tugasakhir)
-                    ->limit(7)
-                    ->get();
+        $tugas_akhir = TugasAkhir::where('id_tugasakhir', $id_tugasakhir)->first();
+        $tipe_ta = $tugas_akhir->tipe_ta;
 
-        $isLikedByUser = Like::where('tugasakhir_id', $id_tugasakhir)
-                         ->where('user_id', Auth::user()->id_user)
-                         ->exists();
-        
-        $isBookmarkByUser = Bookmark::where('tugasakhir_id', $id_tugasakhir)
-        ->where('user_id', Auth::user()->id_user)
-        ->exists();
+        if ($tipe_ta == 'skripsi' || $tipe_ta == 'tesis') {
+            $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
+            $kategoriId = $tugas_akhir->kategori_id ?? null;
+
+            $serupa = DB::table('v_data_tugasakhir')
+                ->where('kategori_id', $kategoriId)
+                ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                ->limit(7)
+                ->get();
+
+            $isLikedByUser = Like::where('tugasakhir_id', $id_tugasakhir)
+                ->where('user_id', Auth::user()->id_user)
+                ->exists();
+
+            $isBookmarkByUser = Bookmark::where('tugasakhir_id', $id_tugasakhir)->where('user_id', Auth::user()->id_user)->exists();
+
+            return view('dosen.dopenskrip', ['tugasakhir' => $tugasakhir,
+                'isLikedByUser' => $isLikedByUser,
+                'isBookmarkByUser' => $isBookmarkByUser, 'serupa' => $serupa
+            ]);
+        } else {
+            $tugasakhir = DB::table('v_data_disertasi')->where('id_tugasakhir', $id_tugasakhir)->first();
+            $kategoriId = $tugas_akhir->kategori_id ?? null;
+
+            $serupa = DB::table('v_data_disertasi')
+                ->where('kategori_id', $kategoriId)
+                ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                ->limit(7)
+                ->get();
+
+            $isLikedByUser = Like::where('tugasakhir_id', $id_tugasakhir)
+                ->where('user_id', Auth::user()->id_user)
+                ->exists();
+
+            $isBookmarkByUser = Bookmark::where('tugasakhir_id', $id_tugasakhir)->where('user_id', Auth::user()->id_user)->exists();
+
+            return view('dosen.dopenskrip', ['tugasakhir' => $tugasakhir,
+                'isLikedByUser' => $isLikedByUser,
+                'isBookmarkByUser' => $isBookmarkByUser, 'serupa' => $serupa
+            ]);
+        }
 
 
-        return view('dosen.dopenskrip', ['tugasakhir' => $tugasakhir,
-        'isLikedByUser' =>  $isLikedByUser,
-        'isBookmarkByUser' =>  $isBookmarkByUser, 'serupa' =>  $serupa
-    ]);
+
     }
 
     /**

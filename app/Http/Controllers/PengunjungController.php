@@ -44,30 +44,47 @@ class PengunjungController extends Controller
 
     public function detailTugasakhir($id_tugasakhir)
     {
-        $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
+        // Mengambil data tugas akhir dari tabel sesuai dengan ID yang diberikan
+        $tugas_akhir = TugasAkhir::where('id_tugasakhir', $id_tugasakhir)->first();
 
-        $kategoriId = $tugasakhir->kategori_id ?? null;
-    
-        $serupa = DB::table('v_data_tugasakhir')
-                    ->where('kategori_id', $kategoriId)
-                    ->where('id_tugasakhir', '!=', $id_tugasakhir)
-                    ->limit(7)
-                    ->get();
+        $tipe_ta = $tugas_akhir->tipe_ta;
 
-        return view('pengunjung.popenskrip', ['tugasakhir' => $tugasakhir, 'serupa' =>  $serupa
-        ]);
+        if ($tipe_ta == 'skripsi' || $tipe_ta == 'tesis') {
+            $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
+            $kategoriId = $tugas_akhir->kategori_id ?? null;
+
+            $serupa = DB::table('v_data_tugasakhir')
+                ->where('kategori_id', $kategoriId)
+                ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                ->limit(7)
+                ->get();
+
+            return view('pengunjung.popenskrip', ['tugasakhir' => $tugasakhir, 'serupa' => $serupa]);
+        } else {
+            $tugasakhir = DB::table('v_data_disertasi')->where('id_tugasakhir', $id_tugasakhir)->first();
+            $kategoriId = $tugas_akhir->kategori_id ?? null;
+
+            $serupa = DB::table('v_data_disertasi')
+                ->where('kategori_id', $kategoriId)
+                ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                ->limit(7)
+                ->get();
+
+            return view('pengunjung.popenskrip', ['tugasakhir' => $tugasakhir, 'serupa' => $serupa]);
+        }
     }
+
 
     public function browseAll()
     {
         $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')
-        ->orderBy('tahun_terbit', 'desc')
-        ->get();
+            ->orderBy('tahun_terbit', 'desc')
+            ->get();
         $groupedTahun = $tahun_terbit->groupBy('tahun_terbit');
 
         $kategori = DB::table('v_tugasakhir_kategori')->get();
         $groupedKategori = $kategori->groupBy('nama_kategori');
-        
+
         $skripsi = DB::table('v_tugasakhir_skripsi')->paginate(10);
         $tesis = DB::table('v_tugasakhir_tesis')->paginate(10);
         $disertasi = DB::table('v_tugasakhir_disertasi')->paginate(10);
@@ -81,7 +98,7 @@ class PengunjungController extends Controller
             'groupedKategori' => $groupedKategori,
             'groupedTahun' => $groupedTahun
         ]);
-        
+
     }
 
     public function abstrak()
@@ -89,9 +106,6 @@ class PengunjungController extends Controller
         return view('pengunjung.pabstrak');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //

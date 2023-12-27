@@ -905,11 +905,199 @@ class DatabaseSeeder extends Seeder
         ]);
         //<!-- END -->
 
+        User::create([
+            'username' => "198407072015041001",
+            'email' => "jayaivan@gmail.com",
+            'password' => bcrypt('198407072015041001'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "IVJ",
+            'NIP' => "198407072015041001",
+            'NIDN' => "0107078404",
+            'nama_dosen' => "Ivan Jaya S.Si., M.Kom.",
+            'user_id' => 61,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+        User::create([
+            'username' => "195912311998021001",
+            'email' => "sawal@usu.ac.id",
+            'password' => bcrypt('195912311998021001'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "SWL",
+            'NIP' => "195912311998021001",
+            'NIDN' => "0031125982",
+            'nama_dosen' => "Dr. Sawaluddin M.IT",
+            'user_id' => 62,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+        User::create([
+            'username' => "195908131986011002",
+            'email' => "suyanto@usu.ac.id",
+            'password' => bcrypt('195908131986011002'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "SYT",
+            'NIP' => "195908131986011002",
+            'NIDN' => "0013085903",
+            'nama_dosen' => "Dr. Suyanto M.Kom.",
+            'user_id' => 63,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+        User::create([
+            'username' => "1197303232017061001",
+            'email' => "sajadinbiring@gmail.com",
+            'password' => bcrypt('1197303232017061001'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "SJS",
+            'NIP' => "1197303232017061001",
+            'NIDN' => "0123037305",
+            'nama_dosen' => "Sajadin Sembiring S.Si., M.Comp.Sc",
+            'user_id' => 64,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+        User::create([
+            'username' => "197901082012121002",
+            'email' => "baihaqi@usu.ac.id",
+            'password' => bcrypt('197901082012121002'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "BHS",
+            'NIP' => "197901082012121002",
+            'NIDN' => "0008017906",
+            'nama_dosen' => "Baihaqi Siregar S.Si., M.T.",
+            'user_id' => 65,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+
+        User::create([
+            'username' => "199003272017062001",
+            'email' => "marischaelveny123@gmail.com",
+            'password' => bcrypt('199003272017062001'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "MRE",
+            'NIP' => "199003272017062001",
+            'NIDN' => "0127039001",
+            'nama_dosen' => "Dr. Marischa Elveny S.TI., M.Kom.",
+            'user_id' => 66,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+        User::create([
+            'username' => "198010242010121002",
+            'email' => "herriyance_usu@yahoo.com",
+            'password' => bcrypt('198010242010121002'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "HRY",
+            'NIP' => "198010242010121002",
+            'NIDN' => "0024108007",
+            'nama_dosen' => "Herriyance S.T., M.Kom.",
+            'user_id' => 67,
+            'prodi_id' => 2
+        ]);
+        //<!-- END -->
+
+        User::create([
+            'username' => "196210262017042001",
+            'email' => "ernabrn@usu.ac.id",
+            'password' => bcrypt('196210262017042001'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "EBN",
+            'NIP' => "196210262017042001",
+            'NIDN' => "0026106209",
+            'nama_dosen' => "Dr. Erna Budhiarti Nababan M.IT",
+            'user_id' => 68,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+        User::create([
+            'username' => "196209011988031002",
+            'email' => "tulus@usu.ac.id",
+            'password' => bcrypt('196209011988031002'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "TLS",
+            'NIP' => "196209011988031002",
+            'NIDN' => "0001096202",
+            'nama_dosen' => "Prof. Dr. Tulus Vor.Dipl.Math., M.Si., Ph.D.",
+            'user_id' => 69,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+
+        User::create([
+            'username' => "196401091988031004",
+            'email' => "saib@usu.ac.id",
+            'password' => bcrypt('196401091988031004'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "SSW",
+            'NIP' => "196401091988031004",
+            'NIDN' => "0009016402",
+            'nama_dosen' => "Prof. Dr. Saib Suwilo M.Sc",
+            'user_id' => 70,
+            'prodi_id' => 4
+        ]);
+        //<!-- END -->
+
+
+        User::create([
+            'username' => "197802022003121001",
+            'email' => "suherman.usu@gmail.com",
+            'password' => bcrypt('197802022003121001'),
+            'role' => "dosen"
+        ]);
+
+        Dosen::create([
+            'kode_dosen' => "SHM",
+            'NIP' => "197802022003121001",
+            'NIDN' => "0002027802",
+            'nama_dosen' => "Suherman ST., M.Comp., Ph.D ",
+            'user_id' => 71,
+            'prodi_id' => 1
+        ]);
+        //<!-- END -->
+
+
 
         // BATAS BATAS
-
-
-
         Staff::create([
             'kode_staff' => "SP001",
             'nama_staff' => "Benjamin Frank",
@@ -1038,6 +1226,48 @@ class DatabaseSeeder extends Seeder
             'prodi_id' => 4
         ]);
 
+        Kategori::create([
+            'nama_kategori' => "Advanced Networking",
+            'prodi_id' => 4
+        ]);
         
+        // TUGAS AKHIR
+        TugasAkhir::create([
+            'judul' => "Disertasi 1",
+            'abstrak' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut distinctio neque porro dolor ex eos ipsum. At autem, officiis nostrum nulla quod nam magni tempora eaque quidem consectetur excepturi quas?",
+            'tahun_terbit' => 2020,
+            'tipe_ta' => "disertasi",
+            'author' => "178123001",
+            'kategori_id' => 7
+        ]);
+
+        Dosenpembimbing::create([
+            'NIM' => "178123001",
+            'kode_dosen' => "MAB",
+            'status_pembimbing' => "promotor1"
+        ]);
+
+        Dosenpembimbing::create([
+            'NIM' => "178123001",
+            'kode_dosen' => "OPM",
+            'status_pembimbing' => "promotor2"
+        ]);
+
+        Dosenpembimbing::create([
+            'NIM' => "178123001",
+            'kode_dosen' => "EMZ",
+            'status_pembimbing' => "promotor3"
+        ]);
+
+        DokumenFile::create([
+            'bab1' => "Isi Bab1178123001.pdf",
+            'bab2' => "Isi Bab2178123001.pdf",
+            'bab3' => "Isi Bab3178123001.pdf",
+            'bab4' => "Isi Bab4178123001.pdf",
+            'bab5' => "Isi Bab5178123001.pdf",
+            'file_daftarpustaka' => "Daftar Pustaka178123001.pdf",
+            'tugasakhir_id' => 1
+        ]);
+        // <!-- END -->
     }
 }

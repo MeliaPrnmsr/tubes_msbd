@@ -13,6 +13,7 @@ use App\Models\Kategori;
 use App\Models\Like;
 use App\Models\Mahasiswa;
 use App\Models\Bookmark;
+
 // use App\Models\User;
 
 class MahasiswaController extends Controller
@@ -50,25 +51,48 @@ class MahasiswaController extends Controller
 
     public function detailMhs($id_tugasakhir)
     {
-        $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
+        $tugas_akhir = TugasAkhir::where('id_tugasakhir', $id_tugasakhir)->first();
+        $tipe_ta = $tugas_akhir->tipe_ta;
 
-        $kategoriId = $tugasakhir->kategori_id ?? null;
-    
-        $serupa = DB::table('v_data_tugasakhir')
-                    ->where('kategori_id', $kategoriId)
-                    ->where('id_tugasakhir', '!=', $id_tugasakhir)
-                    ->limit(7)
-                    ->get();
+        if ($tipe_ta == 'skripsi' || $tipe_ta == 'tesis') {
+            $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
+            $kategoriId = $tugas_akhir->kategori_id ?? null;
 
-        $isLikedByUser = Like::where('tugasakhir_id', $id_tugasakhir)
-                         ->where('user_id', Auth::user()->id_user)
-                         ->exists();
-        
-        $isBookmarkByUser = Bookmark::where('tugasakhir_id', $id_tugasakhir)->where('user_id', Auth::user()->id_user)->exists();
+            $serupa = DB::table('v_data_tugasakhir')
+                ->where('kategori_id', $kategoriId)
+                ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                ->limit(7)
+                ->get();
 
-        return view('mahasiswa.mopenskrip', ['tugasakhir' => $tugasakhir, 'isLikedByUser' =>  $isLikedByUser,
-        'isBookmarkByUser' =>  $isBookmarkByUser, 'serupa' =>  $serupa
-        ]);
+            $isLikedByUser = Like::where('tugasakhir_id', $id_tugasakhir)
+                ->where('user_id', Auth::user()->id_user)
+                ->exists();
+
+            $isBookmarkByUser = Bookmark::where('tugasakhir_id', $id_tugasakhir)->where('user_id', Auth::user()->id_user)->exists();
+
+            return view('mahasiswa.mopenskrip', ['tugasakhir' => $tugasakhir, 'isLikedByUser' => $isLikedByUser,
+                'isBookmarkByUser' => $isBookmarkByUser, 'serupa' => $serupa
+            ]);
+        } else {
+            $tugasakhir = DB::table('v_data_disertasi')->where('id_tugasakhir', $id_tugasakhir)->first();
+            $kategoriId = $tugas_akhir->kategori_id ?? null;
+
+            $serupa = DB::table('v_data_disertasi')
+                ->where('kategori_id', $kategoriId)
+                ->where('id_tugasakhir', '!=', $id_tugasakhir)
+                ->limit(7)
+                ->get();
+
+            $isLikedByUser = Like::where('tugasakhir_id', $id_tugasakhir)
+                ->where('user_id', Auth::user()->id_user)
+                ->exists();
+
+            $isBookmarkByUser = Bookmark::where('tugasakhir_id', $id_tugasakhir)->where('user_id', Auth::user()->id_user)->exists();
+
+            return view('mahasiswa.mopenskrip', ['tugasakhir' => $tugasakhir, 'isLikedByUser' => $isLikedByUser,
+                'isBookmarkByUser' => $isBookmarkByUser, 'serupa' => $serupa
+            ]);
+        }
     }
 
     public function profilMhs()
@@ -110,16 +134,28 @@ class MahasiswaController extends Controller
         return redirect()->route('profile.mahasiswa')->with('success', 'Profil berhasil diperbarui');
     }
 
-    public function bookmarkMhs()
+    public function bookmarkMhs(Request $request)
     {
         $userId = Auth::id();
 
         $bookmarks = Bookmark::where('user_id', $userId)->get();
         $tugasAkhirIds = $bookmarks->pluck('tugasakhir_id')->toArray();
 
-        $bookmarks = DB::table('v_data_tugasakhir')->whereIn('id_tugasakhir', $tugasAkhirIds)->paginate(10);
+        $query = DB::table('v_semua_tugasakhir')->whereIn('id_tugasakhir', $tugasAkhirIds);
+
+        $search = $request->input('search');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('tahun_terbit', 'like', '%' . $search . '%')
+                    ->orWhere('nama_prodi', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_ta', 'like', '%' . $search . '%');
+            });
+        }
     
-        return view('mahasiswa.mbookmark', ['bookmarks' => $bookmarks]);
+        $bookmarks = $query->paginate(10);
+
+        return view('mahasiswa.mbookmark', ['bookmarks' => $bookmarks, 'search' => $search]);
     }
 
 
@@ -129,8 +165,8 @@ class MahasiswaController extends Controller
         $idUser = $request->input('id_user');
 
         $existingBookmark = Bookmark::where('tugasakhir_id', $idTugasAkhir)
-                            ->where('user_id', $idUser)
-                            ->first();
+            ->where('user_id', $idUser)
+            ->first();
 
         if ($existingBookmark) {
             $existingBookmark->delete();
@@ -151,8 +187,8 @@ class MahasiswaController extends Controller
         $idUser = $request->input('id_user');
 
         $existingLike = Like::where('tugasakhir_id', $idTugasAkhir)
-                            ->where('user_id', $idUser)
-                            ->first();
+            ->where('user_id', $idUser)
+            ->first();
 
         if ($existingLike) {
             $existingLike->delete();
@@ -182,13 +218,13 @@ class MahasiswaController extends Controller
     public function browseallMhs()
     {
         $tahun_terbit = DB::table('v_tugasakhir_pertahunterbit')
-        ->orderBy('tahun_terbit','desc')
-        ->get();
+            ->orderBy('tahun_terbit', 'desc')
+            ->get();
         $groupedTahun = $tahun_terbit->groupBy('tahun_terbit');
 
         $kategori = DB::table('v_tugasakhir_kategori')->get();
         $groupedKategori = $kategori->groupBy('nama_kategori');
-        
+
         $skripsi = DB::table('v_tugasakhir_skripsi')->paginate(10);
         $tesis = DB::table('v_tugasakhir_tesis')->paginate(10);
         $disertasi = DB::table('v_tugasakhir_disertasi')->paginate(10);

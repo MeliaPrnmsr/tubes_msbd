@@ -32,6 +32,34 @@
                     </div>
 
 
+                    @if ($tugas_akhir->tipe_ta =='disertasi')
+
+                    <div class="col">
+                        <div class="mb-4">
+                            <label for="promotor1" class="form-label"><b>Promotor 1</b></label>
+                            <input type="text" class="form-control" id="promotor1" name="promotor1" placeholder="promotor1" value="{{ $tugas_akhir->nama_promotor1}}" readonly>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col">
+                        <div class="mb-4">
+                            <label for="promotor2" class="form-label"><b>Promotor 2</b></label>
+                            <input type="text" class="form-control" id="promotor2" name="promotor2" placeholder="promotor2" value="{{ $tugas_akhir->nama_promotor2 }}" readonly>
+                        </div>
+                    </div>
+
+                    
+                    <div class="col">
+                        <div class="mb-4">
+                            <label for="promotor3" class="form-label"><b>Promotor 3</b></label>
+                            <input type="text" class="form-control" id="promotor3" name="promotor3" placeholder="promotor3" value="{{ $tugas_akhir->nama_promotor3 }}" readonly>
+                        </div>
+                    </div>
+
+
+                    @else
+                        
                     <div class="col">
                         <div class="mb-4">
                             <label for="dospem1" class="form-label"><b>Pembimbing 1</b></label>
@@ -46,7 +74,8 @@
                             <input type="text" class="form-control" id="dospem2" name="dospem2" placeholder="dosenpembimbing1" value="{{ $tugas_akhir->nama_dosen_dospem2 }}" readonly>
                         </div>
                     </div>
-                  
+
+                    @endif
 
                     <div class="col">
                         <div class="mb-4">
@@ -72,10 +101,6 @@
         
                     </div>
         
-                    <div class="mb-4">
-                        <label for="file_metodologi" class="form-label"><b>File metodologi</b></label><br>
-                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->file_metodologi)}}" target="_blank">File Metodologi</a>
-                    </div>
         
                     <div class="mb-4">
                         <label for="file_pustaka" class="form-label"><b>File pustaka</b></label><br>
@@ -83,9 +108,32 @@
                     </div>
         
                     <div class="mb-4">
-                        <label for="file_tugasakhir" class="form-label"><b>File Tugas Akhir</b></label><br>
-                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->file_tugasakhir)}}" target="_blank">File Tugas Akhir</a>
+                        <label for="bab1" class="form-label"><b>Bab 1</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->bab1)}}" target="_blank">Bab 1</a>
                     </div>
+
+                    
+                    <div class="mb-4">
+                        <label for="bab2" class="form-label"><b>Bab 2</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->bab2)}}" target="_blank">Bab 2</a>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="bab3" class="form-label"><b>Bab 3</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->bab3)}}" target="_blank">Bab 3</a>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="bab4" class="form-label"><b>Bab 4</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->bab4)}}" target="_blank">Bab 4</a>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="bab5" class="form-label"><b>Bab 5</b></label><br>
+                        <a class="btn border" href="{{ asset('asset/file/'. $tugas_akhir->bab5)}}" target="_blank">Bab 5</a>
+                    </div>
+
+
             </div> <!-- row -->
             
             <br>

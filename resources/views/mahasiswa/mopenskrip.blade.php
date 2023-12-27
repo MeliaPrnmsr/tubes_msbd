@@ -11,7 +11,8 @@
                 <div class="row p-2">
                     {{-- kolom judul start --}}
                     <div class="col-1">
-                        <button class="btn btn-hijau rounded-circle" onclick="goBack()"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button class="btn btn-hijau rounded-circle" onclick="goBack()"><i
+                                class="fa-solid fa-arrow-left"></i></button>
                     </div>
 
                     <div class="col-8">
@@ -20,35 +21,35 @@
                     {{-- kolom judul end --}}
 
                     {{-- kolom button start --}}
-                    
-                        <div class="col-3 d-flex justify-content-end">
-                            <form action="/mhlike" method="post">
-                                @csrf
 
-                                <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
-                                <input type="hidden" name="id_user" value="{{ Auth::user()->id_user }}">
-                                <button class="btn" type="submit">
-                                    @if($isLikedByUser)
-                                        <i class="fa-solid fa-heart"></i>
-                                    @else
-                                        <i class="fa-regular fa-heart"></i>
-                                    @endif
-                                </button>
-                            </form>
+                    <div class="col-3 d-flex justify-content-end">
+                        <form action="/mhlike" method="post">
+                            @csrf
 
-                            <form action="/mhbookmark" method="post">
-                                @csrf
-                                <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
-                                <input type="hidden" name="id_user" value="{{ Auth::user()->id_user  }}">
-                                <button class="btn" type="submit">
-                                    @if($isBookmarkByUser)
-                                        <i class="fa-solid fa-bookmark"></i>
-                                    @else
-                                        <i class="fa-regular fa-bookmark"></i>
-                                    @endif
-                                </button>
-                            </form>
-                        </div>
+                            <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
+                            <input type="hidden" name="id_user" value="{{ Auth::user()->id_user }}">
+                            <button class="btn" type="submit">
+                                @if($isLikedByUser)
+                                <i class="fa-solid fa-heart"></i>
+                                @else
+                                <i class="fa-regular fa-heart"></i>
+                                @endif
+                            </button>
+                        </form>
+
+                        <form action="/mhbookmark" method="post">
+                            @csrf
+                            <input type="hidden" name="id_tugasakhir" value="{{$tugasakhir->id_tugasakhir}}">
+                            <input type="hidden" name="id_user" value="{{ Auth::user()->id_user  }}">
+                            <button class="btn" type="submit">
+                                @if($isBookmarkByUser)
+                                <i class="fa-solid fa-bookmark"></i>
+                                @else
+                                <i class="fa-regular fa-bookmark"></i>
+                                @endif
+                            </button>
+                        </form>
+                    </div>
 
                     {{-- kolom sampul start --}}
                     <div class="col-4 d-flex align-items-center justify-content-center">
@@ -64,6 +65,28 @@
                                 <td style="width: 5%">:</td>
                                 <td>{{$tugasakhir->nama_mahasiswa}}</td>
                             </tr>
+                            @if ($tugasakhir->tipe_ta =='disertasi')
+                            <tr>
+                                <td><b>Promotor 1</b></td>
+                                <td>:</td>
+                                <td><a href="#" class="btn btn-hijau text-start">{{ $tugasakhir->nama_promotor1}}</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Promotor 2</b></td>
+                                <td>:</td>
+                                <td><a href="#" class="btn btn-warning text-start">{{ $tugasakhir->nama_promotor2}}</a>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Promotor 3</b></td>
+                                <td>:</td>
+                                <td><a href="#" class="btn btn-danger text-start">{{ $tugasakhir->nama_promotor3}}</a>
+                                </td>
+                            </tr>
+                            @else
                             <tr>
                                 <td><b>Pembimbing 1</b></td>
                                 <td>:</td>
@@ -77,6 +100,7 @@
                                 <td><a href="#" class="btn btn-warning text-start">{{ $tugasakhir->nama_dosen_dospem2
                                         }}</a></td>
                             </tr>
+                            @endif
                             <tr>
                                 <td><b>Tipe TA</b></td>
                                 <td>:</td>
@@ -110,12 +134,21 @@
                         <button class="nav-link nav-link-hijau mx-1 active" id="nav-abstrak-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-abstrak" type="button" role="tab" aria-controls="nav-abstrak"
                             aria-selected="true">Abstrak</button>
-                        <button class="nav-link nav-link-hijau mx-1" id="nav-metodologi-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-metodologi" type="button" role="tab" aria-controls="nav-metodologi"
-                            aria-selected="false">Metodologi Penelitian</button>
-                        <button class="nav-link nav-link-hijau mx-1" id="nav-isiskripsi-tab" data-bs-toggle="tab"
-                            data-bs-target="#nav-isiskripsi" type="button" role="tab" aria-controls="nav-isiskripsi"
-                            aria-selected="false">Tugas Akhir</button>
+                        <button class="nav-link nav-link-hijau mx-1" id="nav-bab1-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-bab1" type="button" role="tab" aria-controls="nav-bab1"
+                            aria-selected="false">Bab 1</button>
+                        <button class="nav-link nav-link-hijau mx-1" id="nav-bab2-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-bab2" type="button" role="tab" aria-controls="nav-bab2"
+                            aria-selected="false">Bab 2</button>
+                        <button class="nav-link nav-link-hijau mx-1" id="nav-bab3-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-bab3" type="button" role="tab" aria-controls="nav-bab3"
+                            aria-selected="false">Bab 3</button>
+                        <button class="nav-link nav-link-hijau mx-1" id="nav-bab4-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-bab4" type="button" role="tab" aria-controls="nav-bab4"
+                            aria-selected="false">Bab 4</button>
+                        <button class="nav-link nav-link-hijau mx-1" id="nav-bab5-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-bab5" type="button" role="tab" aria-controls="nav-bab5"
+                            aria-selected="false">Bab 5</button>
                         <button class="nav-link nav-link-hijau mx-1" id="nav-pustaka-tab" data-bs-toggle="tab"
                             data-bs-target="#nav-pustaka" type="button" role="tab" aria-controls="nav-pustaka"
                             aria-selected="false">Daftar Pustaka</button>
@@ -143,24 +176,57 @@
                     </div>
                     {{-- isi tab 2 end --}}
 
-                    {{-- isi tab 3 start --}}
-                    <div class="tab-pane fade bg-white" id="nav-isiskripsi" role="tabpanel"
-                        aria-labelledby="nav-isiskripsi-tab" tabindex="0">
+                    {{-- isi tab 4 start --}}
+                    <div class="tab-pane fade bg-white" id="nav-bab1" role="tabpanel" aria-labelledby="nav-bab1-tab"
+                        tabindex="0">
                         <div class="container">
                             <br>
-                            <embed src="{{ asset('asset/file/'.$tugasakhir->file_tugasakhir) }}" type="application/pdf"
-                                width="80%" height="700px" />
+                            <embed src="{{ asset('asset/file/'.$tugasakhir->bab1) }}" type="application/pdf" width="80%"
+                                height="700px" />
                         </div>
                     </div>
-                    {{-- isi tab 3 end --}}
+                    {{-- isi tab 4 end --}}
 
                     {{-- isi tab 4 start --}}
-                    <div class="tab-pane fade bg-white" id="nav-metodologi" role="tabpanel"
-                        aria-labelledby="nav-metodologi-tab" tabindex="0">
+                    <div class="tab-pane fade bg-white" id="nav-bab2" role="tabpanel" aria-labelledby="nav-bab2-tab"
+                        tabindex="0">
                         <div class="container">
                             <br>
-                            <embed src="{{ asset('asset/file/'.$tugasakhir->file_metodologi) }}" type="application/pdf"
-                                width="80%" height="700px" />
+                            <embed src="{{ asset('asset/file/'.$tugasakhir->bab2) }}" type="application/pdf" width="80%"
+                                height="700px" />
+                        </div>
+                    </div>
+                    {{-- isi tab 4 end --}}
+
+                    {{-- isi tab 4 start --}}
+                    <div class="tab-pane fade bg-white" id="nav-bab3" role="tabpanel" aria-labelledby="nav-bab3-tab"
+                        tabindex="0">
+                        <div class="container">
+                            <br>
+                            <embed src="{{ asset('asset/file/'.$tugasakhir->bab3) }}" type="application/pdf" width="80%"
+                                height="700px" />
+                        </div>
+                    </div>
+                    {{-- isi tab 4 end --}}
+
+                    {{-- isi tab 4 start --}}
+                    <div class="tab-pane fade bg-white" id="nav-bab4" role="tabpanel" aria-labelledby="nav-bab4-tab"
+                        tabindex="0">
+                        <div class="container">
+                            <br>
+                            <embed src="{{ asset('asset/file/'.$tugasakhir->bab4) }}" type="application/pdf" width="80%"
+                                height="700px" />
+                        </div>
+                    </div>
+                    {{-- isi tab 4 end --}}
+
+                    {{-- isi tab 4 start --}}
+                    <div class="tab-pane fade bg-white" id="nav-bab5" role="tabpanel" aria-labelledby="nav-bab5-tab"
+                        tabindex="0">
+                        <div class="container">
+                            <br>
+                            <embed src="{{ asset('asset/file/'.$tugasakhir->bab5) }}" type="application/pdf" width="80%"
+                                height="700px" />
                         </div>
                     </div>
                     {{-- isi tab 4 end --}}
@@ -177,7 +243,7 @@
                 @foreach ($serupa as $item)
                 <div class="card p-2 mb-3">
                     <p><b><a href="{{ route('detail.mahasiswa', ['id_tugasakhir' => $item->id_tugasakhir]) }}"
-                        class="text-decoration-none text-black"><b>{{$item->judul}}</b></a></b></p>
+                                class="text-decoration-none text-black"><b>{{$item->judul}}</b></a></b></p>
                     <small>{{$item->nama_mahasiswa}} ({{$item->tahun_terbit}})</small>
                 </div>
                 @endforeach

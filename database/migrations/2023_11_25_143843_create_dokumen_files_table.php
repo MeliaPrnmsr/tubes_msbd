@@ -13,8 +13,11 @@ return new class extends Migration
     {
         Schema::create('dokumen_files', function (Blueprint $table) {
             $table->increments('id_file');
-            $table->string('file_metodologi');
-            $table->string('file_tugasakhir');
+            $table->string('bab1');
+            $table->string('bab2');
+            $table->string('bab3');
+            $table->string('bab4');
+            $table->string('bab5');
             $table->string('file_daftarpustaka');
             
             $table->unsignedInteger('tugasakhir_id');

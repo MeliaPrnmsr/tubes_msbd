@@ -24,13 +24,13 @@ $active = 'datatugas';
                 <div class="col">
                     <div class="mb-4">
                         <label for="author" class="form-label"><b>Penulis</b></label>
-                        <select class="form-select @error('author') is-invalid @enderror" id="author" name="author">
+                        <select class="form-control ch @error('author') is-invalid @enderror" id="author" name="author">
                             @foreach($mahasiswas as $mahasiswa)
-                            <option value="{{ sprintf('%09d', $mahasiswa->NIM) }}">{{ $mahasiswa->nama_mahasiswa }}</option>
+                                <option value="{{ sprintf('%09d', $mahasiswa->NIM) }}" @if(old('author') == $mahasiswa->NIM) selected @endif>{{ $mahasiswa->nama_mahasiswa }}</option>
                             @endforeach
                         </select>
                         @error('author')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -38,45 +38,107 @@ $active = 'datatugas';
                 <div class="col">
                     <div class="mb-4">
                         <label for="tipe_ta" class="form-label"><b>Tipe Tugas Akhir</b></label>
-                        <select class="form-select @error('tipe_ta') is-invalid @enderror" id="tipe_ta" name="tipe_ta">
-                            <option value="skripsi">Skripsi</option>
-                            <option value="tesis">Tesis</option>
-                            <option value="disertasi">Disertasi</option>
+                        <select class="ch form-select @error('tipe_ta') is-invalid @enderror" id="tipe_ta" name="tipe_ta">
+                            <option value="skripsi" @if(old('tipe_ta') == 'skripsi') selected @endif>Skripsi</option>
+                            <option value="tesis" @if(old('tipe_ta') == 'tesis') selected @endif>Tesis</option>
+                            <option value="disertasi" @if(old('tipe_ta') == 'disertasi') selected @endif>Disertasi</option>
                         </select>
                         @error('tipe_ta')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                        
                     </div>
                 </div>
+
+
+                @if ($jenjangStaff=='S1' || $jenjangStaff=='S2')
+                    
 
                 <div class="col">
                     <div class="mb-4">
                         <label for="dospem1" class="form-label"><b>Pembimbing 1</b></label>
-                        <select class="form-select @error('dospem1') is-invalid @enderror" id="dospem1" name="dospem1">
+                        <select class="ch form-select @error('dospem1') is-invalid @enderror" id="dospem1" name="dospem1">
                             @foreach($dosens as $dosen)
-                            <option value="{{ $dosen->kode_dosen }}">{{ $dosen->nama_dosen }}</option>
+                                <option value="{{ $dosen->kode_dosen }}" @if(old('dospem1') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
                             @endforeach
                         </select>
                         @error('dospem1')
                             <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @enderror
+                        
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="mb-4">
                         <label for="dospem2" class="form-label"><b>Pembimbing 2</b></label>
-                        <select class="form-select @error('dospem2') is-invalid @enderror" id="dospem2" name="dospem2">
+                        <select class="ch form-select @error('dospem2') is-invalid @enderror" id="dospem2" name="dospem2">
                             @foreach($dosens as $dosen)
-                            <option value="{{ $dosen->kode_dosen }}">{{ $dosen->nama_dosen }}</option>
+                                <option value="{{ $dosen->kode_dosen }}" @if(old('dospem2') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
                             @endforeach
                         </select>
                         @error('dospem2')
                             <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @enderror
+                        
 
                     </div>
                 </div>
+
+
+                @else
+
+
+                <div class="col">
+                    <div class="mb-4">
+                        <label for="promotor1" class="form-label"><b>Promotor 1</b></label>
+                        <select class="ch form-select @error('promotor1') is-invalid @enderror" id="promotor1" name="promotor1">
+                            @foreach($dosens as $dosen)
+                                <option value="{{ $dosen->kode_dosen }}" @if(old('promotor1') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
+                            @endforeach
+                        </select>
+                        @error('promotor1')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="mb-4">
+                        <label for="promotor2" class="form-label"><b>Promotor 2</b></label>
+                        <select class="ch form-select @error('promotor2') is-invalid @enderror" id="promotor2" name="promotor2">
+                            @foreach($dosens as $dosen)
+                                <option value="{{ $dosen->kode_dosen }}" @if(old('promotor2') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
+                            @endforeach
+                        </select>
+                        @error('promotor2')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        
+
+                    </div>
+                </div>
+            
+                <div class="col">
+                    <div class="mb-4">
+                        <label for="promotor3" class="form-label"><b>Promotor 3</b></label>
+                        <select class="ch form-select @error('promotor3') is-invalid @enderror" id="promotor3" name="promotor3">
+                            @foreach($dosens as $dosen)
+                                <option value="{{ $dosen->kode_dosen }}" @if(old('promotor3') == $dosen->kode_dosen) selected @endif>{{ $dosen->nama_dosen }}</option>
+                            @endforeach
+                        </select>
+                        @error('promotor3')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        
+
+                    </div>
+                </div>
+
+                    
+                @endif
+
 
                 <div class="col">
                     <div class="mb-4">
@@ -90,20 +152,21 @@ $active = 'datatugas';
                     </div>
                 </div>
 
+
                 <div class="col">
                     <div class="mb-4">
                         <label for="kategori" class="form-label"><b>Kategori</b></label>
-                        <select class="form-select @error('kategori') is-invalid @enderror" id="kategori"
-                            name="kategori">
+                        <select class="ch form-select @error('kategori') is-invalid @enderror" id="kategori" name="kategori">
                             @foreach($kategoris as $kategori)
-                            <option value="{{ $kategori->id_kategori }}">{{ $kategori->nama_kategori }}</option>
+                                <option value="{{ $kategori->id_kategori }}" @if(old('kategori') == $kategori->id_kategori) selected @endif>{{ $kategori->nama_kategori }}</option>
                             @endforeach
                         </select>
                         @error('kategori')
                             <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
+                        @enderror
                     </div>
                 </div>
+
             </div> <!-- row -->
             <div class="mb-4">
                 <label for="abstrak" class="form-label"><b>Abstrak</b></label>
@@ -122,14 +185,7 @@ $active = 'datatugas';
                     @enderror
             </div>
 
-            <div class="mb-4">
-                <label for="file_metodologi" class="form-label"><b>File metodologi</b></label>
-                <input class="form-control @error('file_metodologi') is-invalid @enderror" type="file" value="{{ old('file_metodologi')}}"
-                    id="file_metodologi" name="file_metodologi">
-                    @error('file_metodologi')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-            </div>
+
 
             <div class="mb-4">
                 <label for="file_pustaka" class="form-label"><b>File pustaka</b></label>
@@ -140,14 +196,60 @@ $active = 'datatugas';
                     @enderror
             </div>
 
+
+        
             <div class="mb-4">
-                <label for="file_tugasakhir" class="form-label"><b>File Isi Tugas Akhir</b></label>
-                <input class="form-control @error('file_tugasakhir') is-invalid @enderror" type="file" value="{{ old('file_tugasakhir')}}"
-                    id="file_tugasakhir" name="file_tugasakhir">
-                    @error('file_tugasakhir')
+                <label for="bab1" class="form-label"><b>Bab 1</b></label>
+                <input class="form-control @error('bab1') is-invalid @enderror" type="file" value="{{ old('bab1')}}"
+                    id="bab1" name="bab1">
+                    @error('bab1')
                             <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
             </div>
+
+            <div class="mb-4">
+                <label for="bab2" class="form-label"><b>Bab 2</b></label>
+                <input class="form-control @error('bab2') is-invalid @enderror" type="file" value="{{ old('bab2')}}"
+                    id="bab2" name="bab2">
+                    @error('bab2')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+            </div>
+
+
+            <div class="mb-4">
+                <label for="bab3" class="form-label"><b>Bab 3</b></label>
+                <input class="form-control @error('bab3') is-invalid @enderror" type="file" value="{{ old('bab3')}}"
+                    id="bab3" name="bab3">
+                    @error('bab3')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+            </div>
+
+
+            <div class="mb-4">
+                <label for="bab4" class="form-label"><b>Bab 4</b></label>
+                <input class="form-control @error('bab4') is-invalid @enderror" type="file" value="{{ old('bab4')}}"
+                    id="bab4" name="bab4">
+                    @error('bab4')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+            </div>
+
+
+            <div class="mb-4">
+                <label for="bab5" class="form-label"><b>Bab 5</b></label>
+                <input class="form-control @error('bab5') is-invalid @enderror" type="file" value="{{ old('bab5')}}"
+                    id="bab5" name="bab5">
+                    @error('bab5')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+            </div>
+
+
+
+
+
             <br>
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn" style="background-color:  #3dae2b; width: 25%; color:white">Tambah</button> &nbsp; &nbsp;

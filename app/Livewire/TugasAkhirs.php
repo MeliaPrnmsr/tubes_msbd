@@ -52,11 +52,11 @@ class TugasAkhirs extends Component
 
    public function render()
         {
-            $tipe_ta_lists = DB::table('v_data_tugasakhir')->distinct()->get('tipe_ta');
+            $tipe_ta_lists = DB::table('v_semua_tugasakhir')->distinct()->get('tipe_ta');
             $prodis = Prodi::all();
             $kategoris = Kategori::all();
 
-            $query = DB::table('v_data_tugasakhir');
+            $query = DB::table('v_semua_tugasakhir');
 
             if ($this->search) {
                 $query->where('judul', 'like', '%' . $this->search . '%');

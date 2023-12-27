@@ -83,13 +83,13 @@
       
 
       .nav-link-hijau {
-        color: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
         background-color: #3dae2b;
         font-size: 15px;
       }
       
       .nav-link-hijau:hover {
-        color: black;
+        color: rgb(255, 255, 255);
         background-color: #3dae2b; 
       }
 

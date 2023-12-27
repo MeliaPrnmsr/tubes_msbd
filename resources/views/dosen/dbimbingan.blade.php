@@ -11,21 +11,23 @@
         <div class="card-body">
           <div class="row d-flex justify-content-center">
             <div class="col-8">
-              <div class="input-group">
-                <input class="form-control border-end-0 border rounded-pill" type="text" value="search" id="example-search-input">
-                <span class="input-group-append">
-                    <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
-              </div>     
+              <form action="/dbimbingan" method="get">
+                <div class="input-group">
+                  <input class="form-control border-end-0 border rounded-pill" type="text" value="{{ request('search')}}" name="search" id="example-search-input" placeholder="cari berdasarkan judul/tahun terbit/tipe tugas akhir">
+                  <span class="input-group-append">
+                      <button class="btn btn-outline-secondary bg-white border-start-0 border rounded-pill ms-n3" type="button">
+                          <i class="fa fa-search"></i>
+                      </button>
+                  </span>
+                </div> 
+              </form>    
             </div>
           </div>
         </div>
 
             @if ($bimbingans->isEmpty())
             <div class="alert alert-repository-no" role="alert">
-              <small><i class="fa-solid fa-circle-info"></i>&nbsp; Tidak ada bimbingan yang disimpan.</small>
+              <small><i class="fa-solid fa-circle-info"></i>&nbsp; Tidak ada Tugas Akhir yang dibimbing.</small>
             </div>
         @else      
               {{-- tabel daftar mhs start --}}
