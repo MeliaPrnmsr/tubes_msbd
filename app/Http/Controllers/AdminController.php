@@ -226,7 +226,7 @@ class AdminController extends Controller
     {
 
         $search = $request->input('search');
-        $query = DB::table('v_data_tugasakhir')
+        $query = DB::table('v_semua_tugasakhir')
                 ->orderBy('tipe_ta', 'asc');
 
         if(!empty(request('search')))
@@ -245,8 +245,21 @@ class AdminController extends Controller
 
     public function detailTugasakhir($id_tugasakhir)
     {
-        $tugasakhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
-        return view('admin.detailTugasakhir_admin', ['tugasakhir' => $tugasakhir]);
+        $tugasakhir = TugasAkhir::where('id_tugasakhir', $id_tugasakhir)->first();
+        $tipe_ta = $tugasakhir->tipe_ta;
+
+        if ($tipe_ta == 'skripsi' || $tipe_ta == 'tesis') {
+
+            $tugas_akhir = DB::table('v_data_tugasakhir')->where('id_tugasakhir', $id_tugasakhir)->first();
+
+            return view('admin.detailTugasakhir_admin', ['tugasakhir' => $tugas_akhir]);
+            
+        } else {
+
+            $tugas_akhir = DB::table('v_data_disertasi')->where('id_tugasakhir', $id_tugasakhir)->first();
+
+            return view('admin.detailTugasakhir_admin', ['tugasakhir' => $tugas_akhir]);
+        }
 
     }
 
