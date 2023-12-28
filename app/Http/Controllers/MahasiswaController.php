@@ -49,6 +49,11 @@ class MahasiswaController extends Controller
         return view('mahasiswa.msearch', ['results' => $results]);
     }
 
+    public function aboutUsMhs()
+    {
+        return view('mahasiswa.aboutus');
+    }
+
     public function detailMhs($id_tugasakhir)
     {
         $tugas_akhir = TugasAkhir::where('id_tugasakhir', $id_tugasakhir)->first();

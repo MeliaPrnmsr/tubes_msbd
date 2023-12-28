@@ -13,7 +13,7 @@
             <i class="fas fa-list icon"></i>
             <small>Browse All</small>
         </a>
-        <a href="#" class="btn rounded square-btn bg-repository">
+        <a href="{{ route ('aboutus.dosen') }}" class="btn rounded square-btn bg-repository">
             <i class="fas fa-info-circle icon"></i>
             <small>About Us</small>
         </a>

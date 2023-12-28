@@ -104,6 +104,7 @@ return new class extends Migration
             DB::statement(" GRANT SELECT ON tubes_repository.v_data_disertasi TO 'staff'@'localhost' ");
             DB::statement(" GRANT SELECT ON tubes_repository.top_like_tugas_akhir TO 'staff'@'localhost' ");
             DB::statement(" GRANT SELECT ON tubes_repository.log_likes TO 'staff'@'localhost' ");
+            DB::statement(" GRANT SELECT ON tubes_repository.judul_baru_ditambahkan TO 'staff'@'localhost' ");
 
             //procedure
             DB::statement(" GRANT EXECUTE ON PROCEDURE tubes_repository.p_tambah_user_mahasiswa TO 'staff'@'localhost' ");

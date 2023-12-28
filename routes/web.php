@@ -102,6 +102,7 @@ Route::middleware(['role:staff', 'auth', 'verified'])->group(function () {
 //ROUTE PENGUNJUNG
 Route::get('/', [PengunjungController::class,'index'])->name('landingpage');
 Route::get('/landingpage', [PengunjungController::class,'index'])->name('landingpage');
+Route::get('/aboutus', [PengunjungController::class,'aboutUs'])->name('aboutus.pengunjung');
 Route::get('/search', [PengunjungController::class,'search']);
 Route::get('/detailtugasakhir/{id_tugasakhir}', [PengunjungController::class,'detailTugasakhir'])->name('detailTugasakhir');
 Route::get('/browseall', [PengunjungController::class,'browseAll'])->name('browseall.pengunjung');
@@ -128,6 +129,7 @@ Route::middleware(['role:mahasiswa', 'auth', 'verified'])->group(function () {
 
     Route::get('/mbrowseall', [MahasiswaController::class,'browseallMhs'])->name('browseall.mahasiswa');
     Route::get('/mabstrak', [MahasiswaController::class,'abstrakMhs'])->name('abstrak.mahasiswa');    
+    Route::get('/maboutus', [MahasiswaController::class,'aboutUsMhs'])->name('aboutus.mahasiswa');
 });
 
 
@@ -147,6 +149,7 @@ Route::middleware(['role:dosen', 'auth', 'verified'])->group(function () {
     Route::get('/ddosenpembimbing/{nama_dosen}', [DosenController::class,'dospemDsn'])->name('dospem.dosen');
     Route::get('/dbrowseall', [DosenController::class,'browseallDosen'])->name('browseall.dosen');
     Route::get('/dabstrak', [DosenController::class,'abstrakDosen'])->name('abstrak.dosen');
-    Route::get('/detailskripsi_dosen/{id_tugasakhir}', [DosenController::class,'detailskripsiDosen'])->name('detail.dosen');    
+    Route::get('/detailskripsi_dosen/{id_tugasakhir}', [DosenController::class,'detailskripsiDosen'])->name('detail.dosen'); 
+    Route::get('/daboutus', [DosenController::class,'aboutUsDsn'])->name('aboutus.dosen');   
 });
 

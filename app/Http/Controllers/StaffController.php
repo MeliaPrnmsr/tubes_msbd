@@ -126,10 +126,7 @@ class StaffController extends Controller
 
         return redirect()->route('datamahasiswa.staff')->with('success', 'Data Mahasiswa berhasil ditambahkan');
     } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi exception
         DB::rollBack();
-
-        // Handle exception atau log pesan kesalahan
         return redirect()->route('datamahasiswa.staff')->with('error', 'Gagal menambahkan Data Mahasiswa: ' . $e->getMessage());
     }
 
@@ -169,10 +166,7 @@ class StaffController extends Controller
 
         return redirect()->route('datamahasiswa.staff')->with('success', 'Data Mahasiswa berhasil diperbarui');
     } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi exception
         DB::rollBack();
-
-        // Handle exception atau log pesan kesalahan
         return redirect()->route('datamahasiswa.staff')->with('error', 'Gagal memperbarui Data Mahasiswa: ' . $e->getMessage());
     }
 
@@ -254,10 +248,7 @@ class StaffController extends Controller
 
         return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil ditambahkan');
     } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi exception
         DB::rollBack();
-
-        // Handle exception atau log pesan kesalahan
         return redirect()->route('datadosen.staff')->with('error', 'Gagal menambahkan Data Dosen: ' . $e->getMessage());
     }
 
@@ -280,8 +271,6 @@ class StaffController extends Controller
 
     public function updateDosen(Request $request)
     {
-
-
         DB::beginTransaction();
 
         try {
@@ -310,10 +299,7 @@ class StaffController extends Controller
 
         return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil diperbarui');
     } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi exception
         DB::rollBack();
-
-        // Handle exception atau log pesan kesalahan
         return redirect()->route('datadosen.staff')->with('error', 'Gagal memperbarui Data Dosen: ' . $e->getMessage());
     }
     
@@ -585,7 +571,6 @@ class StaffController extends Controller
 
         return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
     } catch (\Exception $e) {
-        // Rollback transaksi jika terjadi exception
         DB::rollBack();
 
         return redirect()->route('datatugas.staff')->with('error', 'Gagal menambahkan Tugas Akhir: ' . $e->getMessage());
@@ -742,11 +727,7 @@ class StaffController extends Controller
 
                 return redirect()->route('datatugas.staff')->with('success', 'Data Tugas Akhir berhasil diperbarui');
             } catch (\Throwable $th) {
-                // Rollback transaksi jika terjadi exception
                 DB::rollBack();
-        
-                // Handle exception atau log pesan kesalahan
-                dd($th);
             }
     }
 
@@ -756,7 +737,7 @@ class StaffController extends Controller
         $kategoris = Kategori::where('prodi_id', $prodiStaff)->get();
 
         return view('staff.dataKategori_staff', compact('kategoris'));
-    }
+    }   
 
 
     public function notifikasi_staff()

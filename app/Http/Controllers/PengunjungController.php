@@ -125,6 +125,11 @@ class PengunjungController extends Controller
         return view('pengunjung.pabstrak');
     }
 
+    public function aboutUs()
+    {
+        return view('pengunjung.aboutus');
+    }
+
     public function create()
     {
         //

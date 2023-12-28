@@ -17,7 +17,7 @@
                 <i class="fa-solid fa-fire icon"></i>
                 <small>Popular</small>
             </a> --}}
-            <a href="/mlandingpage" class="btn rounded square-btn bg-repository">
+            <a href="{{ route ('aboutus.mahasiswa') }}" class="btn rounded square-btn bg-repository">
                 <i class="fas fa-info-circle icon"></i>
                 <small>About Us</small>
             </a>

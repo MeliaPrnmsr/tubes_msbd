@@ -20,6 +20,11 @@ class DosenController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function aboutUsDsn()
+    {
+        return view('dosen.aboutus');
+    }
+
     public function landingDosen(Request $request)
     {
         $totalTugasAkhir = TugasAkhir::count();
