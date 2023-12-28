@@ -666,13 +666,6 @@ class DatabaseSeeder extends Seeder
         // BATAS BATAS BUATAN
         
         Mahasiswa::create([
-            'nim' => "221402020",
-            'nama_mahasiswa' => "Gylbert Chrismiguel Sitorus",
-            'user_id' => 5,
-            'prodi_id' => 1
-        ]);
-        
-        Mahasiswa::create([
             'nim' => "221402133",
             'nama_mahasiswa' => "Serafim Edgar Pandamei Sitorus",
             'user_id' => 1,
