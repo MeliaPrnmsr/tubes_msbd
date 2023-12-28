@@ -90,6 +90,12 @@ class StaffController extends Controller
 
     public function insertMahasiswa(Request $request)
     {
+
+
+        DB::beginTransaction();
+
+        try {
+
         $request->validate([
             'NIM' => 'required|unique:mahasiswas,NIM|numeric|digits:9',
             'nama_mahasiswa' => ['required', 'regex:/^[A-Za-z\s\-]+$/u'],
@@ -116,7 +122,17 @@ class StaffController extends Controller
             $prodi_id
         ]);
 
+        DB::commit();
+
         return redirect()->route('datamahasiswa.staff')->with('success', 'Data Mahasiswa berhasil ditambahkan');
+    } catch (\Exception $e) {
+        // Rollback transaksi jika terjadi exception
+        DB::rollBack();
+
+        // Handle exception atau log pesan kesalahan
+        return redirect()->route('datamahasiswa.staff')->with('error', 'Gagal menambahkan Data Mahasiswa: ' . $e->getMessage());
+    }
+
     }
 
     public function editMahasiswa($NIM)
@@ -130,6 +146,9 @@ class StaffController extends Controller
     public function updateMahasiswa(Request $request)
     {
 
+        DB::beginTransaction();
+
+        try {
 
         $nim = $request->input('NIM');
         $nama_mahasiswa = $request->input('nama_mahasiswa');
@@ -146,7 +165,17 @@ class StaffController extends Controller
             $id_user
         ]);
 
+        DB::commit();
+
         return redirect()->route('datamahasiswa.staff')->with('success', 'Data Mahasiswa berhasil diperbarui');
+    } catch (\Exception $e) {
+        // Rollback transaksi jika terjadi exception
+        DB::rollBack();
+
+        // Handle exception atau log pesan kesalahan
+        return redirect()->route('datamahasiswa.staff')->with('error', 'Gagal memperbarui Data Mahasiswa: ' . $e->getMessage());
+    }
+
     }
     //Mahasiswa Part End
     //Mahasiswa Part End
@@ -183,6 +212,11 @@ class StaffController extends Controller
 
     public function insertDosen(Request $request)
     {
+
+        DB::beginTransaction();
+
+    try {
+        
         $validasidata = $request->validate([
             'kode_dosen' => ['required', 'unique:dosens,kode_dosen', 'size:3', 'alpha', 'uppercase'],
             'NIP' => 'required|unique:dosens,NIP|numeric|digits:18',
@@ -216,7 +250,17 @@ class StaffController extends Controller
             $prodi_id
         ]);
 
+        DB::commit();
+
         return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil ditambahkan');
+    } catch (\Exception $e) {
+        // Rollback transaksi jika terjadi exception
+        DB::rollBack();
+
+        // Handle exception atau log pesan kesalahan
+        return redirect()->route('datadosen.staff')->with('error', 'Gagal menambahkan Data Dosen: ' . $e->getMessage());
+    }
+
     }
 
     public function detailDosen($kode_dosen)
@@ -236,6 +280,11 @@ class StaffController extends Controller
 
     public function updateDosen(Request $request)
     {
+
+
+        DB::beginTransaction();
+
+        try {
 
         $kode_dosen = $request->input('kode');
         $nama_dosen = $request->input('nama');
@@ -257,7 +306,17 @@ class StaffController extends Controller
 
         ]);
 
+        DB::commit();
+
         return redirect()->route('datadosen.staff')->with('success', 'Data Dosen berhasil diperbarui');
+    } catch (\Exception $e) {
+        // Rollback transaksi jika terjadi exception
+        DB::rollBack();
+
+        // Handle exception atau log pesan kesalahan
+        return redirect()->route('datadosen.staff')->with('error', 'Gagal memperbarui Data Dosen: ' . $e->getMessage());
+    }
+    
     }
 
     //TUGAS AKHIR
@@ -349,6 +408,11 @@ class StaffController extends Controller
 
     public function insertTugasakhir(Request $request)
     {
+
+        DB::beginTransaction();
+
+        try { 
+
         $prodiJenjang = auth()->user()->staff->prodi->jenjang;
 
         if ($prodiJenjang == 'S1' || $prodiJenjang == 'S2') {
@@ -431,7 +495,6 @@ class StaffController extends Controller
                 $nama_bab5
             ]); 
     
-            return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
 
 
         } elseif ($prodiJenjang == 'S3') {
@@ -518,6 +581,16 @@ class StaffController extends Controller
             dd($request);
         }
 
+        DB::commit();
+
+        return redirect()->route('datatugas.staff')->with('success', 'Tugas Akhir berhasil ditambahkan');
+    } catch (\Exception $e) {
+        // Rollback transaksi jika terjadi exception
+        DB::rollBack();
+
+        return redirect()->route('datatugas.staff')->with('error', 'Gagal menambahkan Tugas Akhir: ' . $e->getMessage());
+    }
+
       
     }
 
@@ -550,6 +623,9 @@ class StaffController extends Controller
     public function updateTugasakhir(Request $request)
     {
             
+        DB::beginTransaction();
+
+        try {
 
             $request->validate([
                 'judul' => 'string|max:255',
@@ -645,7 +721,6 @@ class StaffController extends Controller
     
             $id_tugasakhir = $request->input('tugasakhir_id');
     
-            try {
                 DB::select('CALL p_perbarui_tugas(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                     $judul,
                     $abstrak,
@@ -663,8 +738,14 @@ class StaffController extends Controller
                     $id_tugasakhir
                 ]);
     
+                DB::commit();
+
                 return redirect()->route('datatugas.staff')->with('success', 'Data Tugas Akhir berhasil diperbarui');
             } catch (\Throwable $th) {
+                // Rollback transaksi jika terjadi exception
+                DB::rollBack();
+        
+                // Handle exception atau log pesan kesalahan
                 dd($th);
             }
     }
