@@ -214,6 +214,25 @@ class MahasiswaController extends Controller
         return view('mahasiswa.msearch', compact('tugas_akhirs', 'prodis', 'kategoris', 'tipe_ta_lists', 'searchTerm'));
     }
 
+    public function dospemMhs(Request $request, $nama_dosen)
+    {
+        $dosen = DB::table('v_tugasakhir_dospem')->where('nama_dosen', $nama_dosen)->first();
+
+        $query = DB::table('v_tugasakhir_dospem')->where('nama_dosen', $nama_dosen);
+
+        $search = $request->input('search');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('tahun_terbit', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_ta', 'like', '%' . $search . '%');
+            });
+        }
+    
+        $tugas_akhir = $query->paginate(10);
+        return view('mahasiswa.mdospem', compact('tugas_akhir', 'dosen'));
+    }
+
 
     public function browseallMhs()
     {

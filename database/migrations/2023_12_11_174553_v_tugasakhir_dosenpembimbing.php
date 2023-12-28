@@ -14,9 +14,21 @@ return new class extends Migration {
 
         DB::statement("
         CREATE VIEW v_tugasakhir_dospem AS
-        SELECT ta.id_tugasakhir, ta.judul, ta.abstrak, ta.sampul, ta.date_added, ta.tahun_terbit, ta.tipe_ta, ta.author, dp.kode_dosen
+        SELECT 
+            ta.id_tugasakhir, 
+            ta.judul, 
+            ta.abstrak, 
+            ta.sampul, 
+            ta.date_added, 
+            ta.tahun_terbit, 
+            ta.tipe_ta, 
+            ta.author, 
+            dp.kode_dosen, 
+            d.nama_dosen
         FROM tugas_akhirs ta
         INNER JOIN dosenpembimbings dp ON ta.author = dp.NIM
+        INNER JOIN dosens d ON dp.kode_dosen = d.kode_dosen;
+
         ");
     }
 

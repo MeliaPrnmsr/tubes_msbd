@@ -28,6 +28,7 @@ return new class extends Migration
             DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_skripsi TO 'pengunjung'@'localhost' ");
             DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_tesis TO 'pengunjung'@'localhost' ");
             DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_disertasi TO 'pengunjung'@'localhost' ");
+            DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_dospem TO 'pengunjung'@'localhost' ");
 
         //mahasiswa
             //view
@@ -40,6 +41,7 @@ return new class extends Migration
             DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_skripsi TO 'mahasiswa'@'localhost' ");
             DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_tesis TO 'mahasiswa'@'localhost' ");
             DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_disertasi TO 'mahasiswa'@'localhost' ");
+            DB::statement(" GRANT SELECT ON tubes_repository.v_tugasakhir_dospem TO 'mahasiswa'@'localhost' ");
 
             //tabel
             DB::statement(" GRANT SELECT ON tubes_repository.tugas_akhirs TO 'mahasiswa'@'localhost' ");

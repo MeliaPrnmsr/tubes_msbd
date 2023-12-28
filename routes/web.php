@@ -119,9 +119,9 @@ Route::middleware(['role:mahasiswa', 'auth', 'verified'])->group(function () {
     Route::match(['get', 'post'], '/updateprofil', [MahasiswaController::class, 'UpdateProfil'])->name('update.mahasiswa');
     Route::get('/mbookmark', [MahasiswaController::class,'bookmarkMhs'])->name('bookmark.mahasiswa');
     Route::get('/msearch', [MahasiswaController::class,'searchMhs'])->name('search.mahasiswa');
+    Route::get('/mdosenpembimbing/{nama_dosen}', [MahasiswaController::class,'dospemMhs'])->name('dospem.mahasiswa');
     Route::get('/hasil_search', [MahasiswaController::class,'hasil_search']);
-    Route::get('/mdetailTugasakhir/{id_tugasakhir}', [MahasiswaController::class,'detailMhs'])->name('detail.mahasiswa')
-    ;
+    Route::get('/mdetailTugasakhir/{id_tugasakhir}', [MahasiswaController::class,'detailMhs'])->name('detail.mahasiswa');
     Route::post('/mhlike', [MahasiswaController::class,'likeTugasAkhir']);
     Route::post('/mhbookmark', [MahasiswaController::class,'bookmarkTugasAkhir']);
 
