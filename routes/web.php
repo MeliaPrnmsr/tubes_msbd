@@ -106,6 +106,7 @@ Route::get('/search', [PengunjungController::class,'search']);
 Route::get('/detailtugasakhir/{id_tugasakhir}', [PengunjungController::class,'detailTugasakhir'])->name('detailTugasakhir');
 Route::get('/browseall', [PengunjungController::class,'browseAll'])->name('browseall.pengunjung');
 Route::get('/abstrak', [PengunjungController::class,'abstrak']);
+Route::get('/dosenpembimbing/{nama_dosen}', [PengunjungController::class,'dospem'])->name('dospem.pengunjung');
 
 
 //ROUTE MAHASISWA
@@ -143,10 +144,9 @@ Route::middleware(['role:dosen', 'auth', 'verified'])->group(function () {
     Route::post('/dslike', [DosenController::class,'likeTugasAkhir']);
     Route::post('/dsbookmark', [DosenController::class,'bookmarkTugasAkhir']);
     Route::get('/dsearch', [DosenController::class,'searchDosen'])->name('search.dosen');
+    Route::get('/ddosenpembimbing/{nama_dosen}', [DosenController::class,'dospemDsn'])->name('dospem.dosen');
     Route::get('/dbrowseall', [DosenController::class,'browseallDosen'])->name('browseall.dosen');
     Route::get('/dabstrak', [DosenController::class,'abstrakDosen'])->name('abstrak.dosen');
     Route::get('/detailskripsi_dosen/{id_tugasakhir}', [DosenController::class,'detailskripsiDosen'])->name('detail.dosen');    
 });
 
-
-// Route untuk About (aku sebenarnya kurang dengar tadi)

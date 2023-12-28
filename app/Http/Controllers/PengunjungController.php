@@ -42,6 +42,25 @@ class PengunjungController extends Controller
         return view('pengunjung.psearch');
     }
 
+    public function dospem(Request $request, $nama_dosen)
+    {
+        $dosen = DB::table('v_tugasakhir_dospem')->where('nama_dosen', $nama_dosen)->first();
+
+        $query = DB::table('v_tugasakhir_dospem')->where('nama_dosen', $nama_dosen);
+
+        $search = $request->input('search');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('tahun_terbit', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_ta', 'like', '%' . $search . '%');
+            });
+        }
+    
+        $tugas_akhir = $query->paginate(10);
+        return view('pengunjung.pdospem', compact('tugas_akhir', 'dosen'));
+    }
+
     public function detailTugasakhir($id_tugasakhir)
     {
         // Mengambil data tugas akhir dari tabel sesuai dengan ID yang diberikan

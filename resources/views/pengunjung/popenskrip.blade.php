@@ -43,32 +43,32 @@
                                 <tr>
                                     <td><b>Promotor 1</b></td>
                                     <td>:</td>
-                                    <td><a href="#" class="btn btn-hijau text-start">{{ $tugasakhir->nama_promotor1}}</a></td>
+                                    <td><a href="{{ route('dospem.pengunjung', ['nama_dosen' => $tugasakhir->nama_promotor1]) }}" class="btn btn-hijau text-start">{{ $tugasakhir->nama_promotor1}}</a></td>
                                 </tr>
 
                                 <tr>
                                     <td><b>Promotor 2</b></td>
                                     <td>:</td>
-                                    <td><a href="#" class="btn btn-warning text-start">{{ $tugasakhir->nama_promotor2}}</a></td>
+                                    <td><a href="{{ route('dospem.pengunjung', ['nama_dosen' => $tugasakhir->nama_promotor2]) }}" class="btn btn-warning text-start">{{ $tugasakhir->nama_promotor2}}</a></td>
                                 </tr>
 
                                 <tr>
                                     <td><b>Promotor 3</b></td>
                                     <td>:</td>
-                                    <td><a href="#" class="btn btn-danger text-start">{{ $tugasakhir->nama_promotor3}}</a></td>
+                                    <td><a href="{{ route('dospem.pengunjung', ['nama_dosen' => $tugasakhir->nama_promotor3]) }}" class="btn btn-danger text-start">{{ $tugasakhir->nama_promotor3}}</a></td>
                                 </tr>
                             @else
                                 <tr>
                                     <td><b>Pembimbing 1</b></td>
                                     <td>:</td>
-                                    <td><a href="#" class="btn btn-hijau text-start">{{ $tugasakhir->nama_dosen_dospem1
+                                    <td><a href="{{ route('dospem.pengunjung', ['nama_dosen' => $tugasakhir->nama_dosen_dospem1]) }}" class="btn btn-hijau text-start">{{ $tugasakhir->nama_dosen_dospem1
                                             }}</a></td>
                                 </tr>
 
                                 <tr>
                                     <td><b>Pembimbing 2</b></td>
                                     <td>:</td>
-                                    <td><a href="#" class="btn btn-warning text-start">{{ $tugasakhir->nama_dosen_dospem2
+                                    <td><a href="{{ route('dospem.pengunjung', ['nama_dosen' => $tugasakhir->nama_dosen_dospem2]) }}" class="btn btn-warning text-start">{{ $tugasakhir->nama_dosen_dospem2
                                             }}</a></td>
                                 </tr>
                             @endif

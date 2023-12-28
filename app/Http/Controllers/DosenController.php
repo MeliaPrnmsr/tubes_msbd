@@ -77,6 +77,24 @@ class DosenController extends Controller
         return redirect()->route('profile.dosen')->with('succes', 'Data Dosen Berhasil Diubah!');
     }
 
+    public function dospemDsn(Request $request, $nama_dosen)
+    {
+        $dosen = DB::table('v_tugasakhir_dospem')->where('nama_dosen', $nama_dosen)->first();
+
+        $query = DB::table('v_tugasakhir_dospem')->where('nama_dosen', $nama_dosen);
+
+        $search = $request->input('search');
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('tahun_terbit', 'like', '%' . $search . '%')
+                    ->orWhere('tipe_ta', 'like', '%' . $search . '%');
+            });
+        }
+    
+        $tugas_akhir = $query->paginate(10);
+        return view('dosen.ddospem', compact('tugas_akhir', 'dosen'));
+    }
     public function bimbinganDosen(Request $request)
     {
         $user_login = auth()->user()->dosen->kode_dosen;
