@@ -1268,6 +1268,68 @@ class DatabaseSeeder extends Seeder
             'file_daftarpustaka' => "Daftar Pustaka178123001.pdf",
             'tugasakhir_id' => 1
         ]);
+
+        TugasAkhir::create([
+            'judul' => "Skripsi 1",
+            'abstrak' => "Abstrak skripsi ini membahas tentang pengaruh teknologi terhadap kehidupan mahasiswa.",
+            'tahun_terbit' => 2021,
+            'tipe_ta' => "skripsi",
+            'author' => "178123002",
+            'kategori_id' => 3
+        ]);
+
+        Dosenpembimbing::create([
+            'NIM' => "178123002",
+            'kode_dosen' => "RNS",
+            'status_pembimbing' => "pembimbing1"
+        ]);
+
+        Dosenpembimbing::create([
+            'NIM' => "178123002",
+            'kode_dosen' => "AND",
+            'status_pembimbing' => "pembimbing2"
+        ]);
+
+        DokumenFile::create([
+            'bab1' => "Isi Bab1178123002.pdf",
+            'bab2' => "Isi Bab2178123002.pdf",
+            'bab3' => "Isi Bab3178123002.pdf",
+            'bab4' => "Isi Bab4178123002.pdf",
+            'bab5' => "Isi Bab5178123002.pdf",
+            'file_daftarpustaka' => "Daftar Pustaka178123002.pdf",
+            'tugasakhir_id' => 2
+        ]);
+
+        TugasAkhir::create([
+            'judul' => "Tesis 1",
+            'abstrak' => "Tesis ini menjelaskan pendekatan Machine Learning untuk klasifikasi data kesehatan.",
+            'tahun_terbit' => 2022,
+            'tipe_ta' => "tesis",
+            'author' => "178123003",
+            'kategori_id' => 5
+        ]);
+
+        Dosenpembimbing::create([
+            'NIM' => "178123003",
+            'kode_dosen' => "ADI",
+            'status_pembimbing' => "pembimbing1"
+        ]);
+
+        Dosenpembimbing::create([
+            'NIM' => "178123003",
+            'kode_dosen' => "YNT",
+            'status_pembimbing' => "pembimbing2"
+        ]);
+
+        DokumenFile::create([
+            'bab1' => "Isi Bab1178123003.pdf",
+            'bab2' => "Isi Bab2178123003.pdf",
+            'bab3' => "Isi Bab3178123003.pdf",
+            'bab4' => "Isi Bab4178123003.pdf",
+            'bab5' => "Isi Bab5178123003.pdf",
+            'file_daftarpustaka' => "Daftar Pustaka178123003.pdf",
+            'tugasakhir_id' => 3
+        ]);
         // <!-- END -->
     }
 }
